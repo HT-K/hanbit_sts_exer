@@ -1,7 +1,9 @@
 package com.hanbit.web.admin;
 
-import com.hanbit.web.member.MemberDTO;
+import org.springframework.stereotype.Component;
 
+import com.hanbit.web.member.MemberDTO;
+@Component
 public class AdminDTO extends MemberDTO{
 	private String role;
 

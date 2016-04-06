@@ -1,5 +1,8 @@
 package com.hanbit.web.member;
 
-public class MemberController {
+import org.springframework.stereotype.Controller;
 
+@Controller
+public class MemberController {
+	
 }

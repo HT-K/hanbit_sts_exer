@@ -1,5 +1,8 @@
 package com.hanbit.web.member;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberDTO {
 	private String id, password, name, addr;
 	private int birth;

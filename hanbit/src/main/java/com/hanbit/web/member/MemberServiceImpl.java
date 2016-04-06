@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemberServiceImpl implements MemberService {
 	private static MemberService instance = new MemberServiceImpl(); // 싱글톤 패턴으로 객체를 사용하기 위함.	
 	

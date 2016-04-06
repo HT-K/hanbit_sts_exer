@@ -1,8 +1,10 @@
 package com.hanbit.web.board;
 
+import org.springframework.stereotype.Service;
+
 import com.hanbit.web.grade.GradeDTO;
 import com.hanbit.web.member.MemberDTO;
-
+@Service
 public class BoardServiceImpl implements BoardService {
 	private static BoardService service = new BoardServiceImpl();
 	

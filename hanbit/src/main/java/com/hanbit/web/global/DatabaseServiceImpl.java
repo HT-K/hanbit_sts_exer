@@ -3,6 +3,8 @@ package com.hanbit.web.global;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.springframework.stereotype.Service;
+
 public class DatabaseServiceImpl implements DatabaseService {
 	private String driver, url, id, password;
 	private Connection conn;

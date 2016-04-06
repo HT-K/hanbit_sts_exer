@@ -1,8 +1,14 @@
-package com.hanbit.web.grade;
+package com.hanbit.web.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.hanbit.web.grade.GradeDTO;
+import com.hanbit.web.grade.MemberGradeDTO;
+
+@Repository
 public interface GradeMapper {
 		// C 성적표 등록 
 		public void insert(GradeDTO gradeBean); // 추상 메소드

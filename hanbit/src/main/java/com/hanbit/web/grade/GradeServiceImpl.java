@@ -3,6 +3,8 @@ package com.hanbit.web.grade;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+@Service
 public class GradeServiceImpl implements GradeService{
 	// 멤버 필드 (속성을 모아놓은 부분) 
 	GradeDTO grade;

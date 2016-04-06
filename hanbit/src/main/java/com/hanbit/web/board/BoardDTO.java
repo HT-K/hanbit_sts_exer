@@ -1,7 +1,9 @@
 package com.hanbit.web.board;
 
-import com.hanbit.web.member.MemberDTO;
+import org.springframework.stereotype.Component;
 
+import com.hanbit.web.member.MemberDTO;
+@Component
 public class BoardDTO extends MemberDTO{
 	private String role;
 

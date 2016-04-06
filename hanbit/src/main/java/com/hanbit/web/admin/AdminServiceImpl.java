@@ -1,8 +1,10 @@
 package com.hanbit.web.admin;
 
+import org.springframework.stereotype.Service;
+
 import com.hanbit.web.grade.GradeDTO;
 import com.hanbit.web.member.MemberDTO;
-
+@Service
 public class AdminServiceImpl implements AdminService {
 	private static AdminService service = new AdminServiceImpl();
 	

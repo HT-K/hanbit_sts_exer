@@ -1,5 +1,8 @@
 package com.hanbit.web.grade;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberGradeDTO {
 	private String id;
 	private int score_seq,java,sql,jsp,spring;
