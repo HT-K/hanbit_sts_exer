@@ -15,7 +15,7 @@
 		WHERE id = #{id} and password = #{password}
 	</select>
 	
-	<select id="selectMember" resultType="com.hanbit.web.member.MemberDTO">
+	<select id="selectById" resultType="com.hanbit.web.member.MemberDTO">
 		SELECT * FROM Member WHERE id = #{id}
 	</select>
 	

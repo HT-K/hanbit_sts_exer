@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.hanbit.web.member.MemberDTO;
 @Component
-public class AdminDTO extends MemberDTO{
+public class AdminDTO{
 	private String role;
 
 	public String getRole() {

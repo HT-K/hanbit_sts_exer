@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+.mg_auto{margin: 0 auto} /* 가운데 정렬 */
+
+a:link { color : #800040 } /* 일반, 방문하지 않은 링크 */
+a:visited { color : green } /* 사용자가 이미 방문 */
+a:hover { color : hotpink } /* 마우스 오버 */ 
+a:active { color : blue } /* 클릭하는 순간 */
+
+/* 목록 (ul, ol) */
+.list_circle {list-style-type:circle}
+.list_square {list-style-type:square}
+.list_upper {list-style-type:upper-roman}
+.list_lower {list-style-type:lower-alpha}
+
+/* 이미지 */
+/* list-style-image: url('*.jpg'); */
+
+/* 수직 네비게이션 */
+ul {list-style-type: none; margin: 0;padding: 0;width: 60px;}
+li a {display: block}
+li a:hover {background-color: #555;color: white;}
+li a.active {background-color: #4CAF50;color: white;}
+
+/* 수평 네비게이션 */
+li {display: inline}
+
+/* 양식 */
+input[type=text] {width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box;}
+
+/* 모서리 */
+border-radius: 4px;
+
+/* 포커스 */
+input[type=text]:focus {background-color: lightblue}
+input[type=password]:focus {background-color: lightblue}
+
+/* 이미지 입력 */
+/* background-image: url('*.png'); */
+
+.w_100pct{width: 100%}

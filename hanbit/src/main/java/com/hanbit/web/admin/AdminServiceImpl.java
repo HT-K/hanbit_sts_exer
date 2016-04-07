@@ -1,11 +1,14 @@
 package com.hanbit.web.admin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.web.grade.GradeDTO;
 import com.hanbit.web.member.MemberDTO;
 @Service
 public class AdminServiceImpl implements AdminService {
+	private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
 	private static AdminService service = new AdminServiceImpl();
 	
 	public static AdminService getService() {

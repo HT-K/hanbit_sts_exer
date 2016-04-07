@@ -52,10 +52,10 @@
 		
 		$('#updateBtn').addClass('btn btn-primary').click(function() { // 수정 폼 이동 클릭 시 URL에 id 값을 가지고 넘어간다.
 			//location.href = '${context}/member/update_form.do?id=${member.id}'; 
-			location.href = '${context}/member/update_form.do';// session객체를 이용하면 ${member.id}를 쓸 필요가 없다.
+			location.href = '${context}/member/update';// session객체를 이용하면 ${member.id}를 쓸 필요가 없다.
 		});
 		$('#delBtn').addClass('btn btn-primary').click(function() {
-			location.href = '${context}/member/delete.do';
+			location.href = '${context}/member/delete';
 			
 		});
 	});

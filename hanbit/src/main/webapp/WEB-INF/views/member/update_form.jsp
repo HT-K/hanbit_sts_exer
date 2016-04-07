@@ -48,7 +48,7 @@
 <script type="text/javascript">
 	$(function() {
 		$('#updateButton').click(function() {
-			$('form').attr('action','${context}/member/update.do').attr('method','post').submit();
+			$('form').attr('action','${context}/member/update').attr('method','post').submit();
 		});
 	});
 </script>

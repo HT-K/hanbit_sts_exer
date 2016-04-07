@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+		
+		<!-- viewResolver Negotiator 을 이용해서 선택하는 로직을 만듦 : SWITCH ~ CASE -->
+		<!-- <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+			<property name="mediaTypes">
+				<map>
+					넘어온 타입이 xml이면 맨위 html이면 가운데, json이면 맨 아래~
+					<entry key="atom" value="application/atom+xml"/> 
+					<entry key="html" value="text/html"/> MIME
+					<entry key="json" value="application/json"/>
+				</map>
+			</property>
+			<property name="viewResolvers"> SWITCH 
+				<list>
+					<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"/>
+					<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+					<bean class="org.springframework.web.servlet.view.InternalResourceView"/> 이게 default라고 생각하면 된다., servlet-context.xml에 보면 있다!!
+				</list>
+			</property>
+			<property name="defaultViews"> 
+				<list>
+					<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+				</list>
+			</property>
+			xml로 defaultContentType이 되어 있던 것을 json으로 바꾼다.
+			json은 map 타입이다.
+			<property name="defaultContentType" value="application/json"/>
+		</bean> -->
+		
+</beans>

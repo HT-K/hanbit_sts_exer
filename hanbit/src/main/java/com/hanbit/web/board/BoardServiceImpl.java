@@ -1,11 +1,15 @@
 package com.hanbit.web.board;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.web.grade.GradeDTO;
 import com.hanbit.web.member.MemberDTO;
+
 @Service
 public class BoardServiceImpl implements BoardService {
+	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	private static BoardService service = new BoardServiceImpl();
 	
 	public static BoardService getService() {

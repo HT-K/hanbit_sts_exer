@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
+	//syso과 같은 역할, 디버깅을 위한 용도
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	
+	// 맨 처음 프로젝트를 실행하면 이곳으로 들어온다 ("/" 의 영향때문!)
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -33,6 +36,6 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "global/main";
+		return "home/index";
 	}
 }

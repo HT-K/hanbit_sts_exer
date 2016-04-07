@@ -42,10 +42,10 @@
 		// $로 cho라는 아이디를 가진 태그자체를 객체로 리턴받고 첫번째 .css를 만나 border 속성을 set하고 두번쨰, 세번째 전부 set한 후 ';' 세미콜론을 만나면 끝난다.
 		$('#cho').css('border','0').css('height', '160px').css('width', '160px'); // border가 속성이고 0이 value다.
 		$('#loginButton').css('width', '150px');
-		$('form').addClass('form-horizontal').attr('method','post'); // form 태그에 클래스 입히기
+		$('form').addClass('form-horizontal'); // form 태그에 클래스 입히기
 		
 		$('#loginButton').click(function() { // 로그인 버튼 클릭 시 $() 로 form 태그를 찾아서 객체로 리턴받아 action을 걸고 post방식으로 보낸다.
-			$('form').attr('action','${context}/member/login.do').submit();
+			$('form').attr('action','${context}/member/login').attr('method','post').submit();
 		});
 		$('#cancelBtn').addClass('btn btn-primary').click(function() { // 취소 버튼 클릭 시
 			$('form').reset();
