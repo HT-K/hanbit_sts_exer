@@ -16,7 +16,7 @@
 <script src="${context}/resources/js/admin.js"></script>
 <script type="text/javascript">
 $(document).ready(function() { // 메인 메소드 같은 존재라고 생각하면 편하다.
-	$('#result').load('${context}/member/member_list.do'); // result 아이디를 가진 곳에 오른쪽 URL의 결과를 로드시킨다.
+	$('#result').load('${context}/member/memList'); // result 아이디를 가진 곳에 오른쪽 URL의 결과를 로드시킨다.
 	$('#admin_sidebar').children().first().addClass('dropdown active'); 
 	$('#admin_sidebar').children().click(function() {
 		$(this).addClass('dropdown active');
@@ -25,15 +25,11 @@ $(document).ready(function() { // 메인 메소드 같은 존재라고 생각하
 	
 	$("#member_list").click(function() {
 		$('#result').empty();
-		$('#result').load('${context}/member/member_list.do');
+		$('#result').load('${context}/member/memList');
 	});
 	$("#grade_list").click(function() {
 		$('#result').empty();
-		$('#result').load('${context}/grade/grade_list.do');
-	});
-	$("#grade_regist").click(function() {
-		$('#result').empty();
-		$('#result').load('${context}/admin/grade_add.do');
+		$('#result').load('${context}/grade/graList');
 	});
 });
 </script>

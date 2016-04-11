@@ -4,19 +4,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MemberDTO {
-	private String id, password, name, addr;
-	private int birth;
+	private String id, password, name, addr, role;
+
+	private int birth,cate;
 	
 	public MemberDTO() {}
 	
-	public MemberDTO(String id, String password, String name, String addr, int birth) {
+	public MemberDTO(String id, String password, String name, String addr, int birth, int cate, String role) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
 		this.addr = addr;
 		this.birth = birth;
+		this.cate = cate;
+		this.role = role;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -47,6 +50,23 @@ public class MemberDTO {
 	public void setBirth(int birth) {
 		this.birth = birth;
 	}
+
+	public int getCate() {
+		return cate;
+	}
+
+	public void setCate(int cate) {
+		this.cate = cate;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 
 	@Override
 	public String toString() {

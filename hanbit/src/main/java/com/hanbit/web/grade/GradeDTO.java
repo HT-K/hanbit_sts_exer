@@ -4,18 +4,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GradeDTO {
+	private int score_seq;
 	private String id;
-	private int score_seq,java,sql,jsp,spring;
+	private int subj_seq;
+	private int score;
+
+	public GradeDTO() {
+		// TODO Auto-generated constructor stub
+	}
 	
-	public GradeDTO() {} //디폴트 생성자 , 생성자 오버로딩
-	
-	public GradeDTO(int score_seq, String id,int java,int sql,int jsp,int spring) {
-		this.score_seq = score_seq;
+	public GradeDTO(String id, int subj_seq, int score) { // 기본 생성자를 만들어줘야 오류가 생기지 않는다... 왜지??
 		this.id = id;
-		this.java = java;
-		this.sql = sql;
-		this.jsp = jsp;
-		this.spring = spring;
+		this.subj_seq = subj_seq;
+		this.score = score;
 	}
 	
 	public int getScore_seq() {
@@ -25,42 +26,30 @@ public class GradeDTO {
 	public void setScore_seq(int score_seq) {
 		this.score_seq = score_seq;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public int getJava() {
-		return java;
-	}
-	public void setJava(int java) {
-		this.java = java;
-	}
-	public int getSql() {
-		return sql;
-	}
-	public void setSql(int sql) {
-		this.sql = sql;
-	}
-	public int getJsp() {
-		return jsp;
-	}
-	public void setJsp(int jsp) {
-		this.jsp = jsp;
-	}
-	public int getSpring() {
-		return spring;
-	}
-	public void setSpring(int spring) {
-		this.spring = spring;
+	public int getSubj_seq() {
+		return subj_seq;
 	}
 
-	@Override
-	public String toString() {
-		return "성적표 [시험번호=" + score_seq + ", 아이디=" + id + ", 자바=" + java + ", SQL=" + sql + ", JSP=" + jsp
-				+ ", 스프링=" + spring + "]";
+	public void setSubj_seq(int subj_seq) {
+		this.subj_seq = subj_seq;
 	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	
 } 

@@ -23,6 +23,7 @@
 					<li><a href="${context}/js/pattern.do">패턴</a></li>
 				</ul>
 			</li>
+			
 			<li role="presentation" class="dropdown" style="margin-left: 100px">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> 
 					제이쿼리<span class="caret"></span>
@@ -37,5 +38,10 @@
 					
 				</ul>
 			</li>
+			
+			<li role="presentation" style="margin-left: 100px">
+				<a href="${context}/article/list">게시판 바로 가기</a>
+			</li>
+			
 		</ul>
 	</header>

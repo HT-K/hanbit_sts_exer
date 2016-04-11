@@ -20,7 +20,7 @@
 
 <body>
 <c:choose> 
-	<c:when test="${sessionScope.admin.role eq 'admin'}"> 
+	<c:when test="${sessionScope.user.role eq '관리자'}"> 
 		<jsp:include page="../admin/admin_header.jsp" /> 
 	</c:when>
 	<c:otherwise>

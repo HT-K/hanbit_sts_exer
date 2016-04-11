@@ -55,26 +55,6 @@
 							<input type="text" class="form-control" id="birth" name="birth" placeholder="생년월일을 입력하세요"/>
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="input_name" class="col-sm-4 control-label">수강과목</label>
-					 	<div class="col-sm-4">
-							<input type="checkbox" class="form-control" id="subject" name="Java" /> Java
-							<input type="checkbox" class="form-control" id="subject" name="Jsp" /> Jsp
-							<input type="checkbox" class="form-control" id="subject" name="Sql" /> Sql
-							<input type="checkbox" class="form-control" id="subject" name="Spring" /> Spring
-							<input type="checkbox" class="form-control" id="subject" name="파이썬" /> 파이썬
-							<input type="checkbox" class="form-control" id="subject" name="노드JS" /> 노드JS
-							<input type="checkbox" class="form-control" id="subject" name="안드로이드" /> 안드로이드
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="input_name" class="col-sm-4 control-label">전 공</label>
-					 	<select name="major" id="major">
-					 		<option value="computer">컴퓨터공학</option>
-					 		<option value="info">정보통신</option>
-					 		<option value="security">정보보안</option>
-					 	</select>
-					</div>
 					<div class="input_button text-center">
 						<button id="joinBtn">회원가입</button>
 						<button id="resetBtn">취소</button>
@@ -90,7 +70,7 @@
 		$form.addClass('form-horizontal');
 		
 		$('#joinBtn').addClass('btn btn-primary').click(function() { // 회원가입 버튼 클릭 시 포스트방식으로 전송
-			$form.attr('action','${context}/member/join').attr('method','post').submit();
+			$form.attr('action','${context}/admin/join').attr('method','post').submit();
 		});
 		$('#resetBtn').addClass('btn btn-primary').click(function() { // 취소 버튼 클릭 시
 			$form.reset();
