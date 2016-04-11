@@ -5,14 +5,13 @@
 	table tr th{border: 1px solid black; text-align: center; background: yellow}
 	table tr td{border: 1px solid black}
 </style>
-
 <jsp:include page="../global/header.jsp"/>
 <table style="border: 1px solid black">
-	<c:if test="${listModel.totalPageCount > 0}">
+	<c:if test="${command.totalPages > 0}">
 		<tr>
 			<td colspan="5">
-				${listModel.startRow} - ${listModel.endRow}
-				[${listModel.requestPage}/${listModel.totalPageCount}]
+				${command.startRow} - ${command.endRow}
+				<%-- [${listModel.requestPage}/${command.totalPages}] --%>
 			</td>
 		</tr>
 	</c:if>
@@ -28,31 +27,33 @@
 	</tr>
 	
 	<c:choose>
-		<c:when test="${listModel.hasArticle == false}">
+		<c:when test="${command.startRow == 0}">
 			<tr>
 				<td colspan="5">
-					게시글이 없습니다.9
+					게시글이 없습니다.
 				</td>
 			</tr>
 		</c:when>
+		
 		<c:otherwise>
-		<c:forEach var="article" items="${listModel.articleList}">
+		<%-- <c:forEach var="article" items="${artiList}"> --%>
+		<!-- 디비에서 가져온 글들 보여주는 th! -->
 		<tr>
-			<td>${article.id}</td>
+			<td>${article.articleId}</td>
 			<td>
-				<c:if test="${article.level > 0}">
+				<%-- <c:if test="${article.level > 0}">
 					<c:forEach begin="1" end="${article.level}">-</c:forEach>&gt;
-				</c:if>
+				</c:if> --%>
 				<!-- 글 제목을 눌렀을 시 해당 글이 있는 페이지를 같이 보낸다. -->
 				<a href="${context}/article/page/${page}">
 					${article.title}
 				</a>
 			</td>
-			<td>${article.writerName}</td>
+			<td>${article.writeName}</td>
 			<td>${article.postingDate}</td>
 			<td>${article.readCount}</td>
 		</tr>
-		</c:forEach>
+		<%-- </c:forEach> --%>
 		
 		<!-- 글쓰기 버튼 tr(줄, 행) -->
 		<tr>

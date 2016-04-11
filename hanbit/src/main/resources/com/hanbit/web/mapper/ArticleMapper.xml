@@ -8,7 +8,7 @@
 	</insert>
 	
 	<!-- 컬럼의 이름이랑 자바의 변수이름이 같으면 AS를 안써도 된다?! -->
-	<select id="selectList" parameterType="com.hanbit.web.board.ArticleListModel" resultType="com.hanbit.web.board.ArticleDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
+	<select id="selectList" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.board.ArticleDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
 		SELECT article_id AS articleId, 
 		group_id AS groupId,
 		sequence_no AS sequenceNo, 
@@ -17,9 +17,10 @@
 		writer_name AS writerName,
 		password,
 		title,
+		content
 		FROM Article
 		ORDER BY sequence_no
-		DESC LIMIT #{firstRow - 1}, #{endRow - firstRow + 1}
+		DESC LIMIT #{startRow}, #{endRow}
 	</select>
 	
 	<select id="selectByName" resultType="com.hanbit.web.board.ArticleDTO" parameterType="com.hanbit.web.board.ArticleDTO">
@@ -27,7 +28,7 @@
 	</select>
 	
 	<select id="selectById" resultType="com.hanbit.web.board.ArticleDTO" parameterType="com.hanbit.web.board.ArticleDTO">
-		
+		SELECT * FROM Article WHERE article_id = #{id}
 	</select>
 	
 	<select id="count" resultType="int">

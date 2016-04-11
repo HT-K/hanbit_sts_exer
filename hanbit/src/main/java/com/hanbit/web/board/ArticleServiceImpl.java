@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hanbit.web.global.Command;
 import com.hanbit.web.mapper.ArticleMapper;
 
 @Service
@@ -23,21 +24,21 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleDTO> selectList() {
+	public List<ArticleDTO> getList(Command command) {
 		logger.info("ArticleService - selectList() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.selectList();
+		return mapper.selectList(command);
 	}
 
 	@Override
-	public List<ArticleDTO> selectByName(String name) {
+	public List<ArticleDTO> getByName(String name) {
 		logger.info("ArticleService - selectByName() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
 		return mapper.selectByName(name);
 	}
 
 	@Override
-	public ArticleDTO selectById(String id) {
+	public ArticleDTO getById(String id) {
 		logger.info("ArticleService - selectById() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
 		return mapper.selectById(id);

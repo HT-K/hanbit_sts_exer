@@ -29,52 +29,44 @@ public class MemberController {
 	@Autowired MemberDTO member; // 이 MemberController에 MemberDTO 객체를 가져와 달라는 뜻이다. (싱글톤)
 	@Autowired MemberService service; 
 	
-	////////////////////////////////////////////////
+	@RequestMapping("/join") // 이건 get방식
+	public String join() {
+		return "member/join_form";
+	}
+	
+	//@RequestParam(value="subject",required=true) List<String> subject ==> 얘는 체크박스 값 받아오는 방법이다.
+	//@RequestParam("major")String major
+	@RequestMapping(value="/join", method=RequestMethod.POST) // 이건 post방식
+	public String join( @RequestParam("id")String id, @RequestParam("password")String password,
+						@RequestParam("name")String name, @RequestParam("addr")String addr,
+						@RequestParam("birth")int birth, @RequestParam("cate")int cate) {
 		
-	@RequestMapping("/memList") // 모든 회원 정보를 가져옴
-	public String memList(Model model) {
-		logger.info("memList 진입 ");
-		List<MemberDTO> list = service.getMemList();
-		model.addAttribute("list", list);
-		return "member/member_list";
-	}
-	
-	////////////////////////////////////////////////
-	
-	@RequestMapping("/name/{name}") // 뷰에서 name 텍스트 값을 가져온다.
-	public String getMembersByName(@PathVariable("name")String name) {
 		MemberDTO param = new MemberDTO();
+		param.setId(id);
+		param.setPassword(password);
 		param.setName(name);
-		List<MemberDTO> list = service.getMemsByName(param);
-		return "member/member_list";
-	}
-	
-	////////////////////////////////////////////////
-	
-	@RequestMapping("/detail/{id}") // id 검색으로 회원 정보를 가져옴
-	public String getMemberById(@PathVariable("id") String id, Model model) {
-		if (service.isMember(id)) {
-			logger.info("회원확인 성공 = {}", id);
-			// 비회원인지, 학생 교수 관리자 인지 알아내야함. 데이터베이스에는 Cate로 인트형으로 저장되어있는데 이것을 enum에 보내서 role을 알아낸다.
-			member = service.getMemById(id);
-			member.setRole(User.valueOf(service.getMemById(id).getCate()).toString());
-			model.addAttribute("member", member);
+		param.setAddr(addr);
+		param.setBirth(birth);
+		param.setCate(cate);
+		
+		int res = service.join(param);
+		String view = "";
+		
+		if (res == 1) {
+			logger.info("회원가입 성공!");
+			view = "member/login_form";
 		} else {
-			model.addAttribute("member", "");
+			logger.info("회원가입 실패!");
+			view = "member/join_form";
 		}
-
-		return "member/detail";
+		return view;
 	}
-	
-	////////////////////////////////////////////////
 	
 	// /member URL 들어오고 뒤에 action 값은 이곳에 넣는다.
 	@RequestMapping("/login") // 이건 get방식
 	public String login() {
 		return "member/login_form";
 	}
-	
-	////////////////////////////////////////////////
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST) // id 값만 공개 시킨다.
 	public String login(@RequestParam("id")String id, 
@@ -104,63 +96,51 @@ public class MemberController {
 		return view;
 	}
 	
-	////////////////////////////////////////////////
-	
 	@RequestMapping("/logout") // 모든 회원 정보를 가져옴
 	public String logout(SessionStatus status) {
 		logger.info("=== member - logout() ===");
 		status.setComplete(); // 세션 무효화
 		return "redirect:/"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
 	}
-	
-	////////////////////////////////////////////////
-	
-	@RequestMapping("/join") // 이건 get방식
-	public String join() {
-		return "member/join_form";
+		
+	@RequestMapping("/memList") // 모든 회원 정보를 가져옴
+	public String memList(Model model) {
+		logger.info("memList 진입 ");
+		List<MemberDTO> list = service.getMemList();
+		model.addAttribute("list", list);
+		return "member/member_list";
 	}
 	
-	////////////////////////////////////////////////
 	
-	//@RequestParam(value="subject",required=true) List<String> subject ==> 얘는 체크박스 값 받아오는 방법이다.
-	//@RequestParam("major")String major
-	@RequestMapping(value="/join", method=RequestMethod.POST) // 이건 post방식
-	public String join( @RequestParam("id")String id, @RequestParam("password")String password,
-						@RequestParam("name")String name, @RequestParam("addr")String addr,
-						@RequestParam("birth")int birth, @RequestParam("cate")int cate) {
-		
+	@RequestMapping("/name/{name}") // 이름 검색으로 회원 정보들을 가져옴(중복이름가능!)
+	public String getMembersByName(@PathVariable("name")String name) {
 		MemberDTO param = new MemberDTO();
-		param.setId(id);
-		param.setPassword(password);
 		param.setName(name);
-		param.setAddr(addr);
-		param.setBirth(birth);
-		param.setCate(cate);
-		
-		int res = service.join(param);
-		String view = "";
-		
-		if (res == 1) {
-			logger.info("회원가입 성공!");
-			view = "member/login_form";
-		} else {
-			logger.info("회원가입 실패!");
-			view = "member/join_form";
-		}
-		
-		return view;
+		List<MemberDTO> list = service.getMemsByName(param);
+		return "member/member_list";
 	}
 	
-	////////////////////////////////////////////////
+	@RequestMapping("/detail/{id}") // id 검색으로 회원 정보를 가져옴
+	public String getMemberById(@PathVariable("id") String id, Model model) {
+		if (service.isMember(id)) {
+			logger.info("회원확인 성공 = {}", id);
+			// 비회원인지, 학생 교수 관리자 인지 알아내야함. 데이터베이스에는 Cate로 인트형으로 저장되어있는데 이것을 enum에 보내서 role을 알아낸다.
+			member = service.getMemById(id);
+			member.setRole(User.valueOf(service.getMemById(id).getCate()).toString());
+			model.addAttribute("member", member);
+		} else {
+			model.addAttribute("member", "");
+		}
+
+		return "member/detail";
+	}
 	
-	@RequestMapping("/update") // 이건 get방식
+	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
 	public String update() {
 		return "member/update_form";
 	}
 	
-	////////////////////////////////////////////////
-	
-	@RequestMapping(value="/update", method=RequestMethod.POST) // 이건 post방식
+	@RequestMapping(value="/update", method=RequestMethod.POST) // 이건 post방식, 이렇게 method를 지정해주지 않으면 default는 get방식이다!표9
 	public String update(@RequestParam("password")String password, 
 						 @RequestParam("addr")String addr,
 						 HttpSession session,
@@ -184,8 +164,6 @@ public class MemberController {
 		}
 		return view;
 	}
-
-	////////////////////////////////////////////////
 	
 	@RequestMapping("/delete") 
 	public String delete(HttpSession session,
@@ -204,6 +182,4 @@ public class MemberController {
 		}
 		return "redurectL/";
 	}
-
-	////////////////////////////////////////////////
 }

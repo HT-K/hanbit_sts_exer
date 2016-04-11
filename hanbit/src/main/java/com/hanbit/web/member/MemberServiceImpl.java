@@ -21,6 +21,36 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired MemberDTO member; // 이렇게 싱글톤 패턴으로 써도 되고 지역 변수로 선언해서 사용해도 된다. 둘다 메모리 점유율을 낮추는 방법이기 때문이다.
 	
 	@Override
+	public int join(MemberDTO member) {
+		// 회원가입
+		logger.info("MemberServie - join() 진입 후 ");
+		
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		
+		int res = mapper.insert(member);
+		
+		return res;
+	}
+	
+	@Override
+	public MemberDTO login(MemberDTO member) {
+		// 로그인
+		logger.info("memberService-login() 진입 후 id = {}", member.getId());
+		// MemberMapper.class -> MemberMapper 인터페이스를 class화 시켜라 (~~~.zip은 ~~~를 압축파일로 만들어라 라는 뜻이랑 비슷한 것으로 생각하자.)
+		// MemberMapper.xml 은 MemberMapper 인터페이스를 매핑해서 해당 메소드들에 맞는 쿼리문을 실행해서 결과 값을 얻게 했다. MemberMapper 인터페이스를 매핑한 MemberMapper.xml의 정보를 sqlSession에 담게된다.
+		// 이렇게 되면 MemberMapper 인터페이스를 매핑하여 구현한 객체를 리턴 받은 mapper은 해당 메소드를 호출하여 xml의 쿼리문 실행 결과 값을 받아올 수 있게된다.
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
+		member = mapper.login(member); // MemberMapper.xml 의 주소 값이 mapper에 들어있고 그 중 login이라는 id를 가진 곳의 요소 값을 가져와서 member에 담는 것~
+		
+		if (member != null) {
+			logger.info("memberService :login() 성공 후 id = {}", member.getId());
+		} else {
+			logger.info("memberService :login() 실패 ");
+		}
+		return member;
+	}
+	
+	@Override
 	public List<MemberDTO> getMemList() {
 		// 모든 회원 리스트
 		
@@ -48,24 +78,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public MemberDTO login(MemberDTO member) {
-		// 로그인
-		logger.info("memberService-login() 진입 후 id = {}", member.getId());
-		// MemberMapper.class -> MemberMapper 인터페이스를 class화 시켜라 (~~~.zip은 ~~~를 압축파일로 만들어라 라는 뜻이랑 비슷한 것으로 생각하자.)
-		// MemberMapper.xml 은 MemberMapper 인터페이스를 매핑해서 해당 메소드들에 맞는 쿼리문을 실행해서 결과 값을 얻게 했다. MemberMapper 인터페이스를 매핑한 MemberMapper.xml의 정보를 sqlSession에 담게된다.
-		// 이렇게 되면 MemberMapper 인터페이스를 매핑하여 구현한 객체를 리턴 받은 mapper은 해당 메소드를 호출하여 xml의 쿼리문 실행 결과 값을 받아올 수 있게된다.
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
-		member = mapper.login(member); // MemberMapper.xml 의 주소 값이 mapper에 들어있고 그 중 login이라는 id를 가진 곳의 요소 값을 가져와서 member에 담는 것~
-		
-		if (member != null) {
-			logger.info("memberService :login() 성공 후 id = {}", member.getId());
-		} else {
-			logger.info("memberService :login() 실패 ");
-		}
-		return member;
-	}
-	
-	@Override
 	public boolean isMember(String id) {
 		// 회원인지 아닌지 검사
 		logger.info("MemberServie - isMember() 진입 후 ");
@@ -79,20 +91,13 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		}
 	}
-		
+
 	@Override
-	public int join(MemberDTO member) {
-		// 회원가입
-		logger.info("MemberServie - join() 진입 후 ");
-		
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		
-		int res = mapper.insert(member);
-		
-		return res;
+	public int count() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
-
 	@Override
 	public int update(MemberDTO member) {
 		// 수정
@@ -115,11 +120,5 @@ public class MemberServiceImpl implements MemberService {
 		int res = mapper.delete(member);
 		
 		return res;
-	}
-
-	@Override
-	public int count() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }
