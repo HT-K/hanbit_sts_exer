@@ -19,6 +19,8 @@ public class Constants {
 	public static final String ID = "rainbow";
 	public static final String PASSWORD = "rainbow";
 	
+	public static final int PAGESIZE = 10;
+	
 	public static final String VIEWS = "/WEB-INF/views/";
 	public static final String EXT = ".jsp";
 }
