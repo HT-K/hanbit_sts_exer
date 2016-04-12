@@ -3,11 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanbit.web.mapper.ArticleMapper"> 
-	<insert id="insert" useGeneratedKeys="true" keyProperty="score_seq" parameterType="com.hanbit.web.board.ArticleDTO"> 
-		
+	<insert id="insert" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.hanbit.web.board.ArticleDTO"> 
+		<!-- INSERT INTO Article(title, writer_name, password) 
+		VALUES(#{title}, #{writerName), #{password}) -->
 	</insert>
 	
 	<!-- 컬럼의 이름이랑 자바의 변수이름이 같으면 AS를 안써도 된다?! -->
+	<!-- 왼쪽이 데이터베이스 컬럼이름이고 오른쪽은 자바의 클래스안에 있는 인스턴스 변수이름이다. -->
+	<!-- 데베 컬럼이름과 자바의 변수이름이 같으면 상관없으나 다르면 아래와 같이 AS를 써서 맞춰줘야한다. -->
 	<select id="selectList" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.board.ArticleDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
 		SELECT article_id AS articleId, 
 		group_id AS groupId,
@@ -20,7 +23,7 @@
 		content
 		FROM Article
 		ORDER BY sequence_no
-		DESC LIMIT #{startRow}, #{endRow}
+		DESC LIMIT 0, #{endRow}
 	</select>
 	
 	<select id="selectByName" resultType="com.hanbit.web.board.ArticleDTO" parameterType="com.hanbit.web.board.ArticleDTO">
@@ -28,7 +31,16 @@
 	</select>
 	
 	<select id="selectById" resultType="com.hanbit.web.board.ArticleDTO" parameterType="com.hanbit.web.board.ArticleDTO">
-		SELECT * FROM Article WHERE article_id = #{id}
+		SELECT article_id AS articleId, 
+		group_id AS groupId,
+		sequence_no AS sequenceNo, 
+		posting_date AS postingDate,
+		read_count AS readCount,
+		writer_name AS writerName,
+		password,
+		title, 
+		content
+		FROM Article WHERE article_id = #{id}
 	</select>
 	
 	<select id="count" resultType="int">

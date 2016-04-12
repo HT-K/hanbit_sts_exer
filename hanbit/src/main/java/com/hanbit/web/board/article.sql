@@ -29,3 +29,14 @@ SELECT * FROM Article;
 -----------------------------------------
 DROP TABLE Article CASCADE;
 ----------------------------------------
+SELECT article_id AS articleId, 
+		group_id AS groupId,
+		sequence_no AS sequenceNo, 
+		posting_date AS postingDate,
+		read_count AS readCount,
+		writer_name AS writerName,
+		password,
+		title,
+		content
+		FROM Article
+		ORDER BY sequence_no
