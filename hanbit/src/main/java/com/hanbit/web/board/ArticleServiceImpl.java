@@ -31,10 +31,10 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleDTO> getByName(String name) {
+	public List<ArticleDTO> getBySearch(Command command) {
 		logger.info("ArticleService - selectByName() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.selectByName(name);
+		return mapper.selectBySearch(command);
 	}
 
 	@Override
@@ -45,10 +45,17 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int count() {
-		logger.info("ArticleService - count() 진입");
+	public int countAll() {
+		logger.info("ArticleService - countAll() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.count();
+		return mapper.countAll();
+	}
+	
+	@Override
+	public int countBySearch(Command command) {
+		logger.info("ArticleService - countBySearch() 진입");
+		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+		return mapper.countBySearch(command);
 	}
 
 	@Override
@@ -63,7 +70,5 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.info("ArticleService - delete() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
 		return mapper.delete(article);
-	}
-
-	
+	}	
 }

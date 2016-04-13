@@ -1,7 +1,5 @@
 package com.hanbit.web.board;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +7,7 @@ public class ArticleDTO{
 	private int articleId;
 	private int groupId;
 	private String sequenceNo;
-	private Date postingDate;
+	private String postingDate;
 	private int readCount;
 	private String writerName;
 	private String password;
@@ -35,10 +33,11 @@ public class ArticleDTO{
 	public void setSequenceNo(String sequenceNo) {
 		this.sequenceNo = sequenceNo;
 	}
-	public Date getPostingDate() {
+
+	public String getPostingDate() {
 		return postingDate;
 	}
-	public void setPostingDate(Date postingDate) {
+	public void setPostingDate(String postingDate) {
 		this.postingDate = postingDate;
 	}
 	public int getReadCount() {

@@ -9,7 +9,7 @@
 		<!-- 위 xmlns(xml namespace):명칭  ==> 은 해당 태그를 썼을지 그 태그가 정확한지 아닌지 판별해주는 역할을 한다 -->
 		<!-- 예를 들어 xmlna:context는 context:property-placeholder이 제대로 쓰였는지 판별해준다. 대충 그런 뉘앙스로 사용한다~ 라고만 알아두자. -->
 		<!-- 아래 코드는 고정된 설정으로 이해하면 좋고 못해도 가져다 쓰면된다. -->
-		<context:property-placeholder location="classpath:config/mysql.properties"/>
+		<context:property-placeholder location="classpath:config/mysql.properties"/> <!-- 데이터베이스 연결 정보를 가진 .properties 확장자 파일을 모든 곳에서 알 수 있도록 설정 -->
 		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 			<property name="location">
 				<value>classpath:config/mysql.properties</value> <!-- classpath 는 src/main/resources/를 말한다 -->

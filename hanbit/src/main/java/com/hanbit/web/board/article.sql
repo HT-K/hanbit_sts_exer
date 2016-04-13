@@ -29,7 +29,7 @@ SELECT * FROM Article;
 -----------------------------------------
 DROP TABLE Article CASCADE;
 ----------------------------------------
-SELECT article_id AS articleId, 
+SELECT  article_id AS articleId, 
 		group_id AS groupId,
 		sequence_no AS sequenceNo, 
 		posting_date AS postingDate,
@@ -39,4 +39,7 @@ SELECT article_id AS articleId,
 		title,
 		content
 		FROM Article
-		ORDER BY sequence_no
+		ORDER BY article_id
+----------------------------------------
+
+

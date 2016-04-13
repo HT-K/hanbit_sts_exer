@@ -1,6 +1,5 @@
 package com.hanbit.web.board;
 
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +23,13 @@ public class ArticleController {
 	@Autowired ArticleService service;
 	@Autowired Command command;
 	
-	@RequestMapping("/list/{pageNo}/{keyField}/{keyword}") // get방식으로 ${context}/article/list/${pageNo}/${keyField}/${keyworkd} URL로 호출되는 메소드다.
-	public String list(@PathVariable("pageNo")String pageNo,
-					   @PathVariable("keyField")String keyField,
-					   @PathVariable("keyword")String keyword,
-					   Model model) {
-		// 모든 게시글 수를 데이터베이스에서 구해서 command객체에 set해줌 (service.count()) 
-		command = CommandFactory.createCommand("article", "list", pageNo, keyField, keyword, service.count());
+	@RequestMapping("/list")
+	public String list(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
+					   @RequestParam(value="keyField",defaultValue ="none")String keyField,
+					   @RequestParam(value="keyword",defaultValue ="none")String keyword,
+					   Model model){		
+		logger.info("pageNo 체크 {}", pageNo);
+		logger.info("keyField 체크 {}", keyField);
 
 		logger.info("현재 페이지 = {}", command.getPageNo());
 		logger.info("현재 startPage = {}", command.getStartPage());
@@ -38,40 +37,40 @@ public class ArticleController {
 		logger.info("현재 startRow = {}", command.getStartRow());
 		logger.info("현재 endRow = {}", command.getEndRow());
 
-		// 데이터베이스에서 모든 게시글을 가져오는게 아니라 해당 페이지에 보여줄 만큼만 게시글을 리스트로 뽑아오기 위해 command를 파라미터로 보낸다!
-		List<ArticleDTO> list = service.getList(command); 
-		//ArticleDTO param = service.getById("123");
-		logger.info("리스트 체크 = {}", list.size());
-		model.addAttribute("article", list);
+		//keyField 값에 따라 모델로 보내야할 것이 나눠진다.
+		if (keyField.equals("none")) {
+			// 모든 게시글 수를 데이터베이스에서 구해서 command객체에 set해줌 (service.countAll()) 
+			command = CommandFactory.createCommand("article", "list", pageNo, keyField, keyword, service.countAll());
+			model.addAttribute("article", service.getList(command));
+		} else {
+			// keyword의 내용을 포함하는 게시물의 수를 데이터베이스에서 구해서 command 객체에 set해줌
+			command.setKeyField(keyField);
+			command.setKeyword(keyword);
+			int totalArticle = service.countBySearch(command);
+			command = CommandFactory.createCommand("article", "list", pageNo, keyField, keyword, totalArticle);
+			model.addAttribute("article", service.getBySearch(command));
+		}
 		model.addAttribute("command", command);
 		return "board/list";
-	}
-	
-	//${context}/article/write URL로 호출되는 메소드다.
-	@RequestMapping("/write")
-	public String write() {
-		return "board/writeForm";
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String write(@RequestParam("title")String title, 
 						@RequestParam("writerName")String writerName,
-						@RequestParam("password")String password, 
+						@RequestParam("password")String password,
+						@RequestParam("content")String content,
 						Model model) {
 		
 		ArticleDTO param = new ArticleDTO();
+		
 		param.setTitle(title);
 		param.setWriterName(writerName);
 		param.setPassword(password);
+		param.setContent(content);
 		
 		service.insert(param);
-		
-		return "board/list";
-	}
-	
-	@RequestMapping("/name")
-	public String findByName() {
-		return "";
+		logger.info("인서트 확인");
+		return "redirect:/article/list"; // 글 등록이 성공하면 다시 controller에 /article -> /list 로 호출되는 메소드를 호출한다.
 	}
 	
 	@RequestMapping("/id")

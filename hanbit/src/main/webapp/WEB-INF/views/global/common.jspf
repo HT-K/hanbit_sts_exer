@@ -2,4 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!-- 해당 경로 들을 쓸 때 간단히 쓰기위해 미리 변수로 정의해둔다. -->
 <c:set var="context" value="<%=request.getContextPath() %>" />
+<c:set var="css" value="${context}/resources/css" /> 
+<c:set var="img" value="${context}/resources/img" />
+<c:set var="js" value="${context}/resources/js" />

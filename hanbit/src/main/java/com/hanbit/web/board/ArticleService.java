@@ -7,9 +7,10 @@ import com.hanbit.web.global.Command;
 public interface ArticleService {
 	public int insert(ArticleDTO article);
 	public List<ArticleDTO> getList(Command command);
-	public List<ArticleDTO> getByName(String name);
+	public List<ArticleDTO> getBySearch(Command command);
 	public ArticleDTO getById(String id);
-	public int count();
+	public int countAll();
+	public int countBySearch(Command command);
 	public int update(ArticleDTO article);
 	public int delete(ArticleDTO article);
 	
