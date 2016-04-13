@@ -88,8 +88,9 @@
 		<td colspan="5" style="text-align: center;">
 		<form style="margin: 0; padding: 0;">
 			<select name="keyField" id="keyField">
+				<!-- DB에 접근할 떄 value와 db컬럼명이 같아야한다. -->
 				<option value="title" selected="selected">제목</option>
-				<option value="name">이름</option>
+				<option value="writer_name">이름</option>
 			</select>
 			<input type="text" id="keyword" name="keyword" value=""/>
 			<input type="submit" id="searchBtn" name="searchBtn" value="검색" />
