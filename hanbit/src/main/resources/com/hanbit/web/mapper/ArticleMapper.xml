@@ -28,7 +28,7 @@
 		title,
 		content
 		FROM Article
-		ORDER BY article_id ASC
+		ORDER BY posting_date DESC <!-- 날짜 순으로 최신 글이 맨 앞에 오게 된다. -->
 		LIMIT #{startRow}, #{articleSize} <!-- 가지고 갈 게시글의 시작(startRow), 시작부터 몇개를 가지고 갈 것인지 그 숫자(ArticleSize -->
 	</select>
 	
@@ -47,7 +47,7 @@
 		<!-- ${keyField}는 데이터베이스에 컬럼명을 의미(우리는 title 또는 name 둘 중 하나만 컨트롤러에서 보냈다) -->
 		<!-- 해당 컬럼에서 keyword(검색할 내용)와 같은 내용이 한개라도 있으면 모두 검사해준다. -->
 		WHERE ${keyField} LIKE CONCAT('%',#{keyword},'%') 
-		ORDER BY article_id ASC
+		ORDER BY posting_date DESC
 		LIMIT #{startRow}, #{articleSize}
 	</select>
 	
@@ -75,12 +75,20 @@
 		WHERE ${keyField} LIKE CONCAT('%',#{keyword},'%')
 	</select>
 	
+	<!-- SYSDATE() 대신 NOW()를 해도된다. -->
 	<update id="update" parameterType="com.hanbit.web.board.ArticleDTO">
-		
+		UPDATE Article 
+		SET posting_date = SYSDATE(),
+			title = #{title}, 
+			password = #{password}, 
+			writer_name = #{writerName}, 
+			content = #{content}
+		WHERE article_id = #{articleId}
 	</update>
 	
-	<delete id="delete" parameterType="com.hanbit.web.board.ArticleDTO">
-		
+	<delete id="delete" parameterType="int">
+		DELETE FROM Article 
+		WHERE article_id = #{articleId}
 	</delete>
 	
 </mapper>

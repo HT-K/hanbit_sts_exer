@@ -25,8 +25,7 @@ $(function() {
 		// a태그를 클릭했을 때
 		// 해당 태그(this)의 href 속성의 값을 가져온다. (getter 개념)
 		// 가져온 URL을 article.detail 함수에 매개변수로 보낸다
-		//article.detail($(this).attr('href'));
-		article.detail($(this).attr('href'));
+		article.detail($(this).attr('href')); // 왼쪽과 같은 문법이다. article.detail(this.getAttribute('href'));
 		return false; // a태그의 디폴트 동작이 해당 URL을 통해 그 다음 페이지로 가는 것인데 우리는 이 동작이 바로 실행되면 안돼므로 디폴트 동작을 막는 return false를 써줘야한다!
 	});
 });

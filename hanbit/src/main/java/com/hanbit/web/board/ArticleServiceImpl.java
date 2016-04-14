@@ -66,9 +66,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int delete(ArticleDTO article) {
+	public int delete(int articleId) {
 		logger.info("ArticleService - delete() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.delete(article);
+		return mapper.delete(articleId);
 	}	
 }

@@ -16,5 +16,5 @@ public interface ArticleMapper {
 	public int countAll();
 	public int countBySearch(Command command);
 	public int update(ArticleDTO article);
-	public int delete(ArticleDTO article);
+	public int delete(int articleId);
 }

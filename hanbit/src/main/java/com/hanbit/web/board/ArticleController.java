@@ -74,12 +74,11 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/search/{articleId}")
-	public String findById(
+	public void findById( // ajax를 쓰기 때문에 return 값에 굳이 이동할 페이지가 없어도 된다 (해당 페이지에서 어느 부분을 지우고 그 부분에 원하는 결과를 띄우는게 ajax이기 때문!)
 			@PathVariable("articleId")int articleId,
 			Model model) {
 		logger.info("findById() 진입 체크");
 		model.addAttribute("article",service.getById(articleId));
-		return "board/list";
 	}
 	
 	@RequestMapping("/count")
@@ -87,18 +86,40 @@ public class ArticleController {
 		return "";
 	}
 	
-	@RequestMapping("/update")
-	public String update() {
-		return "";
-	}
-	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(Model model) {
-		return "";
+	public void update(
+			@RequestParam("articleId")int articleId,
+			@RequestParam("title")String title, 
+			@RequestParam("writerName")String writerName,
+			@RequestParam("password")String password,
+			@RequestParam("content")String content,
+			Model model) {
+		logger.info("=== update() 진입 체크 ===");
+		article.setArticleId(articleId);
+		article.setTitle(title);
+		article.setPassword(password);
+		article.setWriterName(writerName);
+		article.setContent(content);
+		
+		int result = service.update(article);
+		if (result == 1) {
+			logger.info("=== update 성공 ===");
+			model.addAttribute("id", articleId);
+		} else {
+			logger.info("=== update 실패 ===");
+		}
 	}
 	
 	@RequestMapping("/delete")
-	public String delete() {
+	public String delete(
+			@RequestParam("articleId")int articleId,
+			Model model) {
+		int result = service.delete(articleId);
+		if (result == 1) {
+			model.addAttribute("message", "삭제성공!");
+		} else {
+			model.addAttribute("message", "삭제실패!");
+		}
 		return "";
 	}
 

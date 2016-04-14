@@ -53,10 +53,10 @@ public class Command {
 		//페이지 끝 구하는 공식, ex) pageNo(현재페이지 번호)가 3이고 pageSize가 5이면 3*5 = 15
 		//즉, 3페이지에 맨 끝 글은 15번째 글이 된다는 뜻으로 startRow와 endRow를 합치면 11~15번째 게시글이 3페이지에 보이게 된다!
 		//그러나 만약 글이 11개라면 마지막 페이지의 endRow는 11이 되어야한다. 즉 ,pageNo * pageSize 가 totalArticle(총 글 수)보다 크면 endRow를 총 글 수로 지정해줘야 마지막에 해당 수만큼 글이 해당 페이지에 들어간다!
-		if (pageNo* pageSize > totalArticle) {
+		if (pageNo* articleSize > totalArticle) {
 			this.endRow = totalArticle;
 		} else {
-			this.endRow = pageNo * pageSize;
+			this.endRow = pageNo * articleSize;
 		}
 		
 		// 현재 페이지에 보여지는 시작 페이지 숫자 (1페이지 1이 보여진다.)
