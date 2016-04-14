@@ -37,21 +37,19 @@ public class Command {
 		this.keyField = keyField;
 		this.keyword = keyword;
 		
-		//총 글(totalArticle)이 16개고 한 페이지당 5개라면 총 페이지 수는 4여야한다.
-		//총 글(totalArticle)이 15개고 한 페이지당 5개라면 총 페이지 수는 3이여야 한다.
-		int nmg = totalArticle%pageSize;
+		//총 글(totalArticle)이 16개고 한 페이지당 보이고 싶은 게시물 수가 5개라면 총 페이지 수는 4여야한다.
+		//총 글(totalArticle)이 15개고 한 페이지당 보이고 싶은 게시물 수가 5개라면 총 페이지 수는 3이여야 한다.
+		int nmg = totalArticle%articleSize;
 		if (nmg != 0) {
-			this.totalPages = (totalArticle/pageSize)+1;
+			this.totalPages = (totalArticle/articleSize)+1;
 		} else {
-			this.totalPages = totalArticle/pageSize;
+			this.totalPages = totalArticle/articleSize;
 		}
 		
-		
-		// 페이지  시작 구하는 공식 같은거, ex) 총 16개글이 있고 pageSize=5이라고 가정하자.
+		// 페이지  시작 구하는 공식 같은거, ex) 총 16개글이 있고 articleSize(한 페이지당 보이게 하고 싶은 게시물 수)=5이라고 가정하자.
 		// pageNo가 3이면 (3-1)*5 = 10, 즉 데이버베이스의 11번째 게시글(데이터베이스 시작 글 인덱스가 0이다)이 3페이지에 맨 위에 보이게 된다는 뜻!
-		this.startRow = (pageNo-1)*pageSize;
+		this.startRow = (pageNo-1)*articleSize;
 
-		
 		//페이지 끝 구하는 공식, ex) pageNo(현재페이지 번호)가 3이고 pageSize가 5이면 3*5 = 15
 		//즉, 3페이지에 맨 끝 글은 15번째 글이 된다는 뜻으로 startRow와 endRow를 합치면 11~15번째 게시글이 3페이지에 보이게 된다!
 		//그러나 만약 글이 11개라면 마지막 페이지의 endRow는 11이 되어야한다. 즉 ,pageNo * pageSize 가 totalArticle(총 글 수)보다 크면 endRow를 총 글 수로 지정해줘야 마지막에 해당 수만큼 글이 해당 페이지에 들어간다!
@@ -61,11 +59,11 @@ public class Command {
 			this.endRow = pageNo * pageSize;
 		}
 		
-		// 현재 페이지에 보여지는 페이지 숫자 (1페이지 1이 보여진다.)
+		// 현재 페이지에 보여지는 시작 페이지 숫자 (1페이지 1이 보여진다.)
 		this.startPage = pageNo - ((pageNo-1)%articleSize);
 		
-		// 현재 페이지에서 보여질
-		int end = startPage + articleSize - 1;
+		// 현재 페이지에서 보여질 마지막 페이지 숫자
+		int end = startPage + pageSize - 1;
 		if (end > totalPages) {
 			end = totalPages;
 		}

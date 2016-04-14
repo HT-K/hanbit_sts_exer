@@ -20,7 +20,7 @@ public class Constants {
 	public static final String PASSWORD = "rainbow";
 	
 	public static final int PAGESIZE = 3; // 게시판 하단에 보이게 될 페이지 개수 ==> (1 2 3 다음) 이런식으로 
-	public static final int ARTICLESIZE = 3; // 한 페이지 당 보이게 될 게시글의 수
+	public static final int ARTICLESIZE = 5; // 한 페이지 당 보이게 될 게시글의 수
 	
 	public static final String VIEWS = "/WEB-INF/views/";
 	public static final String EXT = ".jsp";

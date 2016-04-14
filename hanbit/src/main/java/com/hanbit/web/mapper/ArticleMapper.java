@@ -12,7 +12,7 @@ public interface ArticleMapper {
 	public int insert(ArticleDTO article);
 	public List<ArticleDTO> selectList(Command command);
 	public List<ArticleDTO> selectBySearch(Command command);
-	public ArticleDTO selectById(String id);
+	public ArticleDTO selectById(int articleId);
 	public int countAll();
 	public int countBySearch(Command command);
 	public int update(ArticleDTO article);

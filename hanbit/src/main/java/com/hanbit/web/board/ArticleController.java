@@ -73,9 +73,13 @@ public class ArticleController {
 		return "redirect:/article/list"; // 글 등록이 성공하면 다시 controller에 /article -> /list 로 호출되는 메소드를 호출한다.
 	}
 	
-	@RequestMapping("/id")
-	public String findById() {
-		return "";
+	@RequestMapping("/search/{articleId}")
+	public String findById(
+			@PathVariable("articleId")int articleId,
+			Model model) {
+		logger.info("findById() 진입 체크");
+		model.addAttribute("article",service.getById(articleId));
+		return "board/list";
 	}
 	
 	@RequestMapping("/count")

@@ -2,6 +2,7 @@
 <jsp:include page="../global/header.jsp" />
 <div class="container">
 <div>
+<a href="${context}/article/list?pageNo=1"><img src="${img}/board/backBtn.png" id="backBtn" name="backBtn" style="cursor:pointer; width: 80px;height: 30px;float: right;float: right; margin-right: 50px"/></a>
 <img src="${img}/board/writeBtn.png" id="writeBtn" name="writeBtn" style="cursor:pointer; width: 50px;height: 30px;float: right;float: right; margin-right: 50px"/>
 </div>
 <table class="table table-bordered">
@@ -37,7 +38,8 @@
 			<c:if test="${article.level}>0">
 			<c:forEach begin="1" end="${article.level}">-</c:forEach>&gt;
 			</c:if>
-			<a href="${context}/article/page/${page}">${article.title}</a>
+			<!-- href="${context}/article/search/${article.articleId}" -->
+			<a class="searchById" href="${context}/article/search/${article.articleId}">${article.title}</a>
 		</td>
 		<td>${article.writerName}</td>
 		<td>${article.postingDate}</td>

@@ -38,10 +38,10 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public ArticleDTO getById(String id) {
+	public ArticleDTO getById(int articleId) {
 		logger.info("ArticleService - selectById() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.selectById(id);
+		return mapper.selectById(articleId);
 	}
 
 	@Override

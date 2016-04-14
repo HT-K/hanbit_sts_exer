@@ -8,7 +8,7 @@ public interface ArticleService {
 	public int insert(ArticleDTO article);
 	public List<ArticleDTO> getList(Command command);
 	public List<ArticleDTO> getBySearch(Command command);
-	public ArticleDTO getById(String id);
+	public ArticleDTO getById(int articleId);
 	public int countAll();
 	public int countBySearch(Command command);
 	public int update(ArticleDTO article);

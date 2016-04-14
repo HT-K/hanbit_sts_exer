@@ -51,17 +51,15 @@
 		LIMIT #{startRow}, #{articleSize}
 	</select>
 	
-	<select id="selectById" resultType="com.hanbit.web.board.ArticleDTO" parameterType="com.hanbit.web.board.ArticleDTO">
+	<select id="selectById" parameterType="int" resultType="com.hanbit.web.board.ArticleDTO">
 		SELECT article_id AS articleId, 
-		group_id AS groupId,
-		sequence_no AS sequenceNo, 
 		posting_date AS postingDate,
 		read_count AS readCount,
 		writer_name AS writerName,
 		password,
 		title, 
 		content
-		FROM Article WHERE article_id = #{id}
+		FROM Article WHERE article_id = #{articleId}
 	</select>
 	
 	<select id="countAll" resultType="int"> <!-- 총 게시글이 몇개인지 반환 -->
