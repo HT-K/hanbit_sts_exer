@@ -1,6 +1,8 @@
 package com.hanbit.web.board;
 
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.hanbit.web.global.CommandFactory;
 public class ArticleController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired ArticleDTO article;
+	@Autowired ReplyDTO reply;
 	@Autowired ArticleService service;
 	@Autowired Command command;
 	
@@ -122,5 +125,31 @@ public class ArticleController {
 		}
 		return "";
 	}
-
+	
+	@RequestMapping("/reply") // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
+	public void reply( 
+			@RequestParam("articleId")int articleId,
+			@RequestParam("reply_content")String reply_content,
+			Model model) {
+		reply.setArticleId(articleId);
+		//reply.setReply_content(reply_content);
+		
+		int res = service.replyInsert(reply);
+				
+		if (res == 1) {
+			logger.info("=== replyInsert 성공 ===");
+			//model.addAttribute("reply", service.getReply(reply));
+		} else {
+			logger.info("=== replyInsert 실패 ===");
+		}
+	}
+	
+	@RequestMapping("/reply/{articleId}") // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
+	public void reply( 
+			@PathVariable("articleId")int articleId,
+			Model model) {
+		reply.setArticleId(articleId);
+		model.addAttribute("reply", service.getReply(reply));
+		logger.info("=== getReply 성공 ===");
+	}
 }

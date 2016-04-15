@@ -70,5 +70,19 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.info("ArticleService - delete() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
 		return mapper.delete(articleId);
+	}
+
+	@Override
+	public int replyInsert(ReplyDTO reply) {
+		logger.info("ArticleService - replyInsert() 진입");
+		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+		return mapper.replyInsert(reply);
+	}
+
+	@Override
+	public List<ReplyDTO> getReply(ReplyDTO reply) {
+		logger.info("ArticleService - getReply() 진입");
+		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+		return mapper.getReply(reply);
 	}	
 }

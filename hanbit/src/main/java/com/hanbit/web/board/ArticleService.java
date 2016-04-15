@@ -14,4 +14,7 @@ public interface ArticleService {
 	public int update(ArticleDTO article);
 	public int delete(int articleId);
 	
+	public int replyInsert(ReplyDTO reply);
+	public List<ReplyDTO> getReply(ReplyDTO reply);
+	
 }

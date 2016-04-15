@@ -11,6 +11,8 @@ CREATE TABLE Grade(
 	 CONSTRAINT grader_subject_fk FOREIGN KEY(subj_seq)
 	 REFERENCES Subject(subj_seq) ON DELETE CASCADE
 );
+
+
 ------------------------------------
 <!-- 시퀀스명.NEXTVAL을 하면 시퀀스로 학번을 생성한다. -->
 INSERT INTO Grade(score_seq,id,subj_seq,score)

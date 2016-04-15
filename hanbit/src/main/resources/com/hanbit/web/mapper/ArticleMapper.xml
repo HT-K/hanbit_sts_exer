@@ -91,4 +91,15 @@
 		WHERE article_id = #{articleId}
 	</delete>
 	
+	<!-- 댓글 등록, 모든 댓글 select -->
+	<insert id="replyInsert" useGeneratedKeys="true" keyProperty="reply_seq" parameterType="com.hanbit.web.board.ReplyDTO"> 
+		INSERT INTO Reply(article_id, reply_content) 
+		VALUES(#{articleId}, #{reply_content})
+	</insert>
+	
+	<select id="getReply" parameterType="com.hanbit.web.board.ReplyDTO" resultType="com.hanbit.web.board.ReplyDTO"> 
+		SELECT * FROM Reply 
+		WHERE article_id = #{articleId}
+	</select>
+	
 </mapper>

@@ -63,8 +63,17 @@ var article = { // 객체 생성
 					+'<div class="form-group">'
 					+'<label for="content">글내용</label>'
 					+'<textarea id="content" name="content" class="form-control" rows="5" placeholder="글 내 용"  >' + data.article.content + '</textarea></div>'
-					+'<button type="submit" id="updateBtn" name="updateBtn" class="btn col-xs-6 btn-primary btn-lg" style="width : 50%">수 정</button>'  
-					+'<button type="submit" id="deleteBtn" name="deleteBtn" class="btn col-xs-6 btn-danger btn-lg" style="width : 50%">삭 제</button>'
+					+'<button type="submit" id="updateBtn" name="updateBtn" class="btn col-xs-4 btn-primary btn-lg">수 정</button>'   
+					+'<button type="submit" id="deleteBtn" name="deleteBtn" class="btn col-xs-4 btn-danger btn-lg">삭 제</button>'
+					+'<button type="submit" id="replyBtn" name="replyBtn" class="btn col-xs-4 btn-info btn-lg">댓글창 감추기</button>'
+					+'</form>'
+					+'<form id="replyForm">'
+					+'<div class="form-group">'
+					+'<label for="exampleInputFile">댓 글</label>'
+					+'<form><textarea name="reply_content" id="reply_content" class="form-control" style="height : 50px"></textarea>'
+					+'</div>'
+					+'<button type="submit" id="replySuccess" class="btn col-xs-6 btn-success btn-lg" >확 인</button>'
+					+'<button type="reset" id="replyCancle" class="btn col-xs-6 btn-warning btn-lg" >취 소</button>'
 					+'</form>';
 				$('.container').html(detailForm);
 						
@@ -111,7 +120,34 @@ var article = { // 객체 생성
 							alert('에러 발생 상태 : '+status+' 내용 : '+msg);
 						}
 					});
-				}); // delete click end
+				}); // delete click End
+				
+				$('#replyBtn').click(function(e) {
+					alert("댓글달기 버튼 클릭 체크");
+					e.preventDefault();
+					$("#replyForm").remove();
+				}); // reply click End
+				
+				$('#replySuccess').click(function(e) { // 댓글 완료 버튼 클릭 시
+					alert("댓글완료 버튼 클릭 체크");
+					$.ajax({
+						url : article.getContext() + '/article/reply',
+						data : {
+							articleId : $('#articleId').val(),
+							reply_content : $('#reply_content').val()
+						},
+						success : function(data) {
+							alert("댓글들 들고 왔나 체크");
+							var replyRes = '<div class="form-group">'
+								+'<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + data.reply.reply_content + '" placeholder="댓글내용">'
+								+'</div>';
+								$('.container').append(replyRes);
+						},
+						error : function(xhr, status, msg) { // 실패하면 이곳으로, 매개변수는 저렇게 정해져 있다.
+							alert('에러 발생 상태 : '+status+' 내용 : '+msg);
+						}
+					});
+				}); // replySuccess click End
 			},
 			error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
 				alert('에러 발생 상태 : '+status+' 내용 : '+msg);

@@ -2,6 +2,7 @@
 <div id="wrapper">
 	<jsp:include page="list_table.jsp" />
 </div>
+
 <script src="${js}/article.js"></script>
 <script>
 $(function() {
