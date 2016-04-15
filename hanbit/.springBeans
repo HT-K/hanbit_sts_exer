@@ -8,9 +8,11 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/root-context.xml</config>
+		<config>src/main/resources/META-INF/servlet-context.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
+		<config>src/main/resources/META-INF/view-context.xml</config>
+		<config>src/main/resources/META-INF/mybatis-context.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
