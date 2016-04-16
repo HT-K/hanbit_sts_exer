@@ -129,27 +129,20 @@ public class ArticleController {
 	@RequestMapping("/reply") // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
 	public void reply( 
 			@RequestParam("articleId")int articleId,
+			@RequestParam("writerName")String writerName,
 			@RequestParam("reply_content")String reply_content,
 			Model model) {
 		reply.setArticleId(articleId);
-		//reply.setReply_content(reply_content);
+		reply.setWriterName(writerName);
+		reply.setReply_content(reply_content);
 		
 		int res = service.replyInsert(reply);
 				
 		if (res == 1) {
 			logger.info("=== replyInsert 성공 ===");
-			//model.addAttribute("reply", service.getReply(reply));
+			model.addAttribute("reply", service.getReply(reply)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
 		} else {
 			logger.info("=== replyInsert 실패 ===");
 		}
-	}
-	
-	@RequestMapping("/reply/{articleId}") // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
-	public void reply( 
-			@PathVariable("articleId")int articleId,
-			Model model) {
-		reply.setArticleId(articleId);
-		model.addAttribute("reply", service.getReply(reply));
-		logger.info("=== getReply 성공 ===");
 	}
 }

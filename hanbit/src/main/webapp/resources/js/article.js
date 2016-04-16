@@ -26,7 +26,7 @@ var article = { // 객체 생성
 		+'<textarea id="content" name="content" class="form-control" rows="5" placeholder="글 내 용"></textarea></div>'
 		+'<button type="submit" id="writeSubmit" class="btn btn-primary btn-lg btn-block">전송</button>'
 		+'</form>';
-		$('.container').html(writeForm); // container클래스가 감싸고 있는 곳의 내용을 지우고 그 위에 writeForm을 덮어쓰겠다는 뜻이다!
+	$('.container').html(writeForm); // container클래스가 감싸고 있는 곳의 내용을 지우고 그 위에 writeForm을 덮어쓰겠다는 뜻이다!
 		
 		// 위에서 set한 context 값을 호출해서 URL을 만들어 컨트롤러를 호출한다.
 		$('#writeSubmit').click(function() {			
@@ -52,56 +52,85 @@ var article = { // 객체 생성
 					+'</div>'
 					+'<div class="form-group">'
 					+'<label for="title">제목</label>'
-					+'<input type="text" class="form-control" id="title" name="title" placeholder="제 목" value="' + data.article.title + '">' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
+					+'<input type="text" class="form-control" id="title" name="title" placeholder="제 목" value="' + data.article.title + '" readonly>' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
 					+'</div>'
 					+'<div class="form-group">'
 					+'<label for="writerName">작성자</label>'
 					+'<input type="text" class="form-control" id="writerName" name="writerName" value="' + data.article.writerName + '" placeholder="작 성 자" readonly></div>'
 					+'<div class="form-group">'
 					+'<label for="password">글암호</label>'
-					+'<input type="password" id="password" class="form-control" name="password" value="' + data.article.password + '" placeholder="비 밀 번 호" ></div>'
+					+'<input type="password" id="password" class="form-control" name="password" value="' + data.article.password + '" placeholder="비 밀 번 호" readonly></div>'
 					+'<div class="form-group">'
 					+'<label for="content">글내용</label>'
-					+'<textarea id="content" name="content" class="form-control" rows="5" placeholder="글 내 용"  >' + data.article.content + '</textarea></div>'
+					+'<textarea id="content" name="content" class="form-control" rows="5" placeholder="글 내 용" readonly>' + data.article.content + '</textarea></div>'
+					+'<div class="form-group">'
 					+'<button type="submit" id="updateBtn" name="updateBtn" class="btn col-xs-4 btn-primary btn-lg">수 정</button>'   
 					+'<button type="submit" id="deleteBtn" name="deleteBtn" class="btn col-xs-4 btn-danger btn-lg">삭 제</button>'
 					+'<button type="submit" id="replyBtn" name="replyBtn" class="btn col-xs-4 btn-info btn-lg">댓글창 감추기</button>'
+					+'</div>'
 					+'</form>'
-					+'<form id="replyForm">'
+					+'<form id="replyForm" style="display:none;">'
 					+'<div class="form-group">'
 					+'<label for="exampleInputFile">댓 글</label>'
-					+'<form><textarea name="reply_content" id="reply_content" class="form-control" style="height : 50px"></textarea>'
+					+'<textarea class="form-control" id="reply_content" name="reply_content" style="height : 50px"></textarea>'
 					+'</div>'
-					+'<button type="submit" id="replySuccess" class="btn col-xs-6 btn-success btn-lg" >확 인</button>'
+					+'<div class="form-group">'
+					+'<button type="submit" id="replyOkBtn" class="btn col-xs-6 btn-success btn-lg" >확 인</button>'
 					+'<button type="reset" id="replyCancle" class="btn col-xs-6 btn-warning btn-lg" >취 소</button>'
+					+'</div>'
 					+'</form>';
 				$('.container').html(detailForm);
 						
-						//위에 textarea에 값을 넣을 때 <textarea></textarea> 사이에 넣어도 상관없고 아래와 같이해도 상관없다.
-						//$("textarea#content").text(data.article.content);
+				//위에 textarea에 값을 넣을 때 <textarea></textarea> 사이에 넣어도 상관없고 아래와 같이해도 상관없다.
+				//$("textarea#content").text(data.article.content);
 						
-				$('#updateBtn').click(function(e) {
+				$('#updateBtn').click(function(e) { // 수정 버튼 클릭 시
 					e.preventDefault(); // 기존의 submit를 무력화 시켜라!!
-					alert(article.getContext() + '/article/update');
-					$.ajax(article.getContext() + '/article/update',{ // 이렇게 .ajax 함수의 파라미터로 url을 넘겨도되고 아래와 같이 써도 된다.
-						//url : article.getContext() + '/article/update', 
-						data : { // 위 URL로 호출되는 컨트롤러에 보낼 데이터들이다.
-							articleId : $('#articleId').val(),
-							title : $('#title').val(),
-							writerName : $('#writerName').val(),
-							password : $('#password').val(),
-							content : $('#content').val()
-						},
-						type : 'post', // 이곳에 type을 쓰지 않으면 디폴트로 get이 된다.
-						async : true, // 당연히 true여야한다. 생략가능하다
-						dataType : 'json', // 생략이 가능하다, 왜냐하면 view-context.xml에서 설정해놨다.
-						success : function(data) {
-							alert("업데이트 성공!!");
-							article.detail(article.getContext() + "/article/search/" + data.id); // 업데이트 성공 후, 해당 글 id 값 포함한 URL을 article.detail로 보내면 업데이트 된 내용이 스므스하게 화면에 바로 보이게 된다!
-						},
-						error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
-							alert('에러 발생 상태 : '+status+' 내용 : '+msg);
-						}
+					var updateForm = '<form>'
+						+'<div class="form-group">'
+						+'<label for="articleId">게시글 번호</label>'
+						+'<input type="text" class="form-control" id="articleId" name="articleId" placeholder="글 번호" value="' + data.article.articleId + '" readonly>'
+						+'</div>'
+						+'<div class="form-group">'
+						+'<label for="title">제목</label>'
+						+'<input type="text" class="form-control" id="title" name="title" placeholder="제 목" value="' + data.article.title + '">' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
+						+'</div>'
+						+'<div class="form-group">'
+						+'<label for="writerName">작성자</label>'
+						+'<input type="text" class="form-control" id="writerName" name="writerName" value="' + data.article.writerName + '" placeholder="작 성 자" readonly></div>'
+						+'<div class="form-group">'
+						+'<label for="password">글암호</label>'
+						+'<input type="password" id="password" class="form-control" name="password" value="' + data.article.password + '" placeholder="비 밀 번 호"></div>'
+						+'<div class="form-group">'
+						+'<label for="content">글내용</label>'
+						+'<textarea id="content" name="content" class="form-control" rows="5" placeholder="글 내 용">' + data.article.content + '</textarea></div>'
+						+'<button type="submit" id="updateOkBtn" name="updateBtn" class="btn col-xs-6 btn-primary btn-lg">수 정 완 료</button>'   
+						+'<button type="reset" id="deleteBtn" name="deleteBtn" class="btn col-xs-6 btn-danger btn-lg">취 소</button>'
+						+'</form>';
+					$('.container').html(updateForm); // detailForm에서 '수정'버튼 클릭 시 업데이트 폼으로 바로 바뀐다.
+					
+					$('#updateOkBtn').click(function(e) { // 수정 완료 버튼 클릭 시
+						e.preventDefault(); // 기존의 submit를 무력화 시켜라!!
+						$.ajax(article.getContext() + '/article/update',{ // 이렇게 .ajax 함수의 파라미터로 url을 넘겨도되고 아래와 같이 써도 된다.
+							//url : article.getContext() + '/article/update', 
+							data : { // 위 URL로 호출되는 컨트롤러에 보낼 데이터들이다.
+								articleId : $('#articleId').val(),
+								title : $('#title').val(),
+								writerName : $('#writerName').val(),
+								password : $('#password').val(),
+								content : $('#content').val()
+							},
+							type : 'post', // 이곳에 type을 쓰지 않으면 디폴트로 get이 된다.
+							async : true, // 당연히 true여야한다. 생략가능하다
+							dataType : 'json', // 생략이 가능하다, 왜냐하면 view-context.xml에서 설정해놨다.
+							success : function(data) { // 수정 성공하면 다시 article.detail에 업데이트 된 내용을 데이터베이스에서 꺼내와서 띄워주게 된다.
+								alert("업데이트 성공!!");
+								article.detail(article.getContext() + "/article/search/" + data.id); // 업데이트 성공 후, 해당 글 id 값 포함한 URL을 article.detail로 보내면 업데이트 된 내용이 스므스하게 화면에 바로 보이게 된다!
+							},
+							error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
+								alert('에러 발생 상태 : '+status+' 내용 : '+msg);
+							}
+						});
 					});
 				});// update click end
 				
@@ -114,7 +143,7 @@ var article = { // 객체 생성
 						},
 						success : function(data) {
 							alert(data.message);
-							location.href = article.getContext() + '/article/list';
+							location.href = article.getContext() + '/article/list'; // 해당 URL로 컨트롤러를 호출해서 메소드 실행 후 리턴되는 그 페이지로 돌아감~!
 						},
 						error : function(xhr, status, msg) { // 실패하면 이곳으로, 매개변수는 저렇게 정해져 있다.
 							alert('에러 발생 상태 : '+status+' 내용 : '+msg);
@@ -125,33 +154,41 @@ var article = { // 객체 생성
 				$('#replyBtn').click(function(e) {
 					alert("댓글달기 버튼 클릭 체크");
 					e.preventDefault();
-					$("#replyForm").remove();
+					$("#replyForm").slideToggle("slow"); // 클릭할 때마다 댓글 적는 폼이 나타났다가 안나타났다가 하게 해주는 CSS효과임!!
 				}); // reply click End
 				
-				$('#replySuccess').click(function(e) { // 댓글 완료 버튼 클릭 시
+				$('#replyOkBtn').click(function(e) { // 댓글 완료 버튼 클릭 시, ajax를 이용해 ArticleController로 가서 데이터베이스에 댓글 내용을 저장한다.
 					alert("댓글완료 버튼 클릭 체크");
+					e.preventDefault();
 					$.ajax({
 						url : article.getContext() + '/article/reply',
 						data : {
 							articleId : $('#articleId').val(),
+							writerName : $('#writerName').val(),
 							reply_content : $('#reply_content').val()
 						},
+						async : true, // 당연히 true여야한다. 생략가능하다
+						dataType : 'json', // 생략이 가능하다, 왜냐하면 view-context.xml에서 설정해놨다.
 						success : function(data) {
 							alert("댓글들 들고 왔나 체크");
-							var replyRes = '<div class="form-group">'
-								+'<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + data.reply.reply_content + '" placeholder="댓글내용">'
-								+'</div>';
+							$("#replyForm").css("display","none");
+							$.each(data.reply, function(index, value) {  // 제이쿼리의 for - each문
+								// controller에서 보내온 "reply" 접근법, data.reply는 데이터베이스에서 가져온 List<ReplyDTO>를 뜻한다 
+								// index는 그안에 있는 하나하나의 ReplyDTO 객체 자체를 뜻한다.
+								// value는 그 객체(ReplyDTO)에 들어있는 하나하나의 값(reply_seq, articleId, writerName, reply_content)에 접근할 때 쓴다.
+								var replyRes = '<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + value.reply_content + '"  placeholder="댓글 내용" style="margin-top:20px;" readonly>'
 								$('.container').append(replyRes);
+							  });
 						},
 						error : function(xhr, status, msg) { // 실패하면 이곳으로, 매개변수는 저렇게 정해져 있다.
 							alert('에러 발생 상태 : '+status+' 내용 : '+msg);
 						}
-					});
+					}); // .ajax() End
 				}); // replySuccess click End
 			},
 			error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
 				alert('에러 발생 상태 : '+status+' 내용 : '+msg);
 			}
-		});
-	}
+		}); // .ajax() End
+	}, // detail function End		
 };

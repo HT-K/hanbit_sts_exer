@@ -6,15 +6,11 @@ import org.springframework.stereotype.Component;
 public class ReplyDTO {
 	private int reply_seq;
 	private int articleId;
+	private String writerName;
 	private String reply_content;
 	
 	public ReplyDTO() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public ReplyDTO(int articleId, String reply_content) {
-		this.articleId = articleId;
-		this.reply_content = reply_content;
 	}
 	
 	public int getReply_seq() {
@@ -28,6 +24,12 @@ public class ReplyDTO {
 	}
 	public void setArticleId(int articleId) {
 		this.articleId = articleId;
+	}
+	public String getWriterName() {
+		return writerName;
+	}
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
 	}
 	public String getReply_content() {
 		return reply_content;
