@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../global/header.jsp" />
 <div class="container">
 	<div>
 	<a href="${context}/article/list?pageNo=1"><img src="${img}/board/backBtn.png" id="backBtn" name="backBtn" style="cursor:pointer; width: 80px;height: 30px;float: right;float: right; margin-right: 50px"/></a>

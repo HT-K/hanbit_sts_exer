@@ -26,7 +26,7 @@ public class ArticleController {
 	@Autowired ArticleService service;
 	@Autowired Command command;
 	
-	@RequestMapping("/list")
+	@RequestMapping("/article_home")
 	public String list(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
 					   @RequestParam(value="keyField",defaultValue ="none")String keyField,
 					   @RequestParam(value="keyword",defaultValue ="none")String keyword,
@@ -54,7 +54,12 @@ public class ArticleController {
 			model.addAttribute("article", service.getBySearch(command));
 		}
 		model.addAttribute("command", command);
-		return "board/list";
+		return "article/article_home";
+	}
+	
+	@RequestMapping("/writeForm")
+	public String writeForm() {
+		return "article/article_write";
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)

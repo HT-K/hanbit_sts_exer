@@ -40,7 +40,7 @@
 			</li>
 			
 			<li role="presentation" style="margin-left: 100px">
-				<a href="${context}/article/list">게시판 바로 가기</a>
+				<a href="${context}/article/article_home">게시판 바로 가기</a>
 			</li>
 			
 		</ul>
