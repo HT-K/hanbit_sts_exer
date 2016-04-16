@@ -35,7 +35,7 @@
 				<c:forEach begin="1" end="${article.level}">-</c:forEach>&gt;
 				</c:if>
 				<!-- href="${context}/article/search/${article.articleId}" -->
-				<a class="searchById" href="${context}/article/search/${article.articleId}">${article.title}</a>
+				<a class="list_title" href="${context}/article/search/${article.articleId}">${article.title}</a>
 			</td>
 			<td>${article.writerName}</td>
 			<td>${article.postingDate}</td>

@@ -21,7 +21,7 @@
 		<!-- 현재 필요없어 보이는 두 개의 컬럼을 데이터베이스에서 제외시켰다. -->
 		<!-- group_id AS groupId,
 		sequence_no AS sequenceNo, --> 
-		DATE_FORMAT(posting_date,'%Y-%m-%d') AS postingDate,
+		DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate,
 		read_count AS readCount,
 		writer_name AS writerName,
 		password,
@@ -37,7 +37,7 @@
 			   <!-- 현재 필요없어 보이는 두 개의 컬럼을 데이터베이스에서 제외시켰다. -->
 			   <!-- group_id AS groupId,
 			   sequence_no AS sequenceNo, --> 
-			   DATE_FORMAT(posting_date,'%Y-%m-%d') AS postingDate, <!-- 데이터베이스에 date타입으로 저장된 posting_date 컬럼의 값을 ArticleDTO에 postingDate(String 타입)에 저장하기 위한 작업 -->
+			   DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate, <!-- 데이터베이스에 date타입으로 저장된 posting_date 컬럼의 값을 ArticleDTO에 postingDate(String 타입)에 저장하기 위한 작업 -->
 			   read_count AS readCount,
 			   writer_name AS writerName,
 			   password,

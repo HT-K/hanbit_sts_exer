@@ -57,18 +57,13 @@ public class ArticleController {
 		return "article/article_home";
 	}
 	
-	@RequestMapping("/writeForm")
-	public String writeForm() {
-		return "article/article_write";
-	}
-	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(@RequestParam("title")String title, 
+	public void write(@RequestParam("title")String title, 
 						@RequestParam("writerName")String writerName,
 						@RequestParam("password")String password,
 						@RequestParam("content")String content,
 						Model model) {
-		
+		logger.info("== write() 진입 ===");
 		ArticleDTO param = new ArticleDTO();
 		
 		param.setTitle(title);
@@ -76,10 +71,14 @@ public class ArticleController {
 		param.setPassword(password);
 		param.setContent(content);
 		
-		service.insert(param);
-		logger.info("인서트 확인");
-		return "redirect:/article/list"; // 글 등록이 성공하면 다시 controller에 /article -> /list 로 호출되는 메소드를 호출한다.
-	}
+		int res = service.insert(param);
+		if (res == 1 ) {
+			logger.info("== insert 성공 후 article_list.jsp 페이지로===");
+			model.addAttribute("msh", "등록성공");
+		}
+		
+		// ajax로 호출한 거라 여기서 이동할 페이지를 지정하지 않아도 된다. 다시 ajax로 돌아가서 그곳의 success에서 이동할 페이지를 호출하면 된다.
+	} // write() End, 호출한 ajax 메소드로 돌아간다. (article.js의 write : function()에 $.ajax()로 돌아감)
 	
 	@RequestMapping("/search/{articleId}")
 	public void findById( // ajax를 쓰기 때문에 return 값에 굳이 이동할 페이지가 없어도 된다 (해당 페이지에서 어느 부분을 지우고 그 부분에 원하는 결과를 띄우는게 ajax이기 때문!)
@@ -119,7 +118,7 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(
+	public void delete(
 			@RequestParam("articleId")int articleId,
 			Model model) {
 		int result = service.delete(articleId);
@@ -128,7 +127,6 @@ public class ArticleController {
 		} else {
 			model.addAttribute("message", "삭제실패!");
 		}
-		return "";
 	}
 	
 	@RequestMapping("/reply") // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
