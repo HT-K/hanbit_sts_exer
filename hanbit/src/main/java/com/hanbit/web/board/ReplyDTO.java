@@ -7,6 +7,7 @@ public class ReplyDTO {
 	private int reply_seq;
 	private int articleId;
 	private String writerName;
+	private String regTime;
 	private String reply_content;
 	
 	public ReplyDTO() {
@@ -30,6 +31,12 @@ public class ReplyDTO {
 	}
 	public void setWriterName(String writerName) {
 		this.writerName = writerName;
+	}
+	public String getRegTime() {
+		return regTime;
+	}
+	public void setRegTime(String regTime) {
+		this.regTime = regTime;
 	}
 	public String getReply_content() {
 		return reply_content;

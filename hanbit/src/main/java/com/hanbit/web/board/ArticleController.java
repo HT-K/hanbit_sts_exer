@@ -26,7 +26,7 @@ public class ArticleController {
 	@Autowired ArticleService service;
 	@Autowired Command command;
 	
-	@RequestMapping("/article_home")
+	@RequestMapping("/article_home") // 맨 처음 메인 화면이다.
 	public String list(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
 					   @RequestParam(value="keyField",defaultValue ="none")String keyField,
 					   @RequestParam(value="keyword",defaultValue ="none")String keyword,
@@ -34,16 +34,18 @@ public class ArticleController {
 		logger.info("pageNo 체크 {}", pageNo);
 		logger.info("keyField 체크 {}", keyField);
 
-		logger.info("현재 페이지 = {}", command.getPageNo());
-		logger.info("현재 startPage = {}", command.getStartPage());
-		logger.info("현재 endPage = {}", command.getPageNo());
-		logger.info("현재 startRow = {}", command.getStartRow());
-		logger.info("현재 endRow = {}", command.getEndRow());
-
 		//keyField 값에 따라 모델로 보내야할 것이 나눠진다.
 		if (keyField.equals("none")) {
 			// 모든 게시글 수를 데이터베이스에서 구해서 command객체에 set해줌 (service.countAll()) 
 			command = CommandFactory.createCommand("article", "list", pageNo, keyField, keyword, service.countAll());
+			
+			logger.info("현재 페이지 = {}", command.getPageNo());
+			logger.info("현재 startPage = {}", command.getStartPage());
+			logger.info("현재 endPage = {}", command.getEndPage());
+			logger.info("현재 startRow = {}", command.getStartRow());
+			logger.info("현재 endRow = {}", command.getEndRow());
+			logger.info("현재 totalPages = {}", command.getTotalPages());
+			
 			model.addAttribute("article", service.getList(command));
 		} else {
 			// keyword의 내용을 포함하는 게시물의 수를 데이터베이스에서 구해서 command 객체에 set해줌
@@ -57,7 +59,7 @@ public class ArticleController {
 		return "article/article_home";
 	}
 	
-	@RequestMapping(value="/write", method=RequestMethod.POST)
+	@RequestMapping(value="/write", method=RequestMethod.POST) // '글 등록' 클릭 시 호출되는 메소드
 	public void write(@RequestParam("title")String title, 
 						@RequestParam("writerName")String writerName,
 						@RequestParam("password")String password,
@@ -73,14 +75,14 @@ public class ArticleController {
 		
 		int res = service.insert(param);
 		if (res == 1 ) {
-			logger.info("== insert 성공 후 article_list.jsp 페이지로===");
-			model.addAttribute("msh", "등록성공");
+			logger.info("=== insert 성공 후 article_list.jsp 페이지로===");
+		} else {
+			logger.info("=== insert ===");
 		}
-		
 		// ajax로 호출한 거라 여기서 이동할 페이지를 지정하지 않아도 된다. 다시 ajax로 돌아가서 그곳의 success에서 이동할 페이지를 호출하면 된다.
 	} // write() End, 호출한 ajax 메소드로 돌아간다. (article.js의 write : function()에 $.ajax()로 돌아감)
 	
-	@RequestMapping("/search/{articleId}")
+	@RequestMapping("/detail/{articleId}") // 게시글 제목 클릭 시 게시글 내용을 디비에서 가져와서 보여주기 위해 호출되는 메소드
 	public void findById( // ajax를 쓰기 때문에 return 값에 굳이 이동할 페이지가 없어도 된다 (해당 페이지에서 어느 부분을 지우고 그 부분에 원하는 결과를 띄우는게 ajax이기 때문!)
 			@PathVariable("articleId")int articleId,
 			Model model) {
@@ -111,13 +113,13 @@ public class ArticleController {
 		int result = service.update(article);
 		if (result == 1) {
 			logger.info("=== update 성공 ===");
-			model.addAttribute("id", articleId);
+			model.addAttribute("articleId", articleId);
 		} else {
 			logger.info("=== update 실패 ===");
 		}
 	}
 	
-	@RequestMapping("/delete")
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public void delete(
 			@RequestParam("articleId")int articleId,
 			Model model) {
@@ -129,12 +131,23 @@ public class ArticleController {
 		}
 	}
 	
-	@RequestMapping("/reply") // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
-	public void reply( 
+	@RequestMapping("/reply")
+	public void reply( // detail(게시판에서 게시글 제목 클릭 시 해당 게시글 내용 보여주기) 진입 시 해당 게시글에 달려있는 댓글들도 자동으로 보여주기 위해 호출되는 메소드
+			@RequestParam("articleId")int articleId,
+			Model model) {
+		logger.info("게시글 댓글들만 가져오기 메소드 진입 성공");
+		
+		// 댓글을 가져오려면 해당 게시글 번호를 데이터베이스에 보내줘야한다~
+		model.addAttribute("reply", service.getReply(articleId)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
+	}
+	
+	@RequestMapping(value="/reply", method=RequestMethod.POST) // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
+	public void reply( // '댓글 등록' 클릭 시 호출되는 메소드
 			@RequestParam("articleId")int articleId,
 			@RequestParam("writerName")String writerName,
 			@RequestParam("reply_content")String reply_content,
 			Model model) {
+		logger.info("댓글 등록과 해당 게시글 댓글들 가져오기 메소드 진입 성공");
 		reply.setArticleId(articleId);
 		reply.setWriterName(writerName);
 		reply.setReply_content(reply_content);
@@ -143,7 +156,11 @@ public class ArticleController {
 				
 		if (res == 1) {
 			logger.info("=== replyInsert 성공 ===");
-			model.addAttribute("reply", service.getReply(reply)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
+			model.addAttribute("reply", service.getReply(articleId)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
+			for (ReplyDTO temp : service.getReply(articleId)) {
+				logger.info("작성자 : {}", temp.getWriterName());
+				logger.info("댓글 내용 : {}", temp.getReply_content());
+			}
 		} else {
 			logger.info("=== replyInsert 실패 ===");
 		}

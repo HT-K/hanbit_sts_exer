@@ -93,12 +93,17 @@
 	
 	<!-- 댓글 등록, 모든 댓글 select -->
 	<insert id="replyInsert" useGeneratedKeys="true" keyProperty="reply_seq" parameterType="com.hanbit.web.board.ReplyDTO"> 
-		INSERT INTO Reply(article_id, writer_name, reply_content) 
-		VALUES(#{articleId}, #{writerName}, #{reply_content})
+		INSERT INTO Reply(article_id, writer_name, reg_time, reply_content) 
+		VALUES(#{articleId}, #{writerName}, SYSDATE(), #{reply_content})
 	</insert>
 	
-	<select id="getReply" parameterType="com.hanbit.web.board.ReplyDTO" resultType="com.hanbit.web.board.ReplyDTO"> 
-		SELECT * FROM Reply 
+	<select id="getReply" parameterType="int" resultType="com.hanbit.web.board.ReplyDTO"> 
+		SELECT reply_seq, 
+		article_id AS articleId,
+		writer_name AS writerName,
+		DATE_FORMAT(reg_time,'%Y-%m-%d %T') AS regTime, <!-- ReplyDTO의 regTime(String)에 넣기 전에 DATE_FORMAY으로 (연-월-일 시:분:초)형태로 만들고 넣어준다 -->
+		reply_content
+		FROM Reply 
 		WHERE article_id = #{articleId}
 	</select>
 	

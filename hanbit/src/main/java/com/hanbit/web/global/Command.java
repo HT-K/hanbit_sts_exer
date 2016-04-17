@@ -27,13 +27,13 @@ public class Command {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Command(String pkg,String command, String strPageNO,
+	public Command(String pkg, String command, String curPageNO,
 			String keyField,String keyword, int totalArticle) {
 		this.pageSize = Constants.PAGESIZE;
 		this.articleSize = Constants.ARTICLESIZE;
 		this.pkg = pkg;
 		this.command = command;
-		this.pageNo = Integer.parseInt(strPageNO);
+		this.pageNo = Integer.parseInt(curPageNO);
 		this.keyField = keyField;
 		this.keyword = keyword;
 		
@@ -60,7 +60,7 @@ public class Command {
 		}
 		
 		// 현재 페이지에 보여지는 시작 페이지 숫자 (1페이지 1이 보여진다.)
-		this.startPage = pageNo - ((pageNo-1)%articleSize);
+		this.startPage = pageNo - ((pageNo-1)%pageSize);
 		
 		// 현재 페이지에서 보여질 마지막 페이지 숫자
 		int end = startPage + pageSize - 1;

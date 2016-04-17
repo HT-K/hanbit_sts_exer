@@ -80,9 +80,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ReplyDTO> getReply(ReplyDTO reply) {
+	public List<ReplyDTO> getReply(int articleId) {
 		logger.info("ArticleService - getReply() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.getReply(reply);
+		return mapper.getReply(articleId);
 	}	
 }
