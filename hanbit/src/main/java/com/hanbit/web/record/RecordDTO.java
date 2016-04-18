@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RecordDTO{
-	int seq;
-	String id;
-	String name;
-	String subject;
-	int score;
-	String examDate;
+	private int seq;
+	private String id;
+	private String name;
+	private String subject;
+	private int score;
+	private String examDate;
 	
 	public int getSeq() {
 		return seq;
