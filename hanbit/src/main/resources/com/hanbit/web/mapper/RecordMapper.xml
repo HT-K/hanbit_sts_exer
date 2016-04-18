@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanbit.web.mapper.RecordMapper"> 
+
+	<insert id="insert" parameterType="com.hanbit.web.record.RecordDTO"> 
+		INSERT INTO Article(id, name, subject, score, exam_date) 
+		VALUES(#{id},#{name},#{subject},#{score},#{examDate})
+	</insert>
+
+	<select id="selectList" resultType="com.hanbit.web.record.RecordDTO">
+		SELECT seq,
+			name,
+			subject,
+			score,
+			exam_date AS examDate
+		FROM Record
+	</select>
+	
+	<select id="selectByName" parameterType="String" resultType="com.hanbit.web.record.RecordDTO">
+		SELECT seq,
+			name,
+			subject,
+			score,
+			exam_date AS examDate
+		FROM Record
+		WHERE name = #{name}
+	</select>
+	
+	<select id="selectById" parameterType="String" resultType="com.hanbit.web.record.RecordDTO">
+		SELECT seq,
+			name,
+			subject,
+			score,
+			exam_date AS examDate
+		FROM Record
+		WHERE id = #{id}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		FROM Record
+	</select>
+	
+
+	<update id="update" parameterType="com.hanbit.web.record.RecordDTO">
+		UPDATE Record 
+		SET id = #{id}
+			name = #{name}, 
+			subject = #{subject}, 
+			score = #{score}, 
+			exam_date = #{examDate}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM Record 
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>
