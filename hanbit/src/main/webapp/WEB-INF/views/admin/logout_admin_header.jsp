@@ -7,7 +7,7 @@
 		<%-- <span style="float:right; margin-right: 50px;"><%= year %>년<%= month %>월 <%= date%>일 <%= now %></span> --%>
 		<ul class="nav nav-pills">
 			<li role="presentation" style="float: right; margin: 0 100px 0 0">
-				<a href="${context}/admin/regist">관리자 등록</a>
+				<a href="${context}/">로그아웃</a>
 			</li>
 			<li role="presentation" style="float: right; margin: 0 100px 0 0">
 				<a href="${context}/">Home</a>

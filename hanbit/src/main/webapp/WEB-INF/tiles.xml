@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions 
+PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- 기본 디폴트가 layout.jsp다. -->
+<!-- 	<definition name="Layout" template="/WEB-INF/views/layout.jsp"> 
+		layout.jsp에 띄우게 될 페이지 내용이다.
+		헤더부분에는 헤더.jsp , 푸터부분에는 푸터.jsp
+		<put-attribute name="header" value="/WEB-INF/views/global/header.jsp"/>
+		<put-attribute name="center" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp"/>
+	</definition>
+	URL로 */*.tiles를 호출하면 아래 attribute의 value에 있는 페이지가 layout.jsp의 content부분에 띄워지게 된다.
+	<definition name="*/*.tiles" extends="Layout"> 
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" /> {1}과 {2}는 */*.tiles의 각각의 *과 같다
+	</definition> -->
+	
+	<!-- 기본 디폴트가 layout_ _admin.jsp다. -->
+	<definition name="Layout_admin" template="/WEB-INF/views/layout_admin.jsp"> 
+		<!-- layout_admin.jsp에 띄우게 될 페이지 내용이다. -->
+		<!-- 헤더부분에는 헤더.jsp , 푸터부분에는 푸터.jsp -->
+		<put-attribute name="header" value="/WEB-INF/views/admin/admin_header.jsp"/>
+		<put-attribute name="center" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp"/>
+	</definition>
+	<!-- URL로 */*.admin를 호출하면 아래 attribute의 value에 있는 페이지가 layout_admin.jsp의 content부분에 띄워지게 된다. -->
+	<definition name="*/*.admin" extends="Layout_admin"> 
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" /> <!-- {1}과 {2}는 */*.tiles의 각각의 *과 같다 -->
+	</definition>
+	
+	<!-- 기본 디폴트가 layout_user.jsp다. -->
+	<!-- URL로 */*.user를 호출하면 아래 attribute의 value에 있는 페이지가 layout.jsp의 content부분에 띄워지게 된다. -->
+	<definition name="*/*.user" template="/WEB-INF/views/layout_user.jsp"> 
+		<!-- layout_user.jsp에 띄우게 될 페이지 내용이다. -->
+		<put-attribute name="header" value="/WEB-INF/views/member/member_header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp"/>
+	</definition>
+	<!-- 멤버가 로그인 성공 시 보여지게 될 내용들이다. -->
+	<definition name="auth/*/*.user" extends="Layout_user"> 
+		<put-attribute name="header" value="/WEB-INF/views/member/logout_member_header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" /> <!-- {1}과 {2}는 */*.tiles의 각각의 *과 같다 -->
+		<put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp"/>
+	</definition>
+</tiles-definitions>

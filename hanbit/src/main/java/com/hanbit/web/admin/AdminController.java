@@ -36,7 +36,7 @@ public class AdminController {
 	
 	@RequestMapping("/login") // 이건 get방식
 	public String login() {
-		return "admin/login_form";
+		return "admin/login_form.admin";
 	}
 	
 	////////////////////////////////////////////////
@@ -60,7 +60,7 @@ public class AdminController {
 			logger.info("로그인 성공");
 			session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
 			model.addAttribute("member", member); // 로그인 성공 시 다음 페이지에 request와 같은 역할을 하는 model에 member 객체를 담아 보낸다.
-			view = "admin/admin_form";
+			view = "admin/admin_form.admin";
 			//view = "redirect:/admin/detail";
 		} else {
 			logger.info("로그인 실패");

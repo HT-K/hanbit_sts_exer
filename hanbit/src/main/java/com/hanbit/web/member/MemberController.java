@@ -31,7 +31,7 @@ public class MemberController {
 	
 	@RequestMapping("/join") // 이건 get방식
 	public String join() {
-		return "member/join_form";
+		return "member/join_form.user";
 	}
 	
 	//@RequestParam(value="subject",required=true) List<String> subject ==> 얘는 체크박스 값 받아오는 방법이다.
@@ -54,10 +54,10 @@ public class MemberController {
 		
 		if (res == 1) {
 			logger.info("회원가입 성공!");
-			view = "member/login_form";
+			view = "member/login_form.user";
 		} else {
 			logger.info("회원가입 실패!");
-			view = "member/join_form";
+			view = "member/join_form.user";
 		}
 		return view;
 	}
@@ -65,7 +65,7 @@ public class MemberController {
 	// /member URL 들어오고 뒤에 action 값은 이곳에 넣는다.
 	@RequestMapping("/login") // 이건 get방식
 	public String login() {
-		return "member/login_form";
+		return "member/login_form.user";
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST) // id 값만 공개 시킨다.
@@ -132,7 +132,7 @@ public class MemberController {
 			model.addAttribute("member", "");
 		}
 
-		return "member/detail";
+		return "auth/member/detail.user";
 	}
 	
 	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
