@@ -9,33 +9,51 @@
 		VALUES(#{id},#{name},#{subject},#{score},#{examDate})
 	</insert>
 
-	<select id="selectList" resultType="com.hanbit.web.record.RecordDTO">
+	<select id="selectList" parameterType="com.hanbit.web.record.RecordCommand" resultType="com.hanbit.web.record.RecordDTO">
 		SELECT seq,
 			name,
 			subject,
 			score,
-			exam_date AS examDate
+			exam_date AS examDate,
+			prof_id AS profID,
+			prof_name AS profName
 		FROM Record
 	</select>
 	
-	<select id="selectByName" parameterType="String" resultType="com.hanbit.web.record.RecordDTO">
+	<select id="selectByName" parameterType="com.hanbit.web.record.RecordCommand" resultType="com.hanbit.web.record.RecordDTO">
 		SELECT seq,
 			name,
 			subject,
 			score,
-			exam_date AS examDate
+			exam_date AS examDate,
+			prof_id AS profID,
+			prof_name AS profName
 		FROM Record
 		WHERE name = #{name}
 	</select>
 	
-	<select id="selectById" parameterType="String" resultType="com.hanbit.web.record.RecordDTO">
+	<select id="selectById" parameterType="com.hanbit.web.record.RecordCommand" resultType="com.hanbit.web.record.RecordDTO">
 		SELECT seq,
 			name,
 			subject,
 			score,
-			exam_date AS examDate
+			exam_date AS examDate,
+			prof_id AS profID,
+			prof_name AS profName
 		FROM Record
 		WHERE id = #{id}
+	</select>
+	
+	<select id="selectByIdWithExamDate" parameterType="com.hanbit.web.record.RecordCommand" resultType="com.hanbit.web.record.RecordDTO">
+		SELECT seq,
+			name,
+			subject,
+			score,
+			exam_date AS examDate,
+			prof_id AS profID,
+			prof_name AS profName
+		FROM Record
+		WHERE id = #{id} AND exam_date = ${examDate}
 	</select>
 	
 	<select id="countAll" resultType="int">

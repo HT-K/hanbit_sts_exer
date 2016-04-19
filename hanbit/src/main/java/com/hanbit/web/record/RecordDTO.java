@@ -10,6 +10,8 @@ public class RecordDTO{
 	private String subject;
 	private int score;
 	private String examDate;
+	private String profId;
+	private String profName;
 	
 	public int getSeq() {
 		return seq;
@@ -47,4 +49,17 @@ public class RecordDTO{
 	public void setExamDate(String examDate) {
 		this.examDate = examDate;
 	}
+	public String getProfId() {
+		return profId;
+	}
+	public void setProfId(String profId) {
+		this.profId = profId;
+	}
+	public String getProfName() {
+		return profName;
+	}
+	public void setProfName(String profName) {
+		this.profName = profName;
+	}
+	
 }

@@ -17,14 +17,36 @@ CREATE TABLE Grade(
 ALTER TABLE Grade ADD COLUMN exam_date VARCHAR(15); -- Grade 테이블에 exam_date 컬럼 추가
 ------------------------------------
 <!-- 시퀀스명.NEXTVAL을 하면 시퀀스로 학번을 생성한다. -->
-INSERT INTO Grade(score_seq,id,subj_seq,score)
-VALUES (score_seq, 'hong', 1, 80); 
-INSERT INTO Grade(score_seq,id,subj_seq,score)
-VALUES (score_seq, 'hong', 2, 90); 
-INSERT INTO Grade(score_seq,id,subj_seq,score)
-VALUES (score_seq, 'hong', 3, 100); 
-INSERT INTO Grade(score_seq,id,subj_seq,score)
-VALUES (score_seq, 'hong', 4, 70); 
+
+-- 홍길동의 3월 시험
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'hong', 1, 80, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'hong', 2, 90, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'hong', 3, 100, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'hong', 4, 70, '2016-03-31'); 
+
+-- 김유신의 3월 시험
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'kim', 1, 50, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'kim', 2, 50, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'kim', 3, 50, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'kim', 4, 50, '2016-03-31'); 
+
+-- 이순신의 3월 시험
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'lee', 1, 90, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'lee', 2, 90, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'lee', 3, 90, '2016-03-31'); 
+INSERT INTO Grade(score_seq,id,subj_seq,score, exam_date)
+VALUES (score_seq, 'lee', 4, 90, '2016-03-31'); 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 ---------------------------------
 SELECT * FROM Grade;

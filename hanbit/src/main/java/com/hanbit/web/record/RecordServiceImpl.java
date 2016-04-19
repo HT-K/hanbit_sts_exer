@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hanbit.web.global.Command;
 import com.hanbit.web.mapper.RecordMapper;
 
 @Service
@@ -21,23 +22,29 @@ public class RecordServiceImpl implements RecordService {
 		return mapper.insert(record);
 	}
 	@Override
-	public List<RecordDTO> getList() {
+	public List<RecordDTO> getList(RecordCommand command) {
 		logger.info("== getList() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.selectList();
+		return mapper.selectList(command);
 	}
 	@Override
-	public List<RecordDTO> getByName(String name) {
+	public List<RecordDTO> getByName(RecordCommand command) {
 		logger.info("== getByName() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.selectByName(name);
+		return mapper.selectByName(command);
 	}
 	@Override
-	public RecordDTO getById(int id) {
+	public List<RecordDTO> getById(RecordCommand command) {
 		logger.info("== getById() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.selectById(id);
+		return mapper.selectById(command);
 	}
+	@Override
+	public List<RecordDTO> getByIdWithExamDate(RecordCommand command) {
+		logger.info("== getById() 진입 ==");
+		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
+		return mapper.selectByIdWithExamDate(command);
+	} 
 	@Override
 	public int countAll() {
 		logger.info("== countAll() 진입 ==");
@@ -55,5 +62,5 @@ public class RecordServiceImpl implements RecordService {
 		logger.info("== delete() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
 		return mapper.delete(id);
-	} 
+	}
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 // directory와 action을 구분하는 팩토리 패턴을 지우고
 // 페이징을 구하기 위해 커맨트 클래스를 커맨트 팩턴을 이용함! (팩토리 패턴 쓴건 백업되어있당)
+// 페이징에 필요한 클래스임을 명심!
 
 @Component
 public class Command {

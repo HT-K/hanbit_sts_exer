@@ -8,7 +8,7 @@ public class CommandFactory {
 		
 		switch (crud) {
 		case "list":
-			command = new PagingCommand(pkg, crud, pageNo, keyField, keyword, count);
+			command = new ListCommand(pkg, crud, pageNo, keyField, keyword, count);
 			break;
 
 		default:
