@@ -116,6 +116,8 @@ var article = {
 						+			'</div>'
 						+		'</form>'
 						+	'</div>'
+						+'</div>'
+						+'<div class="container" style="margin-top:20px;" id="replyRes">' // 이 부분을 .html로해서 계속 댓글들을 최신화 시킨다.
 						+'</div>';
 					$('#wrapper').html(detailForm); // article.detail() 호출 시 article_home.jsp의 wrapper(div) 사이에 있던 내용을 삭제(.empty())하고 detailForm을 붙인다(.append())
 					
@@ -134,22 +136,20 @@ var article = {
 								// index는 그안에 있는 하나하나의 ReplyDTO 객체 자체를 뜻한다.
 								// value는 그 객체(ReplyDTO)에 들어있는 하나하나의 값(reply_seq, articleId, writerName, reply_content)에 접근할 때 쓴다.
 								var replyRes =
-									'<div class="container" style="margin-top:20px;">'
-									+	'<form class="form-inline">'
-								  	+		'<div class="form-group">'
-								    +			'<label for="writerName">댓글 작성자 : '+ value.writerName +'</label>'
-								    +		'</div>'
-								    +		'<div class="form-group">'
-								    +			'<label for="regTime" style="margin-left:20px;">댓글 작성시간 : '+ value.regTime +'</label>'
-								    +		'</div>'
-								    +		'<button type="submit" class="btn btn-success" style="margin-left:20px;">댓글 수정</button>'
-								    +		'<button type="submit" class="btn btn-warning" style="margin-left:5px;">댓글 삭제</button>'
-								    +	'</form>'
+									'<form class="form-inline">'
+								  	+	'<div class="form-group">'
+								    +		'<label for="writerName">댓글 작성자 : '+ value.writerName +'</label>'
+								    +	'</div>'
 								    +	'<div class="form-group">'
-									+		'<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + value.reply_content + '"  placeholder="댓글 내용" style="margin-top:10px;" readonly>' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
-									+	'</div>'
-								    +'</div>';
-								$('#wrapper').append(replyRes);
+								    +		'<label for="regTime" style="margin-left:20px;">댓글 작성시간 : '+ value.regTime +'</label>'
+								    +	'</div>'
+								    +	'<button type="submit" class="btn btn-success" style="margin-left:20px;">댓글 수정</button>'
+								    +	'<button type="submit" class="btn btn-warning" style="margin-left:5px;">댓글 삭제</button>'
+								    +'</form>'
+								    +'<div class="form-group">'
+									+	'<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + value.reply_content + '"  placeholder="댓글 내용" style="margin-top:10px;" readonly>' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
+									+'</div>';
+								$('#replyRes').append(replyRes);
 							  });
 						},
 						error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
@@ -282,27 +282,26 @@ var article = {
 				success : function(data) { // 해당 URL로 호출된 컨트롤러의 메소드에서 model의 값을 가져오는 것을 성공하면 success가 실행된다 (해당 값(JSON형태)은 파라미터인 data에 들어있다!)
 					//alert("댓글 등록 성공!!");
 					$("#replyForm").css("display","none");
+					$('#replyRes').empty(); // detail 입장 시 불러왔던 댓글들을 모두 날려버리고 그 자리에 방금 추가한 댓글까지 추가해서 다시 보여준다.
 					$.each(data.reply, function(index, value) {  // 제이쿼리의 for - each문
 						// controller에서 보내온 "reply" 접근법, data.reply는 데이터베이스에서 가져온 List<ReplyDTO>를 뜻한다 
 						// index는 그안에 있는 하나하나의 ReplyDTO 객체 자체를 뜻한다.
 						// value는 그 객체(ReplyDTO)에 들어있는 하나하나의 값(reply_seq, articleId, writerName, reply_content)에 접근할 때 쓴다.
 						var replyRes =
-							'<div class="container" style="margin-top:20px;">'
-							+	'<form class="form-inline">'
-						  	+		'<div class="form-group">'
-						    +			'<label for="writerName">댓글 작성자 : '+ value.writerName +'</label>'
-						    +		'</div>'
-						    +		'<div class="form-group">'
-						    +			'<label for="regTime" style="margin-left:20px;">댓글 작성시간 : '+ value.regTime +'</label>'
-						    +		'</div>'
-						    +		'<button type="submit" class="btn btn-success" style="margin-left:20px;">댓글 수정</button>'
-						    +		'<button type="submit" class="btn btn-warning" style="margin-left:5px;">댓글 삭제</button>'
-						    +	'</form>'
+							'<form class="form-inline">'
+						  	+	'<div class="form-group">'
+						    +		'<label for="writerName">댓글 작성자 : '+ value.writerName +'</label>'
+						    +	'</div>'
 						    +	'<div class="form-group">'
-							+		'<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + value.reply_content + '"  placeholder="댓글 내용" style="margin-top:10px;" readonly>' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
-							+	'</div>'
-						    +'</div>';
-						$('#wrapper').append(replyRes);
+						    +		'<label for="regTime" style="margin-left:20px;">댓글 작성시간 : '+ value.regTime +'</label>'
+						    +	'</div>'
+						    +	'<button type="submit" class="btn btn-success" style="margin-left:20px;">댓글 수정</button>'
+						    +	'<button type="submit" class="btn btn-warning" style="margin-left:5px;">댓글 삭제</button>'
+						    +'</form>'
+						    +'<div class="form-group">'
+							+	'<input type="text" class="form-control" id="replyRes" name="replyRes" value="' + value.reply_content + '"  placeholder="댓글 내용" style="margin-top:10px;" readonly>' // value 값은 ''싱글 커터를 살리기 위해 ""더블커터 사이에 싱글커터안에 넣어준다!
+							+'</div>';
+						$('#replyRes').append(replyRes);
 					  }); // $.each() End
 				}, // success() End
 				error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
