@@ -54,6 +54,11 @@ UPDATE Record SET score = 60
 WHERE id = 'kim' AND exam_date = '2016-03-31' AND subject = 'java';
 ----------------------------------------------------
 
+---------------------------------------------------
+DELETE FROM Grade
+WHERE score_seq = 17;
+--------------------------------------------------
+
 ------------------------------------------------
 -- GROUP BY and HAVING 예제
 CREATE OR REPLACE VIEW Record

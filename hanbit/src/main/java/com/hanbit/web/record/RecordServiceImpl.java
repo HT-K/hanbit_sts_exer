@@ -16,12 +16,14 @@ import com.hanbit.web.mapper.RecordMapper;
 public class RecordServiceImpl implements RecordService {
 	private static final Logger logger = LoggerFactory.getLogger(RecordService.class);
 	@Autowired SqlSession sqlSession;
-	@Override
+	
+	/*@Override
 	public int insert(GradeDTO grade) {
 		logger.info("== insert() 진입 ==");
 		GradeMapper mapper = sqlSession.getMapper(GradeMapper.class);
 		return mapper.insert(grade);
-	}
+	}*/
+	
 	@Override
 	public List<RecordDTO> getList(RecordCommand command) {
 		logger.info("== getList() 진입 ==");
@@ -58,10 +60,11 @@ public class RecordServiceImpl implements RecordService {
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
 		return mapper.update(record);
 	}
-	@Override
-	public int delete(String id) {
+	
+	/*@Override
+	public int delete(GradeDTO grade) {
 		logger.info("== delete() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.delete(id);
-	}
+		return mapper.delete(grade);
+	}*/
 }

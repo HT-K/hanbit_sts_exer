@@ -39,7 +39,8 @@
 	</update>
 	
 	<delete id="delete" parameterType="com.hanbit.web.grade.GradeDTO">
-		
+		DELETE FROM Grade
+		WHERE score_seq = #{score_seq};
 	</delete>
 	
 </mapper>

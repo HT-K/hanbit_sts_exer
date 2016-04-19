@@ -29,12 +29,12 @@ public class RecordServiceImplTest {
 	@Autowired SqlSession session;
 	@Autowired RecordCommand command;
 	
-	@Test
+/*	@Test
 	public void testInsert() { // Record의 insert는 Grade 테이블에 성적을 입력하는 것과 같다 (왜냐하면 이미 등록된 멤버에게 성적을 입력하면 Record View가 자동으로 최신화 되기 때문!)
 		GradeMapper mapper = session.getMapper(GradeMapper.class);
-		grade.setId("hye");
-		grade.setSubj_seq(4); 
-		grade.setScore(80);
+		grade.setId("hong");
+		grade.setSubj_seq(1); 
+		grade.setScore(200);
 		grade.setExamDate(ExamDate.getDate());
 		int check = mapper.insert(grade);
 		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
@@ -92,12 +92,13 @@ public class RecordServiceImplTest {
 		record.setScore(60);
 		int check = mapper.update(record);
 		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
-	}
+	}*/
 	
 	@Test
-	public void testDelete() {
-		RecordMapper mapper = session.getMapper(RecordMapper.class);
-		int check = mapper.delete("kim");
-		assertThat(check, is(not(0))); // null이면 빨간불 null아니면 초록불~
+	public void testDelete() { // 성적 테이블의 성적 번호를 이용해서 삭제하기~
+		GradeMapper mapper = session.getMapper(GradeMapper.class);
+		grade.setScore_seq(18);
+		int check = mapper.delete(grade);
+		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
 	}
 }
