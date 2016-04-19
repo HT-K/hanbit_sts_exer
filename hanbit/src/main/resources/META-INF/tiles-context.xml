@@ -7,11 +7,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<!-- <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
-        <beans:property name="order" value="1"/>
-    </beans:bean> -->
-	
 	<!-- 스프링 컨테이너에 tiles 설정 파일 설정하기 -->
 	 <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <beans:property name="definitions">

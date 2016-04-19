@@ -29,7 +29,7 @@ public class RecordServiceImplTest {
 	@Autowired SqlSession session;
 	@Autowired RecordCommand command;
 	
-/*	@Test
+	@Test
 	public void testInsert() { // Record의 insert는 Grade 테이블에 성적을 입력하는 것과 같다 (왜냐하면 이미 등록된 멤버에게 성적을 입력하면 Record View가 자동으로 최신화 되기 때문!)
 		GradeMapper mapper = session.getMapper(GradeMapper.class);
 		grade.setId("hong");
@@ -92,7 +92,7 @@ public class RecordServiceImplTest {
 		record.setScore(60);
 		int check = mapper.update(record);
 		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
-	}*/
+	}
 	
 	@Test
 	public void testDelete() { // 성적 테이블의 성적 번호를 이용해서 삭제하기~

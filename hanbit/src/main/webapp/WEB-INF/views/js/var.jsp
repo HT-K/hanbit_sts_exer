@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../global/header.jsp" />
 <div class="container" style="width: 1000px; margin: 0 auto;"> <!-- container -> 부트스트랩에서 이미 선언되어있는 클래스  -->
 	<div>
 		변수 선언 : <mark> var i; </mark> <br /> <!-- mark 태그는 특정 문자열에 포인트 색을 주기 위한 태그 -->

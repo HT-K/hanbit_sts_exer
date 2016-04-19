@@ -29,7 +29,7 @@ public class MemberController {
 	@Autowired MemberDTO member; // 이 MemberController에 MemberDTO 객체를 가져와 달라는 뜻이다. (싱글톤)
 	@Autowired MemberService service; 
 	
-	@RequestMapping("/join") // 이건 get방식
+	@RequestMapping("/join_form")
 	public String join() {
 		return "member/join_form.user";
 	}
@@ -63,7 +63,7 @@ public class MemberController {
 	}
 	
 	// /member URL 들어오고 뒤에 action 값은 이곳에 넣는다.
-	@RequestMapping("/login") // 이건 get방식
+	@RequestMapping("/login_form") // 이건 get방식
 	public String login() {
 		return "member/login_form.user";
 	}
@@ -84,8 +84,9 @@ public class MemberController {
 		
 		if (member != null) {
 			logger.info("로그인 성공");
-			session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
+			//session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
 			model.addAttribute("member", member); // 로그인 성공 시 다음 페이지에 request와 같은 역할을 하는 model에 member 객체를 담아 보낸다.
+			model.addAttribute("user", member);
 			//view = "member/detail";
 			view = "redirect:/member/detail/"+id; // get 방식으로 detail에 id 값 보내기, redirect는 페이지로 가라는게 아니라 서블릿 호출이라고 생가갛면된다.
 		} else {
@@ -100,7 +101,7 @@ public class MemberController {
 	public String logout(SessionStatus status) {
 		logger.info("=== member - logout() ===");
 		status.setComplete(); // 세션 무효화
-		return "redirect:/"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
+		return "member/main.user"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
 	}
 		
 	@RequestMapping("/memList") // 모든 회원 정보를 가져옴
@@ -132,7 +133,7 @@ public class MemberController {
 			model.addAttribute("member", "");
 		}
 
-		return "auth/member/detail.user";
+		return "member/detail.user";
 	}
 	
 	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
@@ -157,10 +158,10 @@ public class MemberController {
 			logger.info("업데이트 성공");
 			session.setAttribute("user", param);
 			model.addAttribute("member", param);
-			view = "member/detail";
+			view = "member/detail.user";
 		} else {
 			logger.info("업데이트 실패");
-			view = "member/update_form";
+			view = "member/update_form.user";
 		}
 		return view;
 	}

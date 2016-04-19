@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.hanbit.web.member.MemberDTO;
 
@@ -20,6 +21,7 @@ import com.hanbit.web.member.MemberDTO;
  * Handles requests for the application home page.
  */
 @Controller
+@SessionAttributes("user")
 public class HomeController {
 	
 	//syso과 같은 역할, 디버깅을 위한 용도
@@ -31,7 +33,8 @@ public class HomeController {
 	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		session.setAttribute("user", member);
+		//session.setAttribute("user", member);
+		model.addAttribute("user", member); // 위에 방법도 세션에 객체를 담는거고 이 방법도 세션에 객체를 담는 거다~
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
