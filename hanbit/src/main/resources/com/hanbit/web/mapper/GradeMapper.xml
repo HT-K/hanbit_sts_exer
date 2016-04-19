@@ -9,8 +9,8 @@
 	<!-- 아래 쿼리문은 해당 테이블의 전체 값을 가져온다. 즉 serviceImpl 쪽에서 리턴 값을 받는 타입으로 List가 준비되어 있다면 테이블의 모든 내용을 담을 수 있다! -->
 	<!-- Auto_Increment 해놓은 score_seq는 useGeneratedKeys 속성과 keyProperty 속성으로 자동 증가되게 설정한다!-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="score_seq" parameterType="com.hanbit.web.grade.GradeDTO"> 
-		INSERT INTO Grade(id, subj_seq, score) 
-		VALUES(#{id},#{subj_seq},#{score})
+		INSERT INTO Grade(id, subj_seq, score, exam_date)
+		VALUES (#{id}, #{subj_seq}, #{score}, #{examDate});
 	</insert>
 	
 	<select id="selectList" resultType="com.hanbit.web.grade.GradeDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
@@ -34,7 +34,7 @@
 	
 	<update id="update" parameterType="com.hanbit.web.grade.GradeDTO">
 		UPDATE Grade 
-		SET id = #{id}, subj_seq = #{subj_seq}, score = #{score}
+		SET subj_seq = #{subj_seq}, score = #{score}
 		WHERE id = #{id}
 	</update>
 	

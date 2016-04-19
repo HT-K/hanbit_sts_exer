@@ -15,11 +15,6 @@ public class GradeServiceImpl implements GradeService{
 	private static final Logger logger = LoggerFactory.getLogger(GradeService.class);
 	@Autowired SqlSession sqlSession; 
 	
-	private static GradeService instance = new GradeServiceImpl(); // 싱글톤 패턴을 사용하여 하나의 객체로 사용할 수 있도록 만듦
-	public static GradeService getInstance() { // 이 GradeServiceImpl 클래스가 필요한 곳에서 이 static메소드를 호출하면 이미 생성된 하나의 서비스임플객체를가지고 모든 곳에서 쓸 수 있다.
-		return instance;
-	}
-	
 	// 멤버 메소드 에어리어
 	@Override
 	public int insert(GradeDTO grade) { // gradeBean -> 지역변수의 일종으로 매개변수 혹은 파라미터라고 부름

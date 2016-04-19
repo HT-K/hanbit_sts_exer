@@ -27,8 +27,10 @@ public class GradeController {
 	
 	//관리자 페이지 성적 입력 창에서 입력 버튼을 눌렀을 시 호출되는 메소드
 	@RequestMapping(value="/insert", method=RequestMethod.POST) // 관리자 페이지 학생 성적 출력에서 이름을 클릭했을 시 호출되는 메소드
-	public String insert(@RequestParam("id")String id, @RequestParam("name")String name,
-						 @RequestParam("subj_seq")int subj_seq, @RequestParam("score")int score,
+	public String insert(@RequestParam("id")String id, 
+						 @RequestParam("name")String name,
+						 @RequestParam("subj_seq")int subj_seq, 
+						 @RequestParam("score")int score,
 						 Model model) {
 		logger.info("GradeController - insert() 진입");
 		GradeDTO param = new GradeDTO(id, subj_seq, score);

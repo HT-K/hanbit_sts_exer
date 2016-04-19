@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanbit.web.mapper.RecordMapper"> 
 
-	<insert id="insert" parameterType="com.hanbit.web.record.RecordDTO"> 
-		INSERT INTO Article(id, name, subject, score, exam_date) 
-		VALUES(#{id},#{name},#{subject},#{score},#{examDate})
+	<insert id="insert" parameterType="com.hanbit.web.grade.GradeDTO"> 
+		INSERT INTO Grade(id, subj_seq, score, exam_date)
+		VALUES (#{id}, #{subj_seq}, #{score}, #{examDate});
 	</insert>
 
 	<select id="selectList" parameterType="com.hanbit.web.record.RecordCommand" resultType="com.hanbit.web.record.RecordDTO">

@@ -34,9 +34,15 @@
         </property>
 		</bean>
 		<!-- dataSourceSpied 기능을 위해 추가 끝 -->
+		
+		<!-- 자바로 따지면 -->
+		<!-- DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource) -->
+		<!-- dataSource는 위에 있는 내가 사용할 DB정보를 가진 bean 객체를 뜻한다. (지금은 dataSourceSpied의 property로 되어있지만 dataSource안에 포함되어있다!) -->
+		<!-- 트랜잭션은 프록시 패턴을 쓴다. -->
 		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 			<property name="dataSource" ref="dataSource"/>
 		</bean>
+		
 		<!-- bean으로 sqlSessionFactory클래스의 객체를 만들어 놓는다. -->
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<property name="dataSource" ref="dataSource"/> 

@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hanbit.web.global.Command;
+import com.hanbit.web.grade.GradeDTO;
+import com.hanbit.web.mapper.GradeMapper;
 import com.hanbit.web.mapper.RecordMapper;
 
 @Service
@@ -16,10 +17,10 @@ public class RecordServiceImpl implements RecordService {
 	private static final Logger logger = LoggerFactory.getLogger(RecordService.class);
 	@Autowired SqlSession sqlSession;
 	@Override
-	public int insert(RecordDTO record) {
+	public int insert(GradeDTO grade) {
 		logger.info("== insert() 진입 ==");
-		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.insert(record);
+		GradeMapper mapper = sqlSession.getMapper(GradeMapper.class);
+		return mapper.insert(grade);
 	}
 	@Override
 	public List<RecordDTO> getList(RecordCommand command) {

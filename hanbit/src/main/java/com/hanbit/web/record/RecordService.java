@@ -3,9 +3,10 @@ package com.hanbit.web.record;
 import java.util.List;
 
 import com.hanbit.web.global.Command;
+import com.hanbit.web.grade.GradeDTO;
 
 public interface RecordService {
-	public int insert(RecordDTO record);
+	public int insert(GradeDTO grade);
 	public List<RecordDTO> getList(RecordCommand command);
 	public List<RecordDTO> getByName(RecordCommand command);
 	public List<RecordDTO> getById(RecordCommand command); // id 에 해당하는 모든 시험목록

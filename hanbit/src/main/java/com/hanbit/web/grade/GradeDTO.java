@@ -2,12 +2,15 @@ package com.hanbit.web.grade;
 
 import org.springframework.stereotype.Component;
 
+import com.hanbit.web.util.ExamDate;
+
 @Component
 public class GradeDTO {
 	private int score_seq;
 	private String id;
 	private int subj_seq;
 	private int score;
+	private String examDate;
 
 	public GradeDTO() {
 		// TODO Auto-generated constructor stub
@@ -17,6 +20,7 @@ public class GradeDTO {
 		this.id = id;
 		this.subj_seq = subj_seq;
 		this.score = score;
+		this.examDate = ExamDate.getDate(); // util 패키지의 ExamDate 클래스에 있는 getDate() 메소드를 이용해서 현재 달의 말일을 구해온다.
 	}
 	
 	public int getScore_seq() {
@@ -50,6 +54,11 @@ public class GradeDTO {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	
+
+	public String getExamDate() {
+		return examDate;
+	}
+	public void setExamDate(String examDate) {
+		this.examDate = examDate;
+	}
 } 

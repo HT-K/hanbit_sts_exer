@@ -12,12 +12,12 @@ import java.util.Calendar;
  * 해당 연도와 월을 입력하면 말일(시험일)이 자동으로 추출되는 유틸 클래스를 완성하라.
  */
 public class ExamDate {
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ExamDate e = new ExamDate();
 		
 		System.out.println(e.getEndOfMonth());
-	}
-	public String getEndOfMonth() {
+	}*/
+	public static String getDate() {
 		// SimpleDateFormat 을 사용하여
 		// year와 month를 추출하고
 		// 이 값을 사용하여 2000-02-29이 시험일로 등록되는 메소드를 완성하라.

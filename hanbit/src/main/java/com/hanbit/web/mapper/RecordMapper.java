@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.hanbit.web.grade.GradeDTO;
 import com.hanbit.web.record.RecordCommand;
 import com.hanbit.web.record.RecordDTO;
 
 @Repository
 public interface RecordMapper {
-	public int insert(RecordDTO record);
+	public int insert(GradeDTO grade);
 	public List<RecordDTO> selectList(RecordCommand command);
 	public List<RecordDTO> selectByName(RecordCommand command);
 	public List<RecordDTO> selectById(RecordCommand command);

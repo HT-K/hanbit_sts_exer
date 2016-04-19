@@ -19,6 +19,31 @@ WHERE m.id = g.id AND g.subj_seq = s.subj_seq AND a.id = s.prof_id
 ------------------------------------------------
 
 -------------------------------------------------
+-- INSERT Test
+INSERT INTO Record(seq, id, name, subject, score, exam_date, prof_id, prof_name)
+VALUES(13, 'song', '송중기', 'java', 80, '2016-03-31', 'prof_kim', '김교수');
+
+-- 위 INSERT는 실패할 것이다. 여러 테이블에 걸쳐져 있는 Join View는 강제로 insert 할 수 없다 (Can not modify more than one base table through a join view 'rainbow.record')
+-- 제약 조건으로 서로 연결되어 있기 때문!
+-- 그렇다면! insert 하는 방법은?
+-- 각각의 테이블에 값들을 한개 씩 넣어야 한다!
+
+-- 멤버 테이블에 새로운 멤버 추가
+INSERT INTO Member(id, name, password, addr, birth, cate)
+VALUES('hye', '송혜교', '1', '우르크', 851201, 1);
+-- 추가된 멤버의 성적 입력
+INSERT INTO Grade(score_seq, id, subj_seq, score, exam_date)
+VALUES (score_seq, 'hye', 1, 80, '2016-03-31');
+
+SELECT * FROM Record
+WHERE id = 'hye';
+
+-- 얘는 이미 추가되어있어서 안해도 되지만 그냥 적어놓기
+-- INSERT INTO Subject(subj_name, prof_id) VALUES('java', 'prof_kim');
+------------------------------------------------
+
+
+-------------------------------------------------
 SELECT * FROM Record
 WHERE id = 'kim' AND exam_date = '2016-03-31'
 ----------------------------------------------

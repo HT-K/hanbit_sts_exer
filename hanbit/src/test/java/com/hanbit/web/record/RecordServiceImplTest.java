@@ -1,8 +1,10 @@
 
 package com.hanbit.web.record;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +16,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hanbit.web.grade.GradeDTO;
+import com.hanbit.web.mapper.GradeMapper;
 import com.hanbit.web.mapper.RecordMapper;
+import com.hanbit.web.util.ExamDate;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:META-INF/*-context.xml") 
 public class RecordServiceImplTest {
 	@Autowired RecordDTO record;
+	@Autowired GradeDTO grade;
 	@Autowired SqlSession session;
 	@Autowired RecordCommand command;
 	
 	@Test
-	public void testGetList() {
+	public void testInsert() { // Record의 insert는 Grade 테이블에 성적을 입력하는 것과 같다 (왜냐하면 이미 등록된 멤버에게 성적을 입력하면 Record View가 자동으로 최신화 되기 때문!)
+		GradeMapper mapper = session.getMapper(GradeMapper.class);
+		grade.setId("hye");
+		grade.setSubj_seq(4); 
+		grade.setScore(80);
+		grade.setExamDate(ExamDate.getDate());
+		int check = mapper.insert(grade);
+		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
+	}
+	
+	@Test
+	public void testGetList() { // SELECT * FROM Record
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
 		List<RecordDTO> list = new ArrayList<RecordDTO>();
 		list = mapper.selectList(command);
@@ -60,27 +77,27 @@ public class RecordServiceImplTest {
 	}
 	
 	@Test
-	public void testCount() {
+	public void testCount() { // Record Count
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
 		int count = mapper.countAll();
 		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() { // Record Update
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
 		record.setId("kim");
 		record.setExamDate("2016-03-31");
 		record.setSubject("java");
-		record.setScore(50);
-		int count = mapper.update(record);
-		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
+		record.setScore(60);
+		int check = mapper.update(record);
+		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
 	}
 	
 	@Test
 	public void testDelete() {
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
-		int count = mapper.delete("kim");
-		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
+		int check = mapper.delete("kim");
+		assertThat(check, is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 }
