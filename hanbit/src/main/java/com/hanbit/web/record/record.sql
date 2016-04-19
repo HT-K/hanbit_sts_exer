@@ -23,6 +23,12 @@ SELECT * FROM Record
 WHERE id = 'kim' AND exam_date = '2016-03-31'
 ----------------------------------------------
 
+----------------------------------------------------
+-- id가 kim인 김유신 학생의 'java' 점수를 60점으로 바꾼다.
+UPDATE Record SET score = 60
+WHERE id = 'kim' AND exam_date = '2016-03-31' AND subject = 'java';
+----------------------------------------------------
+
 ------------------------------------------------
 -- GROUP BY and HAVING 예제
 CREATE OR REPLACE VIEW Record
@@ -54,3 +60,4 @@ FROM Member m, Grade g, Subject s
 WHERE m.id = g.id AND g.subj_seq = s.subj_seq
 GROUP BY s.subj_name -- 중복되는 것을 제거 , 여기에 이걸 추가해버리면 모든 학생이 과목이름이 같으므로 단 한명의 성적만 뷰로 생성되게 된다. 이렇게 쓰면 안된다!
 ---------------------------------------------------
+

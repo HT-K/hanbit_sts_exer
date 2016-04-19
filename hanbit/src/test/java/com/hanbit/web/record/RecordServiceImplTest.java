@@ -65,4 +65,11 @@ public class RecordServiceImplTest {
 		int count = mapper.countAll();
 		assertNotNull(count); // null이면 빨간불 null아니면 초록불~
 	}
+	
+	@Test
+	public void testUpdate() {
+		RecordMapper mapper = session.getMapper(RecordMapper.class);
+		int count = mapper.update(record);
+		assertNotNull(count); // null이면 빨간불 null아니면 초록불~
+	}
 }
