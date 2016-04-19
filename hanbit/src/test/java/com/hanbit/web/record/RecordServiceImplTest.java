@@ -43,33 +43,44 @@ public class RecordServiceImplTest {
 	@Test
 	public void testGetById() { // 학생 id로 Record 테이블의 내용 가져오기 체크
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
-		List<RecordDTO> temp = new ArrayList<RecordDTO>();
+		List<RecordDTO> list = new ArrayList<RecordDTO>();
 		command.setId("hong");
-		temp = mapper.selectById(command);
-		assertNotNull(temp); // null이면 빨간불 null아니면 초록불~
+		list = mapper.selectById(command);
+		assertThat(list.size(), is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 	
 	@Test
 	public void testGetByIdWithExamDate() { // 학생 id와 ExamDate 로 테이블의 내용 가져오기 체크
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
-		List<RecordDTO> temp = new ArrayList<RecordDTO>();
+		List<RecordDTO> list = new ArrayList<RecordDTO>();
 		command.setId("hong");
 		command.setExamDate("2016-03-31");
-		temp = mapper.selectByIdWithExamDate(command);
-		assertNotNull(temp); // null이면 빨간불 null아니면 초록불~
+		list = mapper.selectByIdWithExamDate(command);
+		assertThat(list.size(), is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 	
 	@Test
 	public void testCount() {
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
 		int count = mapper.countAll();
-		assertNotNull(count); // null이면 빨간불 null아니면 초록불~
+		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 	
 	@Test
 	public void testUpdate() {
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
+		record.setId("kim");
+		record.setExamDate("2016-03-31");
+		record.setSubject("java");
+		record.setScore(50);
 		int count = mapper.update(record);
-		assertNotNull(count); // null이면 빨간불 null아니면 초록불~
+		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
+	}
+	
+	@Test
+	public void testDelete() {
+		RecordMapper mapper = session.getMapper(RecordMapper.class);
+		int count = mapper.delete("kim");
+		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 }

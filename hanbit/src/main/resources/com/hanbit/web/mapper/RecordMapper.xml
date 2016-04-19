@@ -53,7 +53,7 @@
 			prof_id AS profID,
 			prof_name AS profName
 		FROM Record
-		WHERE id = #{id} AND exam_date = ${examDate}
+		WHERE id = #{id} AND exam_date = #{examDate}
 	</select>
 	
 	<select id="countAll" resultType="int">
@@ -64,12 +64,8 @@
 
 	<update id="update" parameterType="com.hanbit.web.record.RecordDTO">
 		UPDATE Record 
-		SET id = #{id}
-			name = #{name}, 
-			subject = #{subject}, 
-			score = #{score}, 
-			exam_date = #{examDate}
-		WHERE id = #{id}
+		SET  score = #{score}
+		WHERE id = #{id} AND exam_date = #{examDate} AND subject = #{subject}
 	</update>
 	
 	<delete id="delete" parameterType="String">

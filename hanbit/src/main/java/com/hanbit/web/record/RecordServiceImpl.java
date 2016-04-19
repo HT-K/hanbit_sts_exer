@@ -58,7 +58,7 @@ public class RecordServiceImpl implements RecordService {
 		return mapper.update(record);
 	}
 	@Override
-	public int delete(int id) {
+	public int delete(String id) {
 		logger.info("== delete() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
 		return mapper.delete(id);

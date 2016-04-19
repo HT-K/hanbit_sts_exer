@@ -16,5 +16,5 @@ public interface RecordMapper {
 	public List<RecordDTO> selectByIdWithExamDate(RecordCommand command); // id와 시험 날짜로 찾는 시험
 	public int countAll();
 	public int update(RecordDTO record);
-	public int delete(int id);
+	public int delete(String id);
 }
