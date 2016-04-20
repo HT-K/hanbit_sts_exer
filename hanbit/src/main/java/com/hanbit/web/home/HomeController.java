@@ -22,7 +22,7 @@ import com.hanbit.web.member.MemberDTO;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes("user") // 세션 생성
+@SessionAttributes("user") // 세션 생성, 회원과 관리자 모두 거치는 맨 처음인 이곳에서 세션을 생성해둔다.
 public class HomeController {
 	
 	//syso과 같은 역할, 디버깅을 위한 용도

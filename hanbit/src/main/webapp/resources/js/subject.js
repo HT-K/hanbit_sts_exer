@@ -13,12 +13,12 @@ var subject = {
 		},
 		
 		list : function() {
-			alert("content 진입 체크");
+			alert("suject list 진입 체크");
 			$.getJSON(subject.getContext()+'/subject/list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
 				var subject_list = 
 					'<div class="container" style="width:1000px;height:450px; margin:0 auto;">'
-					+	'<table id="subject_list" style="width:100%;margin-top: 30px">'
-					+		'<tr style="background-color: yellow;">'
+					+	'<table class="table table-hover" id="subject_list" style="width:100%;margin-top: 30px">'
+					+		'<tr class="danger">'
 					+			'<th style="text-align: center;">No</th>'
 					+			'<th>과목명</th>'
 					+			'<th>담당교수</th>'
@@ -34,15 +34,13 @@ var subject = {
 							+	'<td><a href="'+ subject.getContext()+ '/subject/'+ value.subjSeq +'"> '+ value.subjName +' </a></td>'
 							+	'<td><a href="'+ subject.getContext()+ '/admin/'+ value.profId +'"> '+ value.profName +' </a></td>'
 							+'</tr>';
-					});
+					}); // each() End
 					subject_list += '</table></div>';
 					// 위에서 구한 것들을 div wrapper에 .html 해준다.
 					// subject_list가 지역변수라서 .html, .css 모두 이곳에 써줘야한다.
-					$('#wrapper').html(subject_list);
-					$('#subject_list').css('border','1px solid black')
-					$('#subject_list th').css('border','1px solid black').css('text-align','center');
-					$('#subject_list tr').css('border','1px solid black');
-					$('#subject_list tr td').css('border','1px solid black').css('text-align','center');
-			});
-		}
+					$('#content').html(subject_list);
+					 $('#subject_list th').css('text-align', 'center');
+			         $('#subject_list tr td').css('text-align', 'center');
+			}); // getJson() End
+		} // list() End
 }

@@ -15,13 +15,12 @@ public enum User {
 		return value;
 	}
 	
-	
-	public static User valueOf(int value) {
+	public static String valueOf(int value) {
 		switch (value) {
-			case 0: return 비회원;
-			case 1: return 학생;
-			case 2: return 교수;
-			case 3: return 관리자;
+			case 0: return "비회원";
+			case 1: return "학생";
+			case 2: return "교수";
+			case 3: return "관리자";
 			default: throw new AssertionError("알 수 없는 값 : " + value);
 		}
 	}

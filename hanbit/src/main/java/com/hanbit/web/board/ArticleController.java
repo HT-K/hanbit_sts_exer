@@ -52,7 +52,7 @@ public class ArticleController {
 			command.setKeyField(keyField);
 			command.setKeyword(keyword);
 			int totalArticle = service.countBySearch(command);
-			command = CommandFactory.createCommand("article", "list", pageNo, keyField, keyword, totalArticle);
+			command = CommandFactory.createCommand("article", "article_list", pageNo, keyField, keyword, totalArticle);
 			model.addAttribute("article", service.getBySearch(command));
 		}
 		model.addAttribute("command", command);

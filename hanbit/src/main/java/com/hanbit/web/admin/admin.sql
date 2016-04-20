@@ -4,10 +4,10 @@ CREATE TABLE Admin(
 	password VARCHAR(30) NOT NULL,
 	addr VARCHAR(100),
 	birth INT,
-	role VARCHAR(30)  
+	cate INT  
 );
 ------------------------------------------------------
-INSERT INTO Admin(id,name,password,addr,birth,role)
+INSERT INTO Admin(id,name,password,addr,birth,cate)
 VALUES ('admin','관리자','admin','서울',901013,'admin');
 ------------------------------------------------------
 INSERT INTO Admin(id,name,password,addr,birth,role)

@@ -20,6 +20,6 @@ public class SubjectController {
 			Model model) {
 		logger.info("=== getList() 진입 ===");
 		model.addAttribute("list", service.getList());
-		return "admin/content.admin";
+		return "admin/subject_list.admin";
 	}
 }

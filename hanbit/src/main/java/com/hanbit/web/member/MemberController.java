@@ -1,5 +1,6 @@
 package com.hanbit.web.member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,15 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.hanbit.web.global.User;
 
 // 어노테이션 (annotation), 첨삭의 용도, context가 얘를 controller로 판단하게 하는 역할을 한다.
 @Controller
-// 세션 값을 설정하는 어노테이션, user라는 이름을 가진 세션 객체를 생성한다.
-@SessionAttributes("user")
 // @Webservlet의 발전형 /member(directory)URL로 접근하면 모두 이 MemberController로 넘어오게 된다.
 @RequestMapping("/member")
 public class MemberController {
@@ -84,9 +83,9 @@ public class MemberController {
 		
 		if (member != null) {
 			logger.info("로그인 성공");
-			//session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
+			session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
 			model.addAttribute("member", member); // 로그인 성공 시 다음 페이지에 request와 같은 역할을 하는 model에 member 객체를 담아 보낸다.
-			model.addAttribute("user", member);
+			//model.addAttribute("user", member);
 			//view = "member/detail";
 			view = "redirect:/member/detail/"+id; // get 방식으로 detail에 id 값 보내기, redirect는 페이지로 가라는게 아니라 서블릿 호출이라고 생가갛면된다.
 		} else {
@@ -106,14 +105,28 @@ public class MemberController {
 		status.setComplete(); // 세션 무효화
 		return "global/main.user"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
 	}
-		
-	@RequestMapping("/memList") // 모든 회원 정보를 가져옴
-	public String memList(Model model) {
+	
+	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴
+	public @ResponseBody List<MemberDTO> member_list(Model model) {
+		logger.info("member_list 진입 ");
+		return service.getMemList();
+	}
+	
+/*	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴, 이렇게 리턴 값으로 모델을 던져도됨.
+	public @ResponseBody Model member_list(Model model) {
+		logger.info("member_list 진입 ");
+		List<MemberDTO> list = new ArrayList<MemberDTO>();
+		list = service.getMemList();
+		model.addAttribute("list", list);
+		return model;
+	}*/
+	
+/*	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴, 이렇게 그냥 model에 add만 해놔도 호출한 ajax 함수가 data를 가져간다! (list라는 이름으로!)
+	public void member_list(Model model) {
 		logger.info("memList 진입 ");
 		List<MemberDTO> list = service.getMemList();
 		model.addAttribute("list", list);
-		return "member/member_list";
-	}
+	}*/
 	
 	
 	@RequestMapping("/name/{name}") // 이름 검색으로 회원 정보들을 가져옴(중복이름가능!)

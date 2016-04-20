@@ -1,14 +1,11 @@
 /**
- * Grade
+ * record
  */
-var grade = 
+var record = 
 {
 	context : '',
-	init : function(context) {
-		this.setContext(context);
-	},
 	setContext : function(context) {
-		context = this.context;
+		this.context = context;
 	},
 	getContext : function() {
 		return this.context;

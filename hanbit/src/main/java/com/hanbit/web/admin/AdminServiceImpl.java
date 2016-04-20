@@ -1,40 +1,63 @@
 package com.hanbit.web.admin;
 
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.web.grade.GradeDTO;
+import com.hanbit.web.mapper.AdminMapper;
+import com.hanbit.web.mapper.GradeMapper;
 import com.hanbit.web.member.MemberDTO;
 @Service
 public class AdminServiceImpl implements AdminService {
 	private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
-	private static AdminService service = new AdminServiceImpl();
+	@Autowired SqlSession session;
 	
-	public static AdminService getService() {
-		return service;
-	}
-
 	@Override
-	public AdminDTO getAdmin(AdminDTO admin) { // 관리자 정보 가져오기
+	public List<AdminDTO> getAdminList() {
+		logger.info("AdminService - getAdminList() 진입");
+		AdminMapper mapper = session.getMapper(AdminMapper.class);
+		return mapper.selectAdminList();
+	}
+	
+	@Override
+	public List<AdminDTO> getAdminByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public int addScore(GradeDTO gradeBean) { // 학생 성적 입력하기
+	public AdminDTO adminLogin(AdminDTO admin) {
+		logger.info("AdminService - adminLogin() 진입");
+		AdminMapper mapper = session.getMapper(AdminMapper.class);
+		return mapper.adminLogin(admin);
+	}
+	
+	@Override
+	public AdminDTO getAdminById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public int getAdminCount() {
+		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	@Override
-	public MemberDTO getMemUseId(String id) { // 아이디로 학생검색
+	public int update(AdminDTO admin) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
-
+	
 	@Override
-	public MemberDTO getMemUseName(String name) { // 이름으로 학생 검색
+	public int delete(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 }
