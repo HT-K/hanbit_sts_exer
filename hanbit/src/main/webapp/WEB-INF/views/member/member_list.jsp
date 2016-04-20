@@ -1,4 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style>
+	#member_list{border : 1px solid black}
+	#member_list th {border : 1px solid black; text-align: center}
+	#member_list tr td{border : 1px solid black; text-align: center}
+	#member_list td{border : 1px solid black}
+	
+</style>
+
 <table id="member_list" style="width: 100%; margin-top: 30px">
 	<tr style="background-color: yellow">
 		<th style="text-align: center">아이디</th>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanbit.web.mapper.SubjectMapper"> <!-- mapper 타입의 namespace(com.hanbit.web.mapper.MemberMapper)에 아래 sql문이 실행되어 리턴된 값을 해당 메소드(id 값)에 넘겨준다. 그래서 DAO는 인터페이스만 있으면 되는것 -->
+	<!-- id는 DAO에 있던 메소드이름과 정확히 일치시키면된다. , 파라미터 값 즉 매개변수가 필요한 메소드들은 MemberDTO로 넘기면 된다(이 DTO에 있는 어떤 속성 값 중 아무거나 넘기면 된다는 뜻이다.)-->
+	
+	<!-- selectList()의 리턴 값은 List이다, 이 Mapper에서 select문으로 결과 리턴시 List가 넘어오는데 resultType가 MemberDTO인 이유는 그 List안에 있는 하나하나의 객체가 MemberDTO인지 검사하기 떄문이다!(제네릭 값만 검사한다) -->
+	<!-- 아래 쿼리문은 해당 테이블의 전체 값을 가져온다. 즉 serviceImpl 쪽에서 리턴 값을 받는 타입으로 List가 준비되어 있다면 테이블의 모든 내용을 담을 수 있다! -->
+	<!-- Auto_Increment 해놓은 score_seq는 useGeneratedKeys 속성과 keyProperty 속성으로 자동 증가되게 설정한다!-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="subj_seq" parameterType="com.hanbit.web.subject.SubjectDTO"> 
+		INSERT INTO Subject (subj_name, prof_id, prof_name)
+		VALUES (#{subjName}, #{profId}, #{profName});
+	</insert>
+	
+	<select id="selectList" resultType="com.hanbit.web.subject.SubjectDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
+		<!-- 교수 이름을 가져오기 위해 Admin 테이블과 JOIN -->
+		<!-- Subject 테이블과 Admin 테이블의 id 값을 비교해서 같으면 name을 가져온다. -->
+		SELECT
+			s.subj_seq AS subjSeq,
+			s.subj_name AS subjName,
+			s.prof_id AS profID,
+			a.name AS profName
+		FROM Subject s, Admin a
+		WHERE s.prof_id = a.id;
+	</select>
+	
+	<select id="selectByName" parameterType="String" resultType="com.hanbit.web.subject.SubjectDTO">
+		
+	</select>
+	
+	<select id="selectById" parameterType="String" resultType="com.hanbit.web.subject.SubjectDTO">
+		
+	</select>
+	
+	<select id="count" resultType="int">
+		
+	</select>
+	
+	<!-- insert, update, delete 같은 경우는 오라클에서 성공여부로 자동으로 int 값을 준다. 이 때는 resultType을 명시하지 않아도 된다. -->
+	<!-- 그러나 select문에서 리턴 타입이 int일 경우는 resultType에 int를 명시해줘야 한다. -->
+	
+	<update id="update" parameterType="com.hanbit.web.subject.SubjectDTO">
+		<!-- UPDATE Grade 
+		SET subj_seq = #{subj_seq}, score = #{score}
+		WHERE id = #{id} -->
+	</update>
+	
+	<delete id="delete" parameterType="com.hanbit.web.subject.SubjectDTO">
+		<!-- DELETE FROM Grade
+		WHERE score_seq = #{score_seq}; -->
+	</delete>
+	
+</mapper>

@@ -20,11 +20,12 @@
 		<tiles:insertAttribute name="content" />
 	</div>
 	
-	<div id="footer">
+	<div id="footer" style="text-align: center;">
 		<!-- tilse.xml에 설정된 푸터페이지가 들어가게 된다. -->
-		<tiles:insertAttribute name="footer" />
+		<tiles:insertAttribute name="footer"/>
 	</div>
 </body>
+<script src="${js}/grade.js"></script>
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 3}"> 
 	<script type="text/javascript">
@@ -32,8 +33,24 @@
 			var logout_header = 
 				'<li role="presentation" style="float: right; margin: 0 100px 0 0">'
 				+'<a href="${context}/admin/logout">로그아웃</a>'
+				+'</li>'
+				+'<li role="presentation" style="float: right; margin: 0 100px 0 0">'
+				+'<a href="${context}/record/record_list" id="gradeMgmt">성적관리</a>'
+				+'</li>'
+				+'<li role="presentation" style="float: right; margin: 0 100px 0 0">'
+				+'<a href="${context}/member/member_list">학생관리</a>'
+				+'</li>'
+				+'<li role="presentation" style="float: right; margin: 0 100px 0 0">'
+				+'<a href="${context}/admin/admin_list">교직원관리</a>'
+				+'</li>'
+				+'<li role="presentation" style="float: right; margin: 0 100px 0 0">'
+				+'<a href="${context}/admin/logout" id="gradeMgmt">학과관리</a>'
 				+'</li>';
 			$('#header_ul').html(logout_header);
+			
+			$('#gradeMgmt').click(function() {
+				grade.init('${context}');
+			});
 		});
 	</script>
 </c:when>
@@ -43,13 +60,16 @@
 			var login_header = 
 				'<li role="presentation" style="float: right; margin: 0 100px 0 0">'
 				+	'<a href="${context}/">Home</a>'
-				+'</li>'
-				+'<li role="presentation" style="float: right; margin: 0 50px 0 0">'
-				+'<a href="${context}/admin/regist">관리자 등록</a>'
 				+'</li>';
 				$('#header_ul').html(login_header);
 		});
 	</script>
 </c:otherwise>
 </c:choose>
+
+<!-- <script type="text/javascript">
+	$(function() {
+		
+	});
+</script> -->
 </html>

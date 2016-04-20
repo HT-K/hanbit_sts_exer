@@ -98,10 +98,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/logout") // 모든 회원 정보를 가져옴
-	public String logout(SessionStatus status) {
+	public String logout(
+			SessionStatus status,
+			HttpSession session) {
 		logger.info("=== member - logout() ===");
+		session.setAttribute("user", member);
 		status.setComplete(); // 세션 무효화
-		return "member/main.user"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
+		return "global/main.user"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
 	}
 		
 	@RequestMapping("/memList") // 모든 회원 정보를 가져옴

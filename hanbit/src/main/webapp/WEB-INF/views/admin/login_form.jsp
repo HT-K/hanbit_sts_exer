@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%-- <jsp:include page="../global/header.jsp"/> --%>
 	<style type="text/css">
 		#login{
 			margin-top: 5em;
@@ -7,9 +8,10 @@
 
 	<div id="login">
 		<div class="loginTop text-center" >
-			<img src="${context}/resources/img/member/admin.jpg" id="admin"  />
+			<img src="${context}/resources/img/member/cho.jpg" id="cho" />
 		</div>
-		<form class="form-horizontal">
+		<br>
+		<form>
 		<div class="loginCenter row" style="margin-left: 43.5%;">
 				<fieldset class="loginField">
 					<div class="form-group">
@@ -28,18 +30,24 @@
 			
 		</div>
 		<div class="input_button text-center">
-			<img src="${context}/resources/img/member/login.jpg" id="loginButton" alt="" />
+			<img src="${context}/resources/img/member/login.jpg" id="loginButton" alt="" /> <!-- 로그인버튼을 이미지로~  -->
+			<button id="cancelBtn">취소</button>
+			<!-- <button class="btn btn-primary" id="loginButton">로그인</button> -->
 		</div>
 		</form>
 	</div>
-</body>
-<script>
+<script type="text/javascript">
 	$(function() {
-		$('#paper_plane').css('border','0').css('height','160px').css('height','160px').css('width','160px');	
-		$('#loginButton').css('width','150px');
-		$('#loginButton').click(function() {
-			$('form').attr('action','${context}/admin/login')
-			.attr('method','post').submit();
-			});
+		// $로 cho라는 아이디를 가진 태그자체를 객체로 리턴받고 첫번째 .css를 만나 border 속성을 set하고 두번쨰, 세번째 전부 set한 후 ';' 세미콜론을 만나면 끝난다.
+		$('#cho').css('border','0').css('height', '160px').css('width', '160px'); // border가 속성이고 0이 value다.
+		$('#loginButton').css('width', '150px');
+		$('form').addClass('form-horizontal'); // form 태그에 클래스 입히기
+		
+		$('#loginButton').click(function() { // 로그인 버튼 클릭 시 $() 로 form 태그를 찾아서 객체로 리턴받아 action을 걸고 post방식으로 보낸다.
+			$('form').attr('action','${context}/admin/login').attr('method','post').submit();
 		});
+		$('#cancelBtn').addClass('btn btn-primary').click(function() { // 취소 버튼 클릭 시
+			$('form').reset();
+		});
+	});
 </script>

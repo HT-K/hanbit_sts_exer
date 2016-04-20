@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.hanbit.web.global.User;
 import com.hanbit.web.member.MemberDTO;
@@ -45,16 +46,28 @@ public class AdminController {
 		
 		if (member.getRole().equals("관리자")) {
 			logger.info("로그인 성공");
-			//session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
-			model.addAttribute("user", member); // 세션 객체에 member객체를 실어보낸다.
+			session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
+			//model.addAttribute("user", member); // 세션 객체에 member객체를 실어보낸다.
 			model.addAttribute("member", member); // 로그인 성공 시 다음 페이지에 request와 같은 역할을 하는 model에 member 객체를 담아 보낸다.
-			view = "admin/admin_form.admin";
+			view = "admin/content.admin";
 		} else {
 			logger.info("로그인 실패");
-			view = "admin/login_form";
+			view = "admin/login_form.admin";
 		}
 		return view;
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(
+			SessionStatus status,
+			Model model,
+			HttpSession session){
+		logger.info("=== member-logout() ===");
+		session.setAttribute("user", null);
+		//model.addAttribute("user", null); // 자바에서 객체 소멸은 가바지 컬렉터에 의해 이루어진다. 따라서 로그아웃시 로그아웃버튼이 사라지게하려면 빈 member객체를 세션 객체에 저장하는 방법이 좋다!
+		status.setComplete(); // 세션 사용 중지
+		return "redirect:/admin/login_form.admin"; // 다시 관리자 로그인 폼으로~
+	}	
 		
 
 }
