@@ -56,19 +56,19 @@ var member = {
 	
 	updateForm : function(context) {
 		alert("업데이트 폼으로 진입");
-		$.getJSON(context+'/member/detail',function(member) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
+		$.getJSON(contextPath+'/member/detail',function(member) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
 			var update_form = 
-				+'<div id="detail">'
+				'<div id="detail">'
 				+	'<div class="joinTop">'
 				+		'<h2 class="text-center">수정정보</h2>'
 				+	'</div>'
 				+	'<div class="joinCenter row">'
-				+		'<form class="form-horizontal">'
+				+		'<form class="form-horizontal" enctype="multipart/form-data">'
 				+			'<fieldset class="joinField">'
 				+				'<div class="form-group">'
 				+				 	'<label for="input_id" class="col-sm-4 control-label">프로필 이미지 등록</label>'
 				+				 	'<div class="col-sm-2">'
-				+						'<img src="'+context+'/resources/img/member/'+member.profileImg+'" alt="" style="width:200px;height:230px"/>'
+				+						'<img src="'+contextPath+'/resources/img/member/'+member.profileImg+'" alt="" style="width:200px;height:230px"/>'
 				+					'</div>'
 				+				 	'<div class="col-sm-2">'
 				+						'<input type="file" id="profile_img" name="profile_img" />'
@@ -105,7 +105,7 @@ var member = {
 				+					'</div>'
 				+				'</div>'
 				+				'<div class="input_button text-center">'
-				+					'<button id="updateBtn" class="btn btn-primary">수정</button>'
+				+					'<button id="updateOkBtn" class="btn btn-primary">수정</button>'
 				+					'<button id="cancleBtn" class="btn btn-primary">취소</button>'
 				+				'</div>'		
 				+			'</fieldset>'
@@ -114,9 +114,30 @@ var member = {
 				+'</div>';
 				$('#content').html(update_form);
 				
-				$('#updateBtn').click(function(e) {
+				$('#updateOkBtn').click(function(e) {
 					e.preventDefault();
-					member.update();
+					$.ajax({ // 객체를 파라미터로 보낸다.
+						url : context + "/member/update",
+						date : {
+							id : $('#id').val(),
+							profileImg : $('#profile_img').val(),
+							password : $('#password').val(),
+							addr : $('#addr').val()
+						},
+						// dataType 과 type은 보낼 때 값과 보내는 방식을 의미
+						dataType : 'json',
+						type : 'post',
+						// 아래 두개 타입은 컨트롤러에 갔다 올 때 받아오는 값의 형태를 의미
+						//contentType : 'application/json',
+						//mimeType : 'application/json',
+						success : function(data) {
+							alert('수정 성공' + data.profileImg);
+						},
+						error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
+							alert('에러 발생 상태 : '+status+' 내용 : '+msg);
+						}
+					});
+					//member.update(contextPath);
 				});
 				$('#cancleBtn').click(function(e) {
 					e.preventDefault();
@@ -125,12 +146,12 @@ var member = {
 		}); // getJson() End
 	},
 	
-	update : function() {
-		alert("수정 버튼 클릭 체크");
+	update : function(context) {
+		alert("수정 체크");
 		$.ajax({ // 객체를 파라미터로 보낸다.
-			url : member.getContext() + "/member/update",
+			url : context + "/member/update",
 			date : {
-				//"id" : $('#id').val(),
+				id : $('#id').val(),
 				profileImg : $('#profile_img').val(),
 				password : $('#password').val(),
 				addr : $('#addr').val()
@@ -139,8 +160,8 @@ var member = {
 			dataType : 'json',
 			type : 'post',
 			// 아래 두개 타입은 컨트롤러에 갔다 올 때 받아오는 값의 형태를 의미
-			contentType : 'application/json',
-			mimeType : 'application/json',
+			//contentType : 'application/json',
+			//mimeType : 'application/json',
 			success : function(data) {
 				alert('수정 성공' + data.profileImg);
 			},

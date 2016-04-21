@@ -38,7 +38,7 @@
 			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var logout_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-			+		'<a id="article_list" href="${context}/article/list">게시판</a>'
+			+		'<a id="article_list" href="${context}/article/article_home">게시판</a>'
 			+	'</li>'
 			+	'<li role="presentation" style="margin-left: 100px">'
 			+		'<a href="${context}/member/logout">로그아웃</a>'
@@ -57,7 +57,7 @@
 				member.mypage(global.getContext());
 			}); */
 			
-			$('#updateBtn').addClass('btn btn-primary').click(function(e) { // 수정 폼 이동 클릭 시 URL에 id 값을 가지고 넘어간다.
+			$('#updateBtn').addClass('btn btn-primary').click(function() { // 수정 폼 이동 클릭 시 URL에 id 값을 가지고 넘어간다.
 				member.updateForm(global.getContext());
 			});
 /* 			$('#delBtn').addClass('btn btn-primary').click(function() {

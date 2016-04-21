@@ -24,4 +24,6 @@ public class Constants {
 	
 	public static final String VIEWS = "/WEB-INF/views/";
 	public static final String EXT = ".jsp";
+	
+	public static final String IMAGE_DOMAIN = "C:\\sts\\sourcetree\\spring_exec\\hanbit\\src\\main\\webapp\\resources\\img\\";
 }

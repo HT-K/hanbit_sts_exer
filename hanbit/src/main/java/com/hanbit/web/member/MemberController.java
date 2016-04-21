@@ -1,10 +1,10 @@
 package com.hanbit.web.member;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.hanbit.web.global.Constants;
 import com.hanbit.web.global.User;
 
 // 어노테이션 (annotation), 첨삭의 용도, context가 얘를 controller로 판단하게 하는 역할을 한다.
@@ -183,6 +184,7 @@ public class MemberController {
 	
 	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
 	public String update(Model model,HttpSession session) {
+		logger.info("update로 진입 ");
 		model.addAttribute("member",session.getAttribute("user"));
 		return "member/update.user";
 	}
@@ -199,6 +201,10 @@ public class MemberController {
 		param.setProfileImg(profileImg);
 		param.setPassword(password);
 		param.setAddr(addr);
+		
+		//FileUpload fileUpload = new FileUpload();
+		//String fileName = profileImg.getOriginalFilename();
+		//String fullPath = fileUpload.uploadFile(profileImg, Constants.IMAGE_DOMAIN, fileName);
 		
 		int result = service.update(param);
 		String view = "";
