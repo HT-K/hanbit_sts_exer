@@ -44,3 +44,38 @@ UPDATE Member SET cate = 1;
 -------------------------------------------------
 -- id가 admin이면 cate컬럼을 3번으로 설정!
 UPDATE Member SET cate = 3 WHERE id = 'admin';
+-------------------------------------------------
+
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'computer' WHERE id = 'hong';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'computer' WHERE id = 'kim';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'computer' WHERE id = 'lee';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'info' WHERE id = 'song';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'info' WHERE id = 'yoon';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'info' WHERE id = 'kim2';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'security' WHERE id = 'jang2';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'security' WHERE id = 'jun';
+UPDATE Member SET subject = 'java/jsp/sql/spring', major = 'security' WHERE id = 'jang';
+
+UPDATE Member SET profile_img = 'default_profile.png';
+
+DELETE FROM Member WHERE id = 'choi';
+
+SELECT * FROM Member;
+
+SELECT * FROM Member
+WHERE id = 'song';
+
+SELECT * FROM Member
+WHERE id = 'kim' and password = '1';
+
+-- DDL 테이블 수정
+
+-- 1. 컬럼 추가
+ALTER TABLE Member ADD subject varchar(100); -- java/sql/spring
+ALTER TABLE Member ADD major varchar(20); -- java/sql/spring
+ALTER TABLE Member ADD profile_img varchar(100); -- 프로필 사진 
+
+-- 2. 컬럼 수정(이름)
+ALTER TABLE Member RENAME COLUMN password TO pass; 
+-- 3. 컬럼 수정(타입)
+ALTER TABLE Member MODIFY birth DATE;

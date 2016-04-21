@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../global/header.jsp"/>
+<%-- <jsp:include page="../global/header.jsp"/> --%>
 	<style type="text/css">
 		#login{
 			margin-top: 5em;
 		}
 	</style>
+
 	<div id="login">
 		<div class="loginTop text-center" >
 			<img src="${context}/resources/img/member/cho.jpg" id="cho" />
@@ -29,13 +30,12 @@
 			
 		</div>
 		<div class="input_button text-center">
-			<img src="${context}/resources/img/member/login.jpg" id="loginButton" alt="" />
+			<img src="${context}/resources/img/member/login.jpg" id="loginButton" alt="" /> <!-- 로그인버튼을 이미지로~  -->
 			<button id="cancelBtn">취소</button>
 			<!-- <button class="btn btn-primary" id="loginButton">로그인</button> -->
 		</div>
 		</form>
 	</div>
-</body>
 <script type="text/javascript">
 	$(function() {
 		// $로 cho라는 아이디를 가진 태그자체를 객체로 리턴받고 첫번째 .css를 만나 border 속성을 set하고 두번쨰, 세번째 전부 set한 후 ';' 세미콜론을 만나면 끝난다.
@@ -51,4 +51,3 @@
 		});
 	});
 </script>
-</html>

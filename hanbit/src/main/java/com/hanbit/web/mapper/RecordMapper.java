@@ -4,17 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.hanbit.web.grade.GradeDTO;
-import com.hanbit.web.record.RecordCommand;
+import com.hanbit.web.global.Command;
 import com.hanbit.web.record.RecordDTO;
 
 @Repository
 public interface RecordMapper {
 	//public int insert(GradeDTO grade);
-	public List<RecordDTO> selectList(RecordCommand command);
-	public List<RecordDTO> selectByName(RecordCommand command);
-	public List<RecordDTO> selectById(RecordCommand command);
-	public List<RecordDTO> selectByIdWithExamDate(RecordCommand command); // id와 시험 날짜로 찾는 시험
+	public List<RecordDTO> selectList(Command command);
+	public List<RecordDTO> selectByName(Command command);
+	public List<RecordDTO> selectById(Command command);
+	public List<RecordDTO> selectByIdWithExamDate(Command command); // id와 시험 날짜로 찾는 시험
 	public int countAll();
 	public int update(RecordDTO record);
 	//public int delete(GradeDTO grade);

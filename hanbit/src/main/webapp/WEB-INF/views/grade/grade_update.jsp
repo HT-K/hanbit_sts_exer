@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../global/header.jsp"/>
 <h3>${member.name} 성적 수정</h3>
 <form id="grade_input_form">
 <table id="grade_list" style="width: 100%; margin-top: 30px">
