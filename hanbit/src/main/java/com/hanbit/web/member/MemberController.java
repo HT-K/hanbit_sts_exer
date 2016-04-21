@@ -87,7 +87,8 @@ public class MemberController {
 			model.addAttribute("member", member); // 로그인 성공 시 다음 페이지에 request와 같은 역할을 하는 model에 member 객체를 담아 보낸다.
 			//model.addAttribute("user", member);
 			//view = "member/detail";
-			view = "redirect:/member/detail/"+id; // get 방식으로 detail에 id 값 보내기, redirect는 페이지로 가라는게 아니라 서블릿 호출이라고 생가갛면된다.
+			//view = "redirect:/member/detail/"+id; // get 방식으로 detail에 id 값 보내기, redirect는 페이지로 가라는게 아니라 서블릿 호출이라고 생가갛면된다.
+			view = "redirect:/member/content/"+id; // 강사님 방식
 		} else {
 			logger.info("로그인 실패");
 			view = "member/login_form";
@@ -137,7 +138,35 @@ public class MemberController {
 		return "member/member_list";
 	}
 	
-	@RequestMapping("/detail/{id}") // id 검색으로 회원 정보를 가져옴
+	@RequestMapping("/content/{id}")
+	public String getMemberContent(@PathVariable("id")String id,Model model){
+		logger.info("=== member-getMemberContent() ===");
+		if (service.isMember(id)) {
+			member = service.getMemById(id);
+			member.setRole(User.valueOf(service.getMemById(id).getCate()));
+			model.addAttribute("member",member);
+		} else {
+			model.addAttribute("member","");
+		}
+		return "member/content.user";
+	}	
+	
+	@RequestMapping("/detail")
+	public @ResponseBody MemberDTO getMemberById(Model model, HttpSession session){
+		logger.info("=== member-getMemberById() ===");
+		member = (MemberDTO) session.getAttribute("user");
+		if (service.isMember(member.getId())) {
+			member = service.getMemById(member.getId());
+			member.setRole(User.valueOf(member.getCate()));
+			model.addAttribute("member",member);
+		} else {
+			model.addAttribute("member","");
+		}
+		logger.info("이미지 이름 {}", member.getProfileImg());
+		return member;
+	}	
+	
+	/*@RequestMapping("/detail/{id}") // id 검색으로 회원 정보를 가져옴
 	public String getMemberById(@PathVariable("id") String id, Model model) {
 		if (service.isMember(id)) {
 			logger.info("회원확인 성공 = {}", id);
@@ -150,7 +179,7 @@ public class MemberController {
 		}
 
 		return "member/detail.user";
-	}
+	}*/
 	
 	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
 	public String update(Model model,HttpSession session) {

@@ -25,41 +25,77 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 </body>
+<script src="${js}/subject.js"></script>
+<script src="${js}/admin.js"></script>
+<script src="${js}/member.js"></script>
+<script src="${js}/record.js"></script>
+<script src="${js}/Global.js"></script>
+
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 1}"> 
 	<script type="text/javascript">
 		$(function() {
+			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var logout_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-			+		'<a href="${context}/article/list">게시판</a>'
+			+		'<a id="article_list" href="${context}/article/list">게시판</a>'
 			+	'</li>'
 			+	'<li role="presentation" style="margin-left: 100px">'
 			+		'<a href="${context}/member/logout">로그아웃</a>'
 			+	'</li>'
 			+	'<li role="presentation" style="margin-left: 100px">'
-			+		'<a href="${context}/member/mypage">마이페이지</a>'
+			+		'<a id="mypage" href="${context}/member/mypage">마이페이지</a>'
 			+	'</li>';
 			$('#header_ul').html(logout_header);
+			
+			/* $('#article_list').click(function(e) {
+				e.preventDefault();
+				article.list(global.getContext());
+			}); */
+			/* $('#mypage').click(function(e) {
+				e.preventDefault();
+				member.mypage(global.getContext());
+			}); */
+			
+			$('#updateBtn').addClass('btn btn-primary').click(function(e) { // 수정 폼 이동 클릭 시 URL에 id 값을 가지고 넘어간다.
+				member.updateForm(global.getContext());
+			});
+/* 			$('#delBtn').addClass('btn btn-primary').click(function() {
+			}); */
 		});
 	</script>
 </c:when>
 <c:otherwise>
 	<script type="text/javascript">
 		$(function() {
+			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var login_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-				+	'<a href="${context}/article/article_home">게시판 바로 가기</a>'
+				+	'<a id="article_list" href="${context}/article/article_home">게시판 바로 가기</a>'
 				+'</li>'
 				+'<li role="presentation" style="margin-left: 100px">'
 				+	'<a href="${context}/member/login_form">로그인</a>'
 				+'</li>'
 				+'<li role="presentation" style="margin-left: 100px">'
-				+	'<a href="${context}/member/join_form">회원가입</a>'
+				+	'<a id="join" href="${context}/member/join_form">회원가입</a>'
 				+'</li>'
 				+'<li role="presentation" style="margin-left: 100px">'
-				+	'<a href="${context}/admin/login_form">관리자</a>'
+				+	'<a id="admin_login" href="${context}/admin/login_form">관리자</a>'
 				+'</li>';
 				$('#header_ul').html(login_header);
+				
+				/* $('#article_list').click(function(e) {
+					e.preventDefault();
+					article.list(global.getContext());
+				});
+				$('#join').click(function(e) {
+					e.preventDefault();
+					member.join(global.getContext());
+				});
+				$('#admin_login').click(function(e) {
+					e.preventDefault();
+					admin.login(global.getContext());
+				}); */
 		});
 	</script>
 </c:otherwise>

@@ -33,7 +33,10 @@
 	</select>
 	
 	<select id="selectById" parameterType="string" resultType="com.hanbit.web.member.MemberDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
-		SELECT * FROM Member WHERE id = #{id}
+		SELECT 
+			id,name,password,addr,birth,cate,
+   			profile_img AS profileImg
+		FROM Member WHERE id = #{id}
 	</select>
 	
 	<select id="count" resultType="int">

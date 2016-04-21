@@ -4,13 +4,13 @@
 
 // 객체 리터럴 방식
 var article = {
-		context : '', // context가 key고 (:) 오른쪽이 value라고 생각하면 된다. 스크립트의 모든 것은 이 형태라고 보면 된다.
+/*		context : '', // context가 key고 (:) 오른쪽이 value라고 생각하면 된다. 스크립트의 모든 것은 이 형태라고 보면 된다.
 		setContext : function(context) { // 외부에서 달러{context} 값을 받아와서 이 article 객체의 context 변수에 set한다! 이렇게하면 이 js 파일안에서 사용이 가능하다!
 			this.context = context;
 		},
 		getContext : function() { // 이 article객체의 context 값을 리턴해준다.
 			return this.context;
-		},
+		},*/
 		
 		writeForm : function() {
 			var writeForm = 
@@ -38,7 +38,8 @@ var article = {
 				+'</div>';
 			$('#wrapper').html(writeForm);
 		
-			$('#writeSubmit').click(function() { // '등 록' 버튼 클릭 시 호출되는 메소드
+			$('#writeSubmit').click(function(e) { // '등 록' 버튼 클릭 시 호출되는 메소드
+				e.preventDefault();
 				article.write();
 			}); // writeForm 변수 End
 		}, // writeForm() End

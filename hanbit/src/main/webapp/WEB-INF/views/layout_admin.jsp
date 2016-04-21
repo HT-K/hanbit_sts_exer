@@ -68,20 +68,20 @@
 			
 			$('#subjectMgmt').click(function(e) {
 				e.preventDefault();
-				subject.setContext('${context}'); // 컨텍스트 경로를 subject.js로 보내준다.
-				subject.list(global);
+				//subject.setContext('${context}'); // 컨텍스트 경로를 subject.js로 보내준다.
+				subject.list(global.getContext());
 			});
 			$('#adminMgmt').click(function(e) {
 				e.preventDefault();
 				alert("교직원관리 클릭 체크");
-				admin.setContext('${context}'); // 컨텍스트 경로를 admin.js로 보내준다.
-				admin.list(global);				
+				//admin.setContext('${context}'); // 컨텍스트 경로를 admin.js로 보내준다.
+				admin.list(global.getContext());				
 			});
 			$('#memberMgmt').click(function(e) {
 				e.preventDefault();
 				alert("학생관리 클릭 체크");
-				member.setContext('${context}'); // 컨텍스트 경로를 member.js로 보내준다.
-				member.list(global);
+				//member.setContext('${context}'); // 컨텍스트 경로를 member.js로 보내준다.
+				member.list(global.getContext());
 				
 			}); //('#memberMgmt').click End
 			/* $('#recordMgmt').click(function(ㄷ) {
