@@ -37,10 +37,15 @@
 <script src="${js}/admin.js"></script>
 <script src="${js}/member.js"></script>
 <script src="${js}/record.js"></script>
+<script src="${js}/Global.js"></script>
+
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 3}"> 
 	<script type="text/javascript">
 		$(function() {
+			/* global.setContext('${context}');
+			var context = global.getContext();  */
+			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var logout_header = // 관리자가 로그인 했다면 로그아웃 네비를 띄워주자!
 				'<ul class="nav navbar-nav">'
 				+'<li>'
@@ -64,19 +69,19 @@
 			$('#subjectMgmt').click(function(e) {
 				e.preventDefault();
 				subject.setContext('${context}'); // 컨텍스트 경로를 subject.js로 보내준다.
-				subject.list();
+				subject.list(global);
 			});
 			$('#adminMgmt').click(function(e) {
 				e.preventDefault();
 				alert("교직원관리 클릭 체크");
 				admin.setContext('${context}'); // 컨텍스트 경로를 admin.js로 보내준다.
-				admin.list();				
+				admin.list(global);				
 			});
 			$('#memberMgmt').click(function(e) {
 				e.preventDefault();
 				alert("학생관리 클릭 체크");
 				member.setContext('${context}'); // 컨텍스트 경로를 member.js로 보내준다.
-				member.list();
+				member.list(global);
 				
 			}); //('#memberMgmt').click End
 			/* $('#recordMgmt').click(function(ㄷ) {

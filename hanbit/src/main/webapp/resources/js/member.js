@@ -52,5 +52,30 @@ var member = {
 					admin.memberProfile(url);
 				});
 		}); // getJSON() End
-	} // list() End
+	}, // list() End
+	
+	update : function() {
+		alert("수정 버튼 클릭 체크");
+		$.ajax({ // 객체를 파라미터로 보낸다.
+			url : member.getContext() + "/member/update",
+			date : {
+				//"id" : $('#id').val(),
+				profileImg : $('#profile_img').val(),
+				password : $('#password').val(),
+				addr : $('#addr').val()
+			},
+			// dataType 과 type은 보낼 때 값과 보내는 방식을 의미
+			dataType : 'json',
+			type : 'post',
+			// 아래 두개 타입은 컨트롤러에 갔다 올 때 받아오는 값의 형태를 의미
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			success : function(data) {
+				alert('수정 성공' + data.profileImg);
+			},
+			error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
+				alert('에러 발생 상태 : '+status+' 내용 : '+msg);
+			}
+		});
+	}
 };

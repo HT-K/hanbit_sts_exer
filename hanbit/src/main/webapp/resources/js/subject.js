@@ -3,18 +3,18 @@
  */
 
 var subject = {
-		context : '', 
+		/*context : '', 
 		// 달러{context} 경로를 jsp에서 받아와서 위 context에 저장한다.
 		setContext : function(context) {
 			this.context = context;
 		},
 		getContext : function() {
 			return this.context;
-		},
+		},*/
 		
-		list : function() {
+		list : function(context) {
 			alert("suject list 진입 체크");
-			$.getJSON(subject.getContext()+'/subject/list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
+			$.getJSON(context+'/subject/list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
 				var subject_list = 
 					'<div class="container" style="width:1000px;height:450px; margin:0 auto;">'
 					+	'<table class="table table-hover" id="subject_list" style="width:100%;margin-top: 30px">'
@@ -31,8 +31,8 @@ var subject = {
 						subject_list +=
 							'<tr>'
 							+	'<td> '+ value.subjSeq +' </td>'
-							+	'<td><a href="'+ subject.getContext()+ '/subject/'+ value.subjSeq +'"> '+ value.subjName +' </a></td>'
-							+	'<td><a href="'+ subject.getContext()+ '/admin/'+ value.profId +'"> '+ value.profName +' </a></td>'
+							+	'<td><a href="'+ context+ '/subject/'+ value.subjSeq +'"> '+ value.subjName +' </a></td>'
+							+	'<td><a href="'+ context+ '/admin/'+ value.profId +'"> '+ value.profName +' </a></td>'
 							+'</tr>';
 					}); // each() End
 					subject_list += '</table></div>';

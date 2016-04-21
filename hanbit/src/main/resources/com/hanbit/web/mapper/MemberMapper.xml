@@ -13,14 +13,19 @@
 	</insert>
 	
 	<select id="login" resultType="com.hanbit.web.member.MemberDTO" parameterType="com.hanbit.web.member.MemberDTO">
-		SELECT * FROM Member
+		SELECT id,name,password,addr,birth,cate,
+   			profile_img AS profileImg 
+   		FROM Member
 		WHERE id = #{id} and password = #{password}
 	</select>
 	
 	<!-- selectList()의 리턴 값은 List이다, 이 Mapper에서 select문으로 결과 리턴시 List가 넘어오는데 resultType가 MemberDTO인 이유는 그 List안에 있는 하나하나의 객체가 MemberDTO인지 검사하기 떄문이다!(제네릭 값만 검사한다) -->
 	<!-- 아래 쿼리문은 해당 테이블의 전체 값을 가져온다. 즉 serviceImpl 쪽에서 리턴 값을 받는 타입으로 List가 준비되어 있다면 테이블의 모든 내용을 담을 수 있다! -->
 	<select id="selectList" resultType="com.hanbit.web.member.MemberDTO"> 
-		SELECT * FROM Member
+		select 
+    		id,name,password,addr,birth,cate,
+   			profile_img AS profileImg
+    	from Member
 	</select>
 	
 	<select id="selectByName" resultType="com.hanbit.web.member.MemberDTO">
@@ -37,7 +42,7 @@
 	
 	<update id="update" parameterType="com.hanbit.web.member.MemberDTO">
 		UPDATE Member 
-		SET password = #{password}, addr = #{addr}
+		SET profile_img = #{profileImg}, password = #{password}, addr = #{addr}
 		WHERE id = #{id} 
 	</update>
 	

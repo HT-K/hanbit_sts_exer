@@ -101,7 +101,7 @@ public class MemberController {
 			SessionStatus status,
 			HttpSession session) {
 		logger.info("=== member - logout() ===");
-		session.setAttribute("user", member);
+		session.setAttribute("user", null);
 		status.setComplete(); // 세션 무효화
 		return "global/main.user"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
 	}
@@ -143,7 +143,7 @@ public class MemberController {
 			logger.info("회원확인 성공 = {}", id);
 			// 비회원인지, 학생 교수 관리자 인지 알아내야함. 데이터베이스에는 Cate로 인트형으로 저장되어있는데 이것을 enum에 보내서 role을 알아낸다.
 			member = service.getMemById(id);
-			member.setRole(User.valueOf(service.getMemById(id).getCate()).toString());
+			member.setRole(User.valueOf(member.getCate()));
 			model.addAttribute("member", member);
 		} else {
 			model.addAttribute("member", "");
@@ -153,17 +153,21 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
-	public String update() {
-		return "member/update_form";
+	public String update(Model model,HttpSession session) {
+		model.addAttribute("member",session.getAttribute("user"));
+		return "member/update.user";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST) // 이건 post방식, 이렇게 method를 지정해주지 않으면 default는 get방식이다!표9
-	public String update(@RequestParam("password")String password, 
-						 @RequestParam("addr")String addr,
-						 HttpSession session,
-						 Model model) {
+	public String update(
+			@RequestParam("profile_img")String profileImg,
+			@RequestParam("password")String password, 
+			@RequestParam("addr")String addr,
+			HttpSession session,
+			Model model) {
 		logger.info("update로 진입 ");
 		MemberDTO param = (MemberDTO) session.getAttribute("user"); // 세션 객체에 user로 저장되어 있는 MemberDTO 객체를 가져온다. 
+		param.setProfileImg(profileImg);
 		param.setPassword(password);
 		param.setAddr(addr);
 		
