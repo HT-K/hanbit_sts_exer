@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hanbit.web.global.Constants;
 import com.hanbit.web.global.User;
+import com.hanbit.web.util.FileUpload;
 
 // 어노테이션 (annotation), 첨삭의 용도, context가 얘를 controller로 판단하게 하는 역할을 한다.
 @Controller
@@ -189,7 +190,42 @@ public class MemberController {
 		return "member/update.user";
 	}
 	
-	@RequestMapping(value="/update", method=RequestMethod.POST) // 이건 post방식, 이렇게 method를 지정해주지 않으면 default는 get방식이다!표9
+	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public @ResponseBody MemberDTO update(
+			@RequestParam("password")String password,
+			@RequestParam("addr")String addr,
+			@RequestParam(value="file",required=false)MultipartFile file,
+			HttpSession session,
+			Model model){
+		logger.info("수정폼에서 넘어온 주소 = {}",addr);
+		logger.info("수정폼에서 넘어온 비밀번호 = {}",password);
+		
+		MemberDTO legacy = (MemberDTO) session.getAttribute("user");
+		MemberDTO param = (MemberDTO) session.getAttribute("user");
+		FileUpload fileUpload = new FileUpload();
+		String fileName = file.getOriginalFilename();
+		logger.info("수정폼에서 넘어온 파일 = {}",fileName);
+		String fullPath = fileUpload.uploadFile(file, Constants.IMAGE_DOMAIN, fileName);
+		logger.info("이미지 저장 경로 : {}",fullPath);
+		param.setProfileImg(fileName);
+		param.setPassword(password);	
+		param.setAddr(addr);
+		int result = service.update(param);
+		String view = "";
+		if (result == 1) {
+			model.addAttribute("user", param);
+			model.addAttribute("member",param);
+			view = "member/detail";
+		} else {
+			model.addAttribute("member",legacy);
+			view = "member/update_form";
+		}
+		logger.info("수정 후 비번 : {}",param.getProfileImg());
+		return param;
+	}
+	
+	/*@RequestMapping(value="/update", method=RequestMethod.POST) // 이건 post방식, 이렇게 method를 지정해주지 않으면 default는 get방식이다!표9
 	public String update(
 			@RequestParam("profile_img")String profileImg,
 			@RequestParam("password")String password, 
@@ -219,7 +255,7 @@ public class MemberController {
 			view = "member/update_form.user";
 		}
 		return view;
-	}
+	}*/
 	
 	@RequestMapping("/delete") 
 	public String delete(HttpSession session,

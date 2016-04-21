@@ -84,11 +84,11 @@
 				member.list(global.getContext());
 				
 			}); //('#memberMgmt').click End
-			/* $('#recordMgmt').click(function(ㄷ) {
+			$('#recordMgmt').click(function(e) {
 				e.preventDefault();
 				record.setContext('${context}'); // 컨텍스트 경로를 record.js로 보내준다.
 				record.list();
-			}); */
+			});
 		});
 	</script>
 </c:when>

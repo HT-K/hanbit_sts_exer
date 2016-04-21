@@ -27,6 +27,7 @@
 </body>
 <script src="${js}/subject.js"></script>
 <script src="${js}/admin.js"></script>
+<script src="${js}/article.js"></script>
 <script src="${js}/member.js"></script>
 <script src="${js}/record.js"></script>
 <script src="${js}/Global.js"></script>
@@ -38,7 +39,7 @@
 			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var logout_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-			+		'<a id="article_list" href="${context}/article/article_home">게시판</a>'
+			+		'<a id="my_article" href="${context}/article/my_article">내 글들 보기</a>'
 			+	'</li>'
 			+	'<li role="presentation" style="margin-left: 100px">'
 			+		'<a href="${context}/member/logout">로그아웃</a>'
@@ -48,10 +49,10 @@
 			+	'</li>';
 			$('#header_ul').html(logout_header);
 			
-			/* $('#article_list').click(function(e) {
+			$('#my_article').click(function(e) {
 				e.preventDefault();
-				article.list(global.getContext());
-			}); */
+				article.myArticle(global.getContext());
+			});
 			/* $('#mypage').click(function(e) {
 				e.preventDefault();
 				member.mypage(global.getContext());
@@ -71,7 +72,7 @@
 			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var login_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-				+	'<a id="article_list" href="${context}/article/article_home">게시판 바로 가기</a>'
+				+	'<a id="article_all" href="#">모든 게시글 보기</a>'
 				+'</li>'
 				+'<li role="presentation" style="margin-left: 100px">'
 				+	'<a href="${context}/member/login_form">로그인</a>'
@@ -84,11 +85,11 @@
 				+'</li>';
 				$('#header_ul').html(login_header);
 				
-				/* $('#article_list').click(function(e) {
+				$('#article_all').click(function(e) {
 					e.preventDefault();
-					article.list(global.getContext());
+					article.articleAll(global.getContext());
 				});
-				$('#join').click(function(e) {
+				/* $('#join').click(function(e) {
 					e.preventDefault();
 					member.join(global.getContext());
 				});

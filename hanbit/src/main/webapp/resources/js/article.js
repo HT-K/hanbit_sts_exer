@@ -12,6 +12,14 @@ var article = {
 			return this.context;
 		},*/
 		
+		myArticle : function(context) {
+			alert('내가 쓴 글 진입');
+		},
+		
+		articleAll : function(context) {
+			alert("모든 게시글 보기 진입")
+		},
+		
 		writeForm : function() {
 			var writeForm = 
 				'<div class="container">'

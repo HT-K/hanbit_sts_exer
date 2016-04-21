@@ -37,7 +37,7 @@ public class ArticleController {
 		//keyField 값에 따라 모델로 보내야할 것이 나눠진다.
 		if (keyField.equals("none")) {
 			// 모든 게시글 수를 데이터베이스에서 구해서 command객체에 set해줌 (service.countAll()) 
-			command = CommandFactory.createCommand("article", "list", pageNo, keyField, keyword, service.countAll());
+			command = CommandFactory.createCommand("article", "article_list", pageNo, keyField, keyword, service.countAll());
 			
 			logger.info("현재 페이지 = {}", command.getPageNo());
 			logger.info("현재 startPage = {}", command.getStartPage());
