@@ -82,7 +82,7 @@
 			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var login_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-				+	'<a id="article_all" href="#">모든 게시글 보기</a>'
+				+	'<a id="article_all" href="${context}/article/article_home">모든 게시글 보기</a>'
 				+'</li>'
 				+'<li role="presentation" style="margin-left: 100px">'
 				+	'<a href="${context}/member/login_form">로그인</a>'
@@ -95,10 +95,10 @@
 				+'</li>';
 				$('#header_ul').html(login_header);
 				
-				$('#article_all').click(function(e) {
+				/* $('#article_all').click(function(e) {
 					e.preventDefault();
 					article.articleAll(global.getContext());
-				});
+				}); */
 				/* $('#join').click(function(e) {
 					e.preventDefault();
 					member.join(global.getContext());

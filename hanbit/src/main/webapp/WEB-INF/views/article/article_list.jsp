@@ -31,9 +31,9 @@
 		<tr>
 			<td>${article.articleId}</td>
 			<td>
-				<c:if test="${article.level}>0">
+				<%-- <c:if test="${article.level}>0">
 				<c:forEach begin="1" end="${article.level}">-</c:forEach>&gt;
-				</c:if>
+				</c:if> --%>
 				<!-- href="${context}/article/search/${article.articleId}" -->
 				<a class="list_title" href="${context}/article/detail/${article.articleId}">${article.title}</a>
 			</td>

@@ -69,7 +69,7 @@
 		UPDATE Member 
 		SET password = #{password},
 			addr = #{addr},
-			profile_img = #{profileImg}, 
+			profile_img = #{profileImg}
 		WHERE id = #{id} 
 	</update>
 	

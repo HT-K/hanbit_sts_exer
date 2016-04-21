@@ -63,7 +63,7 @@ var member = {
 				+		'<h2 class="text-center">수정정보</h2>'
 				+	'</div>'
 				+	'<div class="joinCenter row">'
-				+		'<form class="form-horizontal" action="'+context+'/member/update" method="post" enctype="multipart/form-data" id="frm">'
+				+		'<form class="form-horizontal" id="frm" action="'+context+'/member/update" method="post" enctype="multipart/form-data">'
 				+			'<fieldset class="joinField">'
 				+				'<div class="form-group">'
 				+				 	'<label for="input_id" class="col-sm-4 control-label">프로필 이미지 등록</label>'
@@ -119,15 +119,15 @@ var member = {
 				+	'</div>'
 				+'</div>';
 			$('#content').html(update_form); // layout_user.jsp의 content div부분에 위 update_form이 .html된다
-		
+			
 			$('#updateProfile').click(function(e) {
 				e.preventDefault();
-				alert('업데이트 클릭2');
+				alert('업데이트 클릭');
 				var $frm = $('#frm');
 				var postData = new FormData($('#frm')[0]);
 				
 				$.ajax({
-					type: $frm.attr('method'),
+					  type: $frm.attr('method'),
 				      url: $frm.attr('action'),
 				      data: postData,
 				      dataType : 'json',
@@ -135,21 +135,23 @@ var member = {
 				      contentType: false, 
 				      processData : false,
 					success : function(member) {
-						alert("성공");
-						location.href = context+'/member/content/'+member.id;
+						location.href = context+'/member/profile/'+member.id;
 					},
 					error : function(xhr,status,msg) {
 						alert('에러발생상태 :'+status+',내용 : '+msg);
 					}
 				});
-				});
+			});
 			
 			/*$('#updateProfile').click(function(e) {
 				e.preventDefault();
-				alert("업데이트 완료 진입1234");
+				alert("업데이트 완료 진입1234555");
 				$.ajax({ // 객체를 파라미터로 보낸다.
-					url : context+'/member/update',
-					date : {
+					type: 'POST', // 이곳에 type을 쓰지 않으면 디폴트로 get이 된다.
+					dataType: 'json', // 생략이 가능하다, 왜냐하면 view-context.xml에서 설정해놨다.
+					contentType: 'application/json',
+					url: $('#frm').attr('action'),
+					data: {
 						profileImg : $('#profile_img').val(),
 						id : $('#id').val(),
 						password : $('#password').val(),
@@ -159,13 +161,8 @@ var member = {
 						role : $('#role').val()
 					},
 					// dataType 과 type은 보낼 때 값과 보내는 방식을 의미
-					type : 'POST', // 이곳에 type을 쓰지 않으면 디폴트로 get이 된다.
-					dataType : 'json', // 생략이 가능하다, 왜냐하면 view-context.xml에서 설정해놨다.
-					success : function(data) {
+					success: function(data) {
 						location.href = context+'/member/profile/'+data.id;
-					},
-					error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
-						alert('에러 발생 상태 : '+status+' 내용 : '+msg);
 					}
 				}); // ajax() End
 			}); // updateProfile() End

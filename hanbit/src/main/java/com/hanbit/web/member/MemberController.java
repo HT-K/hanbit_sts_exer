@@ -99,7 +99,7 @@ public class MemberController {
 			view = "redirect:/member/profile/"+ id; // 
 		} else {
 			logger.info("로그인 실패");
-			view = "member/login_form";
+			view = "member/login_form.user";
 		}
 		
 		return view;
@@ -127,10 +127,45 @@ public class MemberController {
 		return member;
 	}
 	
-	//@RequestMapping(value="/update", method=RequestMethod.POST)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public @ResponseBody MemberDTO update(
+			@RequestParam(value="password",required=false)String password,
+			@RequestParam(value="addr",required=false)String addr,
+			@RequestParam(value="profile_img",required=false)MultipartFile profile_img,
+			HttpSession session,
+			Model model){
+		logger.info("수정폼에서 넘어온 주소 = {}",addr);
+		logger.info("수정폼에서 넘어온 비밀번호 = {}",password);
+		
+		MemberDTO legacy = (MemberDTO) session.getAttribute("user");
+		MemberDTO param = (MemberDTO) session.getAttribute("user");
+		FileUpload fileUpload = new FileUpload();
+		String fileName = profile_img.getOriginalFilename();
+		logger.info("수정폼에서 넘어온 파일 = {}",fileName);
+		String fullPath = fileUpload.uploadFile(profile_img, 
+				Constants.IMAGE_DOMAIN, fileName );
+		logger.info("이미지 저장 경로 : {}",fullPath);
+		param.setProfileImg(fileName);
+		param.setPassword(password);	
+		param.setAddr(addr);
+		int result = service.update(param);
+		String view = "";
+		if (result == 1) {
+			session.setAttribute("user", param);
+			model.addAttribute("member",param);
+			view = "member/detail";
+		} else {
+			model.addAttribute("member",legacy);
+			view = "member/update_form";
+		}
+		logger.info("수정 후 비번 : {}",param.getProfileImg());
+		return param;
+	}
+	
+	/*//@RequestMapping(value="/update", method=RequestMethod.POST)
 	//@RequestMapping("/update")
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public void update( // 호출한 ajax()에 리턴 값으로 MemberDTO 자체를 넘겨준다, (@ResponseBody를 쓰면 model에 add()해서 주지 않고 바로 객체를 리턴 시킬 수 있다.)
+	public @ResponseBody MemberDTO update( // 호출한 ajax()에 리턴 값으로 MemberDTO 자체를 넘겨준다, (@ResponseBody를 쓰면 model에 add()해서 주지 않고 바로 객체를 리턴 시킬 수 있다.)
 			@RequestParam("profile_img")String profileImg,
 			@RequestParam("id")String id,
 			@RequestParam("password")String password,
@@ -153,13 +188,11 @@ public class MemberController {
 		
 		service.update(param);
 		logger.info("=== update() 디비 다녀오기 성공 ===");
-		
-			session.setAttribute("user", param); // 세션에 업데이트 된 프로필 내용 다시 저장
-			model.addAttribute("member",param);
+		session.setAttribute("user", param); // 세션에 업데이트 된 프로필 내용 다시 저장
+		model.addAttribute("member",param);
 
-
-		//return model;
-	}
+		return param;
+	}*/
 	
 	
 	@RequestMapping("/logout")
