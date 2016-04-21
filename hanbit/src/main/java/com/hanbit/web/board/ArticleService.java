@@ -6,7 +6,7 @@ import com.hanbit.web.global.Command;
 
 public interface ArticleService {
 	public int insert(ArticleDTO article);
-	public List<ArticleDTO> getList(Command command);
+	public List<ArticleDTO> getListAll(Command command);
 	public List<ArticleDTO> getBySearch(Command command);
 	public ArticleDTO getById(int articleId);
 	public int countAll();
@@ -15,6 +15,6 @@ public interface ArticleService {
 	public int delete(int articleId);
 	
 	public int replyInsert(ReplyDTO reply);
-	public List<ReplyDTO> getReply(int articleId);
+	public List<ReplyDTO> getReplyAll(int articleId);
 	
 }

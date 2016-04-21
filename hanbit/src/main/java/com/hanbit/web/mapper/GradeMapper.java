@@ -11,7 +11,7 @@ public interface GradeMapper {
 		// C 성적표 등록 
 		public int insert(GradeDTO grade); // 추상 메소드
 		// R 성적표 리스트 출력
-		public List<GradeDTO> selectList();
+		public List<GradeDTO> selectListAll();
 		// R 성적표 조회(이름)
 		public List<GradeDTO> selectByName(String name);
 		// R 성적표 조회(아이디)

@@ -16,33 +16,34 @@
 	<!-- 컬럼의 이름이랑 자바의 변수이름이 같으면 AS를 안써도 된다?! -->
 	<!-- 왼쪽이 데이터베이스 컬럼이름이고 오른쪽은 자바의 클래스안에 있는 인스턴스 변수이름이다. -->
 	<!-- 데베 컬럼이름과 자바의 변수이름이 같으면 상관없으나 다르면 아래와 같이 AS를 써서 맞춰줘야한다. -->
-	<select id="selectList" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.board.ArticleDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
+	<select id="selectListAll" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.board.ArticleDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
 		SELECT article_id AS articleId, 
 		<!-- 현재 필요없어 보이는 두 개의 컬럼을 데이터베이스에서 제외시켰다. -->
 		<!-- group_id AS groupId,
 		sequence_no AS sequenceNo, --> 
-		DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate,
-		read_count AS readCount,
+		title,
 		writer_name AS writerName,
 		password,
-		title,
-		content
+		content,
+		DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate,
+		read_count AS readCount
 		FROM Article
 		ORDER BY posting_date DESC <!-- 날짜 순으로 최신 글이 맨 앞에 오게 된다. -->
 		LIMIT #{startRow}, #{articleSize} <!-- 가지고 갈 게시글의 시작(startRow), 시작부터 몇개를 가지고 갈 것인지 그 숫자(ArticleSize -->
 	</select>
 	
 	<select id="selectBySearch" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.board.ArticleDTO">
-		SELECT article_id AS articleId, 
-			   <!-- 현재 필요없어 보이는 두 개의 컬럼을 데이터베이스에서 제외시켰다. -->
-			   <!-- group_id AS groupId,
-			   sequence_no AS sequenceNo, --> 
-			   DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate, <!-- 데이터베이스에 date타입으로 저장된 posting_date 컬럼의 값을 ArticleDTO에 postingDate(String 타입)에 저장하기 위한 작업 -->
-			   read_count AS readCount,
-			   writer_name AS writerName,
-			   password,
-			   title,
-			   content
+		SELECT 
+			article_id AS articleId, 
+			<!-- 현재 필요없어 보이는 두 개의 컬럼을 데이터베이스에서 제외시켰다. -->
+			<!-- group_id AS groupId,
+			sequence_no AS sequenceNo, --> 
+			title,
+			writer_name AS writerName,
+			password,
+			content,
+			DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate, <!-- 데이터베이스에 date타입으로 저장된 posting_date 컬럼의 값을 ArticleDTO에 postingDate(String 타입)에 저장하기 위한 작업 -->
+			read_count AS readCount
 		FROM Article
 		<!-- ${keyField}는 데이터베이스에 컬럼명을 의미(우리는 title 또는 name 둘 중 하나만 컨트롤러에서 보냈다) -->
 		<!-- 해당 컬럼에서 keyword(검색할 내용)와 같은 내용이 한개라도 있으면 모두 검사해준다. -->
@@ -52,14 +53,19 @@
 	</select>
 	
 	<select id="selectById" parameterType="int" resultType="com.hanbit.web.board.ArticleDTO">
-		SELECT article_id AS articleId, 
-		posting_date AS postingDate,
-		read_count AS readCount,
-		writer_name AS writerName,
-		password,
-		title, 
-		content
-		FROM Article WHERE article_id = #{articleId}
+		SELECT 
+			article_id AS articleId, 
+			<!-- 현재 필요없어 보이는 두 개의 컬럼을 데이터베이스에서 제외시켰다. -->
+			<!-- group_id AS groupId,
+			sequence_no AS sequenceNo, --> 
+			title,
+			writer_name AS writerName,
+			password,
+			content,
+			DATE_FORMAT(posting_date,'%Y-%m-%d %T') AS postingDate, <!-- 데이터베이스에 date타입으로 저장된 posting_date 컬럼의 값을 ArticleDTO에 postingDate(String 타입)에 저장하기 위한 작업 -->
+			read_count AS readCount
+		FROM Article
+		WHERE article_id = #{articleId}
 	</select>
 	
 	<select id="countAll" resultType="int"> <!-- 총 게시글이 몇개인지 반환 -->
@@ -97,7 +103,7 @@
 		VALUES(#{articleId}, #{writerName}, SYSDATE(), #{reply_content})
 	</insert>
 	
-	<select id="getReply" parameterType="int" resultType="com.hanbit.web.board.ReplyDTO"> 
+	<select id="selectReplyAll" parameterType="int" resultType="com.hanbit.web.board.ReplyDTO"> 
 		SELECT reply_seq, 
 		article_id AS articleId,
 		writer_name AS writerName,

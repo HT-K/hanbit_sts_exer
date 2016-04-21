@@ -24,10 +24,10 @@ public class RecordServiceImpl implements RecordService {
 	}*/
 	
 	@Override
-	public List<RecordDTO> getList(Command command) {
+	public List<RecordDTO> getListAll(Command command) {
 		logger.info("== getList() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.selectList(command);
+		return mapper.selectListAll(command);
 	}
 	@Override
 	public List<RecordDTO> getByName(Command command) {
@@ -48,10 +48,10 @@ public class RecordServiceImpl implements RecordService {
 		return mapper.selectByIdWithExamDate(command);
 	} 
 	@Override
-	public int countAll() {
+	public int count() {
 		logger.info("== countAll() 진입 ==");
 		RecordMapper mapper = sqlSession.getMapper(RecordMapper.class);
-		return mapper.countAll();
+		return mapper.count();
 	}
 	@Override
 	public int update(RecordDTO record) {

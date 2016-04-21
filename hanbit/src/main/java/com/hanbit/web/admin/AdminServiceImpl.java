@@ -18,33 +18,33 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired SqlSession session;
 	
 	@Override
-	public List<AdminDTO> getAdminList() {
-		logger.info("AdminService - getAdminList() 진입");
+	public List<AdminDTO> getListAll() {
+		logger.info("AdminService - getListAll() 진입");
 		AdminMapper mapper = session.getMapper(AdminMapper.class);
-		return mapper.selectAdminList();
+		return mapper.selectListAll();
 	}
 	
 	@Override
-	public List<AdminDTO> getAdminByName(String name) {
+	public List<AdminDTO> getByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public AdminDTO adminLogin(AdminDTO admin) {
+	public AdminDTO login(AdminDTO admin) {
 		logger.info("AdminService - adminLogin() 진입");
 		AdminMapper mapper = session.getMapper(AdminMapper.class);
-		return mapper.adminLogin(admin);
+		return mapper.login(admin);
 	}
 	
 	@Override
-	public AdminDTO getAdminById(String id) {
+	public AdminDTO getById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public int getAdminCount() {
+	public int count() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

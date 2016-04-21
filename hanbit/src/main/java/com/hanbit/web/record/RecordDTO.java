@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RecordDTO{
-	private int seq;
+	private int recordSeq;
 	private String id;
 	private String name;
 	private String subject;
@@ -12,12 +12,12 @@ public class RecordDTO{
 	private String examDate;
 	private String profId;
 	private String profName;
-	
-	public int getSeq() {
-		return seq;
+
+	public int getRecordSeq() {
+		return recordSeq;
 	}
-	public void setSeq(int seq) {
-		this.seq = seq;
+	public void setRecordSeq(int recordSeq) {
+		this.recordSeq = recordSeq;
 	}
 	public String getId() {
 		return id;
@@ -61,5 +61,4 @@ public class RecordDTO{
 	public void setProfName(String profName) {
 		this.profName = profName;
 	}
-	
 }

@@ -9,7 +9,9 @@ public class SubjectDTO {
 	private String profId;
 	private String profName;
 	
-	
+	public SubjectDTO() {
+		// 기본 생성자만 있으면 된다~
+	}
 	
 	public int getSubjSeq() {
 		return subjSeq;

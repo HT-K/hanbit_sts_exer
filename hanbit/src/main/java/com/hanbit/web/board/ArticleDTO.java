@@ -5,15 +5,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArticleDTO{
 	private int articleId;
-	private int groupId;
-	private String sequenceNo;
-	private String postingDate;
-	private int readCount;
+	private String title;
 	private String writerName;
 	private String password;
-	private String title;
 	private String content;
-	
+	private String postingDate;
+	private int readCount;
 	
 	public int getArticleId() {
 		return articleId;
@@ -21,30 +18,11 @@ public class ArticleDTO{
 	public void setArticleId(int articleId) {
 		this.articleId = articleId;
 	}
-	public int getGroupId() {
-		return groupId;
+	public String getTitle() {
+		return title;
 	}
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
-	public String getSequenceNo() {
-		return sequenceNo;
-	}
-	public void setSequenceNo(String sequenceNo) {
-		this.sequenceNo = sequenceNo;
-	}
-
-	public String getPostingDate() {
-		return postingDate;
-	}
-	public void setPostingDate(String postingDate) {
-		this.postingDate = postingDate;
-	}
-	public int getReadCount() {
-		return readCount;
-	}
-	public void setReadCount(int readCount) {
-		this.readCount = readCount;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getWriterName() {
 		return writerName;
@@ -58,20 +36,28 @@ public class ArticleDTO{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getPostingDate() {
+		return postingDate;
+	}
+	public void setPostingDate(String postingDate) {
+		this.postingDate = postingDate;
+	}
+	public int getReadCount() {
+		return readCount;
+	}
+	public void setReadCount(int readCount) {
+		this.readCount = readCount;
+	}
+
 	
-	// sequenceNo를 이용해서 게시글의 중첩레벨을 구한다.
+	
+	/*// sequenceNo를 이용해서 게시글의 중첩레벨을 구한다.
 	public int getLevel() {
 		if (sequenceNo == null) {
 			return -1;
@@ -89,5 +75,5 @@ public class ArticleDTO{
 			return 2;
 		}
 		return 3;
-	}
+	}*/
 }

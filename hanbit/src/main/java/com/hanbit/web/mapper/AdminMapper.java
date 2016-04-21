@@ -11,15 +11,15 @@ import com.hanbit.web.member.MemberDTO;
 @Repository
 public interface AdminMapper {
 		// R 관리자 리스트 출력
-		public List<AdminDTO> selectAdminList();
+		public List<AdminDTO> selectListAll();
 		// R 교수 조회(이름)
-		public List<AdminDTO> selectAdminByName(String name);
+		public List<AdminDTO> selectByName(String name);
 		// R 관리자 로그인
-		public AdminDTO adminLogin(AdminDTO admin);
+		public AdminDTO login(AdminDTO admin);
 		// R 교수 조회(아이디)
-		public AdminDTO selectAdminById(String id);
+		public AdminDTO selectById(String id);
 		// R Admin 테이블 데이터 수 조회
-		public int selectAdminCount();
+		public int count();
 		// U 성적표 수정
 		public int update(AdminDTO admin);
 		// D 성적표 삭제

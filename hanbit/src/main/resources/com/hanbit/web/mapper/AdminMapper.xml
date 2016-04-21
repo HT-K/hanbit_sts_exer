@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanbit.web.mapper.AdminMapper"> <!-- mapper 타입의 namespace(com.hanbit.web.mapper.MemberMapper)에 아래 sql문이 실행되어 리턴된 값을 해당 메소드(id 값)에 넘겨준다. 그래서 DAO는 인터페이스만 있으면 되는것 -->
 	
-	<select id="selectAdminList" resultType="com.hanbit.web.admin.AdminDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
+	<select id="selectListAll" resultType="com.hanbit.web.admin.AdminDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
 		SELECT 
 			a.id AS id,
 			a.password AS password,
@@ -17,43 +17,46 @@
 		WHERE a.id = s.prof_id <!-- 해당 교수가 담당하는 과목도 출력해주기 위해 서브젝트 테이블과 조인했다! -->
 	</select>
 	
-	<select id="selectAdminByName" parameterType="String" resultType="com.hanbit.web.admin.AdminDTO">
+	<select id="selectByName" parameterType="String" resultType="com.hanbit.web.admin.AdminDTO">
 		SELECT 
-			id,
-			password,
-			name,
-			addr,
-			birth,
-			cate
-		FROM Admin
-		WHERE name = #{name}
+			a.id AS id,
+			a.password AS password,
+			a.name AS name,
+			a.addr AS addr,
+			a.birth AS birth,
+			a.cate AS cate,
+			s.subj_name AS subjName
+		FROM Admin a, subject s
+		WHERE a.name = #{name} AND a.id = s.prof_id <!-- 해당 교수가 담당하는 과목도 출력해주기 위해 서브젝트 테이블과 조인했다! -->
 	</select>
 	
-	<select id="adminLogin" parameterType="com.hanbit.web.admin.AdminDTO" resultType="com.hanbit.web.admin.AdminDTO">
+	<select id="login" parameterType="com.hanbit.web.admin.AdminDTO" resultType="com.hanbit.web.admin.AdminDTO">
 		SELECT 
-			id,
-			password,
-			name,
-			addr,
-			birth,
-			cate
-		FROM Admin
-		WHERE id = #{id} AND password = #{password}
+			a.id AS id,
+			a.password AS password,
+			a.name AS name,
+			a.addr AS addr,
+			a.birth AS birth,
+			a.cate AS cate,
+			s.subj_name AS subjName
+		FROM Admin a, subject s
+		WHERE a.id = #{id} AND a.password = #{password} AND a.id = s.prof_id <!-- 해당 교수가 담당하는 과목도 출력해주기 위해 서브젝트 테이블과 조인했다! -->
 	</select>
 	
-	<select id="selectAdminById" parameterType="String" resultType="com.hanbit.web.admin.AdminDTO">
+	<select id="selectById" parameterType="String" resultType="com.hanbit.web.admin.AdminDTO">
 		SELECT 
-			id,
-			password,
-			name,
-			addr,
-			birth,
-			cate
-		FROM Admin
-		WHERE id = #{id}
+			a.id AS id,
+			a.password AS password,
+			a.name AS name,
+			a.addr AS addr,
+			a.birth AS birth,
+			a.cate AS cate,
+			s.subj_name AS subjName
+		FROM Admin a, subject s
+		WHERE a.id = #{id} AND a.id = s.prof_id
 	</select>
 	
-	<select id="selectAdminCount" resultType="int">
+	<select id="count" resultType="int">
 		SELECT COUNT(*)
 		FROM Admin
 	</select>

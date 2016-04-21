@@ -18,16 +18,18 @@ public class SubjectServiceImpl implements SubjectService{
 	
 	@Override
 	public int insert(SubjectDTO subject) {
+		// C 과목 생성
 		logger.info("SubjectService - insert() 진입");
 		SubjectMapper mapper = sqlSession.getMapper(SubjectMapper.class);
 		return mapper.insert(subject);
 	}
 
 	@Override
-	public List<SubjectDTO> getList() {
-		logger.info("SubjectService - getList() 진입");
+	public List<SubjectDTO> getListAll() {
+		// R 모든 과목 리스트 검색
+		logger.info("SubjectService - getListAll() 진입");
 		SubjectMapper mapper = sqlSession.getMapper(SubjectMapper.class);
-		return mapper.selectList();
+		return mapper.selectListAll();
 	}
 
 	@Override
@@ -46,13 +48,15 @@ public class SubjectServiceImpl implements SubjectService{
 
 	@Override
 	public int getCount() {
+		// R 과목 개수 조회
 		logger.info("SubjectService - getCount() 진입");
 		SubjectMapper mapper = sqlSession.getMapper(SubjectMapper.class);
-		return mapper.selectCount();
+		return mapper.count();
 	}
 
 	@Override
 	public int update(SubjectDTO subject) {
+		// U 과목 업데이트
 		logger.info("SubjectService - update() 진입");
 		SubjectMapper mapper = sqlSession.getMapper(SubjectMapper.class);
 		return mapper.update(subject);
@@ -60,6 +64,7 @@ public class SubjectServiceImpl implements SubjectService{
 
 	@Override
 	public int delete(SubjectDTO subject) {
+		// D 과목 삭제
 		logger.info("SubjectService - delete() 진입");
 		SubjectMapper mapper = sqlSession.getMapper(SubjectMapper.class);
 		return mapper.delete(subject);

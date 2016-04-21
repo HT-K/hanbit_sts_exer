@@ -46,7 +46,7 @@ public class ArticleController {
 			logger.info("현재 endRow = {}", command.getEndRow());
 			logger.info("현재 totalPages = {}", command.getTotalPages());
 			
-			model.addAttribute("article", service.getList(command));
+			model.addAttribute("article", service.getListAll(command));
 		} else {
 			// keyword의 내용을 포함하는 게시물의 수를 데이터베이스에서 구해서 command 객체에 set해줌
 			command.setKeyField(keyField);
@@ -138,7 +138,7 @@ public class ArticleController {
 		logger.info("게시글 댓글들만 가져오기 메소드 진입 성공");
 		
 		// 댓글을 가져오려면 해당 게시글 번호를 데이터베이스에 보내줘야한다~
-		model.addAttribute("reply", service.getReply(articleId)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
+		model.addAttribute("reply", service.getReplyAll(articleId)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
 	}
 	
 	@RequestMapping(value="/reply", method=RequestMethod.POST) // ajax로 이 URL을 호출해서 리턴 페이지가 필요없다!
@@ -156,8 +156,8 @@ public class ArticleController {
 				
 		if (res == 1) {
 			logger.info("=== replyInsert 성공 ===");
-			model.addAttribute("reply", service.getReply(articleId)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
-			for (ReplyDTO temp : service.getReply(articleId)) {
+			model.addAttribute("reply", service.getReplyAll(articleId)); // JSON 형태로 $.ajax()의 success에 값이 보내진다.
+			for (ReplyDTO temp : service.getReplyAll(articleId)) {
 				logger.info("작성자 : {}", temp.getWriterName());
 				logger.info("댓글 내용 : {}", temp.getReply_content());
 			}

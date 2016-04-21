@@ -7,78 +7,59 @@ public class MemberDTO {
 	private String id; 
 	private String password; 
 	private String name; 
-	private String addr; 
-	private String role;
-
-	private int birth,cate;
-	
+	private String addr;
+	private int birth;
 	private String major;
 	private String subject;
 	private String profileImg;
+	private int cate;
 	
-	public MemberDTO() {}
+	private String role; // 디비에서 가져오는 것이 아님, 디비에서 cate 값을 가져오면 util의 User(Enum)에 있는 valueOf 메소드를 이용해 해당 회원의 role을 지정하게 된다.
 	
-	public MemberDTO(String id, String password, String name, String addr, int birth, int cate, String role, String major, String subject, String profileImg) {
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.addr = addr;
-		this.birth = birth;
-		this.cate = cate;
-		this.role = role;
-		this.major = major;
-		this.subject = subject;
-		this.profileImg = profileImg;
+	public MemberDTO() {
+		// 기본 생성자만 있으면 된다~
 	}
+
 
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getAddr() {
 		return addr;
 	}
+
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+
 	public int getBirth() {
 		return birth;
 	}
+
 	public void setBirth(int birth) {
 		this.birth = birth;
 	}
-
-	public int getCate() {
-		return cate;
-	}
-
-	public void setCate(int cate) {
-		this.cate = cate;
-	}
-	
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-	
-	
 
 	public String getMajor() {
 		return major;
@@ -102,6 +83,22 @@ public class MemberDTO {
 
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
+	}
+
+	public int getCate() {
+		return cate;
+	}
+
+	public void setCate(int cate) {
+		this.cate = cate;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Override

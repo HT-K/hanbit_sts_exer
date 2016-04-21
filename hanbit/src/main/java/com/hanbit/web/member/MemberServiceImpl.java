@@ -21,71 +21,61 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired MemberDTO member; // 이렇게 싱글톤 패턴으로 써도 되고 지역 변수로 선언해서 사용해도 된다. 둘다 메모리 점유율을 낮추는 방법이기 때문이다.
 	
 	@Override
-	public int join(MemberDTO member) {
-		// 회원가입
-		logger.info("MemberServie - join() 진입 후 ");
-		
+	public int insert(MemberDTO member) {
+		// C 회원 가입(등록)
+		logger.info("MemberServie - insert() 진입 후 ");
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		
-		int res = mapper.insert(member);
-		
-		return res;
+		return mapper.insert(member);
 	}
 	
 	@Override
 	public MemberDTO login(MemberDTO member) {
-		// 로그인
+		// R 회원 로그인
 		logger.info("memberService-login() 진입 후 id = {}", member.getId());
 		// MemberMapper.class -> MemberMapper 인터페이스를 class화 시켜라 (~~~.zip은 ~~~를 압축파일로 만들어라 라는 뜻이랑 비슷한 것으로 생각하자.)
 		// MemberMapper.xml 은 MemberMapper 인터페이스를 매핑해서 해당 메소드들에 맞는 쿼리문을 실행해서 결과 값을 얻게 했다. MemberMapper 인터페이스를 매핑한 MemberMapper.xml의 정보를 sqlSession에 담게된다.
 		// 이렇게 되면 MemberMapper 인터페이스를 매핑하여 구현한 객체를 리턴 받은 mapper은 해당 메소드를 호출하여 xml의 쿼리문 실행 결과 값을 받아올 수 있게된다.
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
-		member = mapper.login(member); // MemberMapper.xml 의 주소 값이 mapper에 들어있고 그 중 login이라는 id를 가진 곳의 요소 값을 가져와서 member에 담는 것~
-		
-		if (member != null) {
+		MemberDTO temp = mapper.login(member);
+		if (temp.getId().equals(member.getId())) { // 디비에서 가져온 회원 정보를 담은 temp의 id와 컨트롤러에서 가져온 member의 id를 비교해서 같을 경우 로그인 성공
 			logger.info("memberService :login() 성공 후 id = {}", member.getId());
 		} else {
 			logger.info("memberService :login() 실패 ");
 		}
-		return member;
+		return temp; // 디비에서 가지고 온 temp를 컨트롤러에 보내준다.
 	}
 	
 	@Override
-	public List<MemberDTO> getMemList() {
-		// 모든 회원 리스트
-		
+	public List<MemberDTO> getListAll() {
+		// R 모든 회원 리스트 검색
 		// xml은 인터페이스를 매핑하고 있다. 서로 연결이 되어있는 상황, 연결한 인터페이스는 xml에서 구현한 것이라고 보면된다 (DAOImpl이라고 생각하면 쉽당)
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
-		List<MemberDTO> list = new ArrayList<MemberDTO>(); // 리턴 값을 받은 것이 있으면 해당 변수는 지역 변수로 만들어서 사용한다.
-		
-		list = mapper.selectList(); // MemberMapper.xml 의 주소 값이 mapper에 들어있고 그 중 login이라는 id를 가진 곳의 요소 값을 가져와서 member에 담는 것~
-		
-		return list;
+		return mapper.selectListAll();
 	}
 	
 	@Override
-	public MemberDTO getMemById(String id) {
-		// TODO Auto-generated method stub
-		logger.info("memberService - getMemById() 진입 후 id = {}", id);
+	public MemberDTO getById(String id) {
+		// R 아이디로 회원 정보 검색
+		logger.info("memberService - getMemById() 진입");
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
 		return mapper.selectById(id);
 	}
 
 	@Override
-	public List<MemberDTO> getMemsByName(MemberDTO member) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MemberDTO> getByName(MemberDTO member) {
+		// R 이름으로 회원 정보 검색
+		logger.info("memberService - getByName() 진입 ");
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
+		return mapper.selectByName(member);
 	}
 	
 	@Override
 	public boolean isMember(String id) {
-		// 회원인지 아닌지 검사
-		logger.info("MemberServie - isMember() 진입 후 ");
-		
+		// R 회원인지 아닌지 검사
+		logger.info("MemberServie - isMember() 진입");
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
 		MemberDTO member = mapper.selectById(id); // MemberMapper.xml 의 주소 값이 mapper에 들어있고 그 중 login이라는 id를 가진 곳의 요소 값을 가져와서 member에 담는 것~
-		
-		if (member != null) {
+		if (!(member.getId().equals(id))) { // 디비에서 가져온 member 객체의 id와 컨트롤러에서 받아온 id 값이 같지 않으면 회원이 아닌것!
 			return true;
 		} else {
 			return false;
@@ -94,31 +84,25 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int count() {
-		// TODO Auto-generated method stub
-		return 0;
+		// R 회원 수 조회
+		logger.info("MemberServie - count() 진입");
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.count();
 	}
 	
 	@Override
 	public int update(MemberDTO member) {
-		// 수정
-		logger.info("MemberServie - update() 진입 후 ");
-		
+		// U 회원 정보 업데이트
+		logger.info("MemberServie - update() 진입");
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		
-		int res = mapper.update(member);
-		
-		return res;
+		return mapper.update(member);
 	}
 
 	@Override
-	public int remove(MemberDTO member) {
-		// 삭제
-		logger.info("MemberServie - remove() 진입 후 ");
-		
+	public int delete(MemberDTO member) {
+		// D 회원 정보 삭제
+		logger.info("MemberServie - remove() 진입");
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		
-		int res = mapper.delete(member);
-		
-		return res;
+		return mapper.delete(member);
 	}
 }

@@ -15,13 +15,13 @@ public interface GradeService {
 	// C 성적표 등록 
 	public int insert(GradeDTO grade); // 추상 메소드
 	// R 성적표 리스트 출력
-	public List<GradeDTO> getList();
+	public List<GradeDTO> getListAll();
 	// R 성적표 조회(이름)
 	public List<GradeDTO> getByName(String name);
 	// R 성적표 조회(아이디)
 	public GradeDTO getById(String id);
-	// R 카운트 조회
-	public int getCount();
+	// R 성적 테이블 카운트 조회
+	public int count();
 	// U 성적표 수정
 	public int update(GradeDTO grade);
 	// D 성적표 삭제

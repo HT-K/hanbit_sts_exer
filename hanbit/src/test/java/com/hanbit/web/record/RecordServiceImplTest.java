@@ -33,7 +33,7 @@ public class RecordServiceImplTest {
 	public void testInsert() { // Record의 insert는 Grade 테이블에 성적을 입력하는 것과 같다 (왜냐하면 이미 등록된 멤버에게 성적을 입력하면 Record View가 자동으로 최신화 되기 때문!)
 		GradeMapper mapper = session.getMapper(GradeMapper.class);
 		grade.setId("hong");
-		grade.setSubj_seq(1); 
+		grade.setSubjSeq(1); 
 		grade.setScore(200);
 		grade.setExamDate(ExamDate.getDate());
 		int check = mapper.insert(grade);
@@ -44,7 +44,7 @@ public class RecordServiceImplTest {
 	public void testGetList() { // SELECT * FROM Record
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
 		List<RecordDTO> list = new ArrayList<RecordDTO>();
-		list = mapper.selectList(command);
+		list = mapper.selectListAll(command);
 		assertThat(list.size(), is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 	
@@ -79,7 +79,7 @@ public class RecordServiceImplTest {
 	@Test
 	public void testCount() { // Record Count
 		RecordMapper mapper = session.getMapper(RecordMapper.class);
-		int count = mapper.countAll();
+		int count = mapper.count();
 		assertThat(count, is(not(0))); // null이면 빨간불 null아니면 초록불~
 	}
 	
@@ -97,7 +97,7 @@ public class RecordServiceImplTest {
 	@Test
 	public void testDelete() { // 성적 테이블의 성적 번호를 이용해서 삭제하기~
 		GradeMapper mapper = session.getMapper(GradeMapper.class);
-		grade.setScore_seq(18);
+		grade.setScoreSeq(18);
 		int check = mapper.delete(grade);
 		assertThat(check, is(1)); // null이면 빨간불 null아니면 초록불~
 	}

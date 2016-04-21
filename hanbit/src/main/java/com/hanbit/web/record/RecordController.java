@@ -21,7 +21,6 @@ public class RecordController {
 	@Autowired RecordDTO record; // 이 MemberController에 MemberDTO 객체를 가져와 달라는 뜻이다. (싱글톤)
 	@Autowired RecordService recordService; 
 	@Autowired Command command;
-	@Autowired RecordCommand recordCommand;
 	
 	@RequestMapping("/record_list")
 	public String record_list(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
@@ -31,7 +30,7 @@ public class RecordController {
 		logger.info("pageNo 체크 {}", pageNo);
 		logger.info("keyField 체크 {}", keyField);
 		
-		command = CommandFactory.createCommand("record", "record_list", pageNo, keyField, keyword, recordService.countAll());
+		command = CommandFactory.createCommand("record", "record_list", pageNo, keyField, keyword, recordService.count());
 		
 		logger.info("총 레코드 수 = {}", command.getTotalArticle());
 		logger.info("현재 페이지 = {}", command.getPageNo());
@@ -41,7 +40,7 @@ public class RecordController {
 		logger.info("현재 endRow = {}", command.getEndRow());
 		logger.info("현재 totalPages = {}", command.getTotalPages());
 			
-		model.addAttribute("record", recordService.getList(command));
+		model.addAttribute("record", recordService.getListAll(command));
 		model.addAttribute("command", command);
 		
 		return "record/record_list.admin";

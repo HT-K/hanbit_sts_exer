@@ -24,22 +24,22 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleDTO> getList(Command command) {
-		logger.info("ArticleService - selectList() 진입");
+	public List<ArticleDTO> getListAll(Command command) {
+		logger.info("ArticleService - getListAll() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.selectList(command);
+		return mapper.selectListAll(command);
 	}
 
 	@Override
 	public List<ArticleDTO> getBySearch(Command command) {
-		logger.info("ArticleService - selectByName() 진입");
+		logger.info("ArticleService - getBySearch() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
 		return mapper.selectBySearch(command);
 	}
 
 	@Override
 	public ArticleDTO getById(int articleId) {
-		logger.info("ArticleService - selectById() 진입");
+		logger.info("ArticleService - getById() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
 		return mapper.selectById(articleId);
 	}
@@ -80,9 +80,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ReplyDTO> getReply(int articleId) {
-		logger.info("ArticleService - getReply() 진입");
+	public List<ReplyDTO> getReplyAll(int articleId) {
+		logger.info("ArticleService - getReplyAll() 진입");
 		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
-		return mapper.getReply(articleId);
+		return mapper.selectReplyAll(articleId);
 	}	
 }

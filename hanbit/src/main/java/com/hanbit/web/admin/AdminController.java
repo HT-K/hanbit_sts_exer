@@ -47,7 +47,7 @@ public class AdminController {
 		AdminDTO param = new AdminDTO();
 		param.setId(id);
 		param.setPassword(password);
-		admin = adminService.adminLogin(param);
+		admin = adminService.login(param);
 		logger.info("=== 디비 다녀오기 성공 ===");
 		admin.setRole(User.valueOf(admin.getCate())); // 데이터베이스에서 가져온 cate 값에 따른 role 지정 (global -> user 이넘에 구현해놓음)
 		String view = "";
@@ -80,14 +80,14 @@ public class AdminController {
 	public @ResponseBody MemberDTO getMemberProfile(
 			@PathVariable("id")String id){
 		logger.info("=== getMemberProfile() ===");
-		return memberService.getMemById(id);
+		return memberService.getById(id);
 	}
 	
 	@RequestMapping("/admin_list") // admin 테이블 내용 전부 보기
 	public @ResponseBody List<AdminDTO> admin_list(
 			Model model){
 		logger.info("=== admin_list() ===");
-		List<AdminDTO> list = adminService.getAdminList(); // admin 테이블에 저장된 모든 admin을 리스트에 담아 가져온다
+		List<AdminDTO> list = adminService.getListAll(); // admin 테이블에 저장된 모든 admin을 리스트에 담아 가져온다
 		for (AdminDTO temp : list) {
 			temp.setRole(User.valueOf(temp.getCate())); // 가져온 관리자 리스트의 내용 중 role을 셋하기 위해 for-each문으로 하나씩 꺼내 cate와 User(enum)를 이용해 role 값을 세팅한다.
 		}

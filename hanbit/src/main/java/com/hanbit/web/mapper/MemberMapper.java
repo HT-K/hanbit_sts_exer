@@ -7,12 +7,22 @@ import com.hanbit.web.member.MemberDTO;
 
 @Repository
 public interface MemberMapper { // void 타입이 존재하지 않는다. 
-	public int insert(MemberDTO member); // 회원가입 시 내용 데이터베이스에 저장
-	public MemberDTO login(MemberDTO member); // 로그인 체크
-	public List<MemberDTO> selectList(); // 모든 학생을 리스트에 담아야한다. (관리자 페이지에 보여주기 위함)
-	public List<MemberDTO> selectByName(MemberDTO member); // 회원 상세 정보 출력을 위함 (name 이용)
-	public MemberDTO selectById(String id); // 회원 상세 정보 출력을 위함 (id 이용)
-	public int count();
-	public int update(MemberDTO member); // 업데이트로 내용 변경 시 데이터베이스 내용도 변경
-	public int delete(MemberDTO member); // 회원 탈퇴
+	// C 회원 가입(등록)
+		public int insert(MemberDTO member); 
+		// R 모든 회원 리스트 검색
+		public List<MemberDTO> selectListAll();
+		// R 이름으로 회원 정보 검색 (중복된 이름 허용)
+		public List<MemberDTO> selectByName(MemberDTO member); 
+		// R 로그인 한 회원 정보 검색
+		public MemberDTO login(MemberDTO member); 
+		// R 아이디로 회원 정보 검색
+		public MemberDTO selectById(String id); 
+		// R 회원인지 아닌지 검사
+		public boolean isMember(String id);
+		// R 회원 수 카운트
+		public int count();
+		// U 회원 정보 업데이트
+		public int update(MemberDTO member);
+		// D 회원 정보 삭제
+		public int delete(MemberDTO member);
 }

@@ -10,11 +10,17 @@
 	<!-- Auto_Increment 해놓은 score_seq는 useGeneratedKeys 속성과 keyProperty 속성으로 자동 증가되게 설정한다!-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="score_seq" parameterType="com.hanbit.web.grade.GradeDTO"> 
 		INSERT INTO Grade(id, subj_seq, score, exam_date)
-		VALUES (#{id}, #{subj_seq}, #{score}, #{examDate});
+		VALUES (#{id}, #{subjSeq}, #{score}, #{examDate});
 	</insert>
 	
-	<select id="selectList" resultType="com.hanbit.web.grade.GradeDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
-		SELECT * FROM Grade;
+	<select id="selectListAll" resultType="com.hanbit.web.grade.GradeDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
+		SELECT 
+			score_seq AS scoreSeq,
+			id,
+			subj_seq AS subjSeq,
+			score
+			exam_date AS examDate
+		FROM Grade;
 	</select>
 	
 	<select id="selectByName" parameterType="String" resultType="com.hanbit.web.grade.GradeDTO">
@@ -26,7 +32,8 @@
 	</select>
 	
 	<select id="count" resultType="int">
-		
+		SELECT COUNT(*)
+		FROM Grade
 	</select>
 	
 	<!-- insert, update, delete 같은 경우는 오라클에서 성공여부로 자동으로 int 값을 준다. 이 때는 resultType을 명시하지 않아도 된다. -->

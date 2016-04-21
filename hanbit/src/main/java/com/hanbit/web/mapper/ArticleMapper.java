@@ -11,7 +11,7 @@ import com.hanbit.web.global.Command;
 @Repository
 public interface ArticleMapper {
 	public int insert(ArticleDTO article);
-	public List<ArticleDTO> selectList(Command command);
+	public List<ArticleDTO> selectListAll(Command command);
 	public List<ArticleDTO> selectBySearch(Command command);
 	public ArticleDTO selectById(int articleId);
 	public int countAll();
@@ -20,5 +20,5 @@ public interface ArticleMapper {
 	public int delete(int articleId);
 	
 	public int replyInsert(ReplyDTO reply);
-	public List<ReplyDTO> getReply(int articleId);
+	public List<ReplyDTO> selectReplyAll(int articleId);
 }

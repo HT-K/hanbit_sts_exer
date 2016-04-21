@@ -10,8 +10,16 @@ public class AdminDTO{
 	private String addr;
 	private int birth;
 	private int cate;
+	
+	// Admin 테이블에는 없는 컬럼들이다.
+	// subjName는 Subject 테이블의 id와 비교해서 같은 값에 해당하는 과목명을 받아와서 set하고
+	// role은 cate와 util패키지에 있는 User(Enum)의 ValueOf() 메소드를 이용해서 set한다.
 	private String subjName;
 	private String role;
+	
+	public AdminDTO() {
+		// 기본 생성자만 있으면 된다~
+	}
 	
 	public String getId() {
 		return id;

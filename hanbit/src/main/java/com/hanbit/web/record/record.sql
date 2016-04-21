@@ -6,7 +6,7 @@ SELECT * FROM Record;
 CREATE OR REPLACE VIEW Record -- REPLACE는 오버라이드 의미이다. (뷰의 장점), 추가 되는 컬럼이 있으면 적고 다시 CREATE VIEW를 해도 된다! (원래는 DROP하고 다시해야되지만 REPLACE가 붙어 있어서 가능하다!)
 AS
 SELECT
-	g.score_seq AS seq, -- int
+	g.score_seq AS record_seq, -- int
 	g.id AS id, -- varchar
 	m.name AS name, -- varchar
 	s.subj_name AS subject, -- varchar
@@ -20,7 +20,7 @@ WHERE m.id = g.id AND g.subj_seq = s.subj_seq AND a.id = s.prof_id
 
 -------------------------------------------------
 -- INSERT Test
-INSERT INTO Record(seq, id, name, subject, score, exam_date, prof_id, prof_name)
+INSERT INTO Record(score_seq, id, name, subject, score, exam_date, prof_id, prof_name)
 VALUES(13, 'song', '송중기', 'java', 80, '2016-03-31', 'prof_kim', '김교수');
 
 -- 위 INSERT는 실패할 것이다. 여러 테이블에 걸쳐져 있는 Join View는 강제로 insert 할 수 없다 (Can not modify more than one base table through a join view 'rainbow.record')

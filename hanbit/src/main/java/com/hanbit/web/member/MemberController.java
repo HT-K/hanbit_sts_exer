@@ -50,7 +50,7 @@ public class MemberController {
 		param.setBirth(birth);
 		param.setCate(cate);
 		
-		int res = service.join(param);
+		int res = service.insert(param);
 		String view = "";
 		
 		if (res == 1) {
@@ -112,7 +112,7 @@ public class MemberController {
 	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴
 	public @ResponseBody List<MemberDTO> member_list(Model model) {
 		logger.info("member_list 진입 ");
-		return service.getMemList();
+		return service.getListAll();
 	}
 	
 /*	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴, 이렇게 리턴 값으로 모델을 던져도됨.
@@ -136,7 +136,7 @@ public class MemberController {
 	public String getMembersByName(@PathVariable("name")String name) {
 		MemberDTO param = new MemberDTO();
 		param.setName(name);
-		List<MemberDTO> list = service.getMemsByName(param);
+		List<MemberDTO> list = service.getByName(param);
 		return "member/member_list";
 	}
 	
@@ -144,8 +144,8 @@ public class MemberController {
 	public String getMemberContent(@PathVariable("id")String id,Model model){
 		logger.info("=== member-getMemberContent() ===");
 		if (service.isMember(id)) {
-			member = service.getMemById(id);
-			member.setRole(User.valueOf(service.getMemById(id).getCate()));
+			member = service.getById(id);
+			member.setRole(User.valueOf(service.getById(id).getCate()));
 			model.addAttribute("member",member);
 		} else {
 			model.addAttribute("member","");
@@ -158,7 +158,7 @@ public class MemberController {
 		logger.info("=== member-getMemberById() ===");
 		member = (MemberDTO) session.getAttribute("user");
 		if (service.isMember(member.getId())) {
-			member = service.getMemById(member.getId());
+			member = service.getById(member.getId());
 			member.setRole(User.valueOf(member.getCate()));
 			model.addAttribute("member",member);
 		} else {
@@ -263,7 +263,7 @@ public class MemberController {
 		logger.info("=== member - delete() ===");
 		
 		MemberDTO param = (MemberDTO) session.getAttribute("user"); // 세션 객체에 user로 저장되어 있는 MemberDTO 객체를 가져온다. 
-		int res = service.remove(param); // serviceImpl에 remove메소드 호출~
+		int res = service.delete(param); // serviceImpl에 remove메소드 호출~
 		
 		if (res == 1) {
 			logger.info("삭제 성공 : {}", member.getId());

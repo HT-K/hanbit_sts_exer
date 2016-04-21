@@ -13,7 +13,7 @@
 		VALUES (#{subjName}, #{profId}, #{profName});
 	</insert>
 	
-	<select id="selectList" resultType="com.hanbit.web.subject.SubjectDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
+	<select id="selectListAll" resultType="com.hanbit.web.subject.SubjectDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
 		<!-- 교수 이름을 가져오기 위해 Admin 테이블과 JOIN -->
 		<!-- Subject 테이블과 Admin 테이블의 id 값을 비교해서 같으면 name을 가져온다. -->
 		SELECT
@@ -22,7 +22,7 @@
 			s.prof_id AS profID,
 			a.name AS profName
 		FROM Subject s, Admin a
-		WHERE s.prof_id = a.id;
+		WHERE s.prof_id = a.id; 
 	</select>
 	
 	<select id="selectByName" parameterType="String" resultType="com.hanbit.web.subject.SubjectDTO">

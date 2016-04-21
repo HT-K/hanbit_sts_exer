@@ -9,26 +9,26 @@
 		VALUES (#{id}, #{subj_seq}, #{score}, #{examDate});
 	</insert> -->
 
-	<select id="selectList" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.record.RecordDTO">
-		SELECT seq,
+	<select id="selectListAll" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.record.RecordDTO">
+		SELECT record_seq AS recordSeq,
 			id,
 			name,
 			subject,
 			score,
-			DATE_FORMAT(exam_date,'%Y-%m-%d %T') AS examDate,
+			DATE_FORMAT(exam_date,'%Y-%m-%d') AS examDate,
 			prof_id AS profID,
 			prof_name AS profName
 		FROM Record
-		ORDER BY exam_date DESC <!-- 날짜 순으로 최신 글이 맨 앞에 오게 된다. -->
+		ORDER BY record_seq DESC <!-- record_seq 순으로 내림차순 -->
 		LIMIT #{startRow}, #{articleSize}
 	</select>
 	
 	<select id="selectByName" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.record.RecordDTO">
-		SELECT seq,
+		SELECT record_seq AS recordSeq,
 			name,
 			subject,
 			score,
-			exam_date AS examDate,
+			DATE_FORMAT(exam_date,'%Y-%m-%d') AS examDate,
 			prof_id AS profID,
 			prof_name AS profName
 		FROM Record
@@ -40,7 +40,7 @@
 			name,
 			subject,
 			score,
-			exam_date AS examDate,
+			DATE_FORMAT(exam_date,'%Y-%m-%d') AS examDate,
 			prof_id AS profID,
 			prof_name AS profName
 		FROM Record
@@ -48,18 +48,18 @@
 	</select>
 	
 	<select id="selectByIdWithExamDate" parameterType="com.hanbit.web.global.Command" resultType="com.hanbit.web.record.RecordDTO">
-		SELECT seq,
+		SELECT record_seq AS recordSeq,
 			name,
 			subject,
 			score,
-			exam_date AS examDate,
+			DATE_FORMAT(exam_date,'%Y-%m-%d') AS examDate,
 			prof_id AS profID,
 			prof_name AS profName
 		FROM Record
 		WHERE id = #{id} AND exam_date = #{examDate}
 	</select>
 	
-	<select id="countAll" resultType="int">
+	<select id="count" resultType="int">
 		SELECT COUNT(*)
 		FROM Record
 	</select>

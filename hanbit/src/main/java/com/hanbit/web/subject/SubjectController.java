@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/subject")
 public class SubjectController {
 	private static final Logger logger = LoggerFactory.getLogger(SubjectController.class);
-	@Autowired SubjectDTO subject; // 이 MemberController에 MemberDTO 객체를 가져와 달라는 뜻이다. (싱글톤)
+	@Autowired SubjectDTO subject; // 이 SubjectController에 미리 생성된 SubjectDTO 빈(객체)을 가져와 달라는 뜻이다.(싱글톤)
 	@Autowired SubjectService service; 
 	
 	@RequestMapping("list") // 아무것도 쓰지 않는 즉, 디폴트는 get방식 호출이다.
 	public String getList(
 			Model model) {
 		logger.info("=== getList() 진입 ===");
-		model.addAttribute("list", service.getList());
+		model.addAttribute("list", service.getListAll());
 		return "admin/subject_list.admin";
 	}
 }

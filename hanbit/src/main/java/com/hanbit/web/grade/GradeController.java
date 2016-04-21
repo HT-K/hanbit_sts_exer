@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hanbit.web.member.MemberController;
 import com.hanbit.web.member.MemberDTO;
 import com.hanbit.web.member.MemberService;
+import com.hanbit.web.util.ExamDate;
 
 @Controller
 @RequestMapping("/grade")
 public class GradeController {
 	private static final Logger logger = LoggerFactory.getLogger(GradeController.class);
-	@Autowired GradeService service;
-	@Autowired MemberService mService;
+	@Autowired GradeService gradeService;
+	@Autowired MemberService memberService;
 	@Autowired MemberDTO member;
 	
 	//관리자 페이지 성적 입력 창에서 입력 버튼을 눌렀을 시 호출되는 메소드
@@ -33,10 +34,11 @@ public class GradeController {
 						 @RequestParam("score")int score,
 						 Model model) {
 		logger.info("GradeController - insert() 진입");
-		GradeDTO param = new GradeDTO(id, subj_seq, score);
+		// util 패키지에 있는 ExamDate 클래스의 getDate() 메소드를 이용해서 현재 달의 말일을 받아온다.
+		GradeDTO param = new GradeDTO(id, subj_seq, score, ExamDate.getDate()); 
 		String view = "";
 		
-		if (service.insert(param) == 1) {
+		if (gradeService.insert(param) == 1) {
 			logger.info("성적 삽입 성공");
 			view =  "admin/admin_form";
 		} else {
@@ -50,9 +52,7 @@ public class GradeController {
 	@RequestMapping("/graList") 
 	public String graList(Model model) {
 		logger.info("GradeController - graList() 진입");
-		List<GradeDTO> list = new ArrayList<GradeDTO>();
-		list = service.getList();
-		model.addAttribute("grade", list);
+		model.addAttribute("grade", gradeService.getListAll());
 		return "grade/grade_list";
 	}
 	
@@ -62,8 +62,7 @@ public class GradeController {
 					  Model model) {
 		logger.info("GradeController - add() 진입");
 		logger.info("파라미터 id 값 체크 = {}", id);
-		member = mService.getMemById(id);
-		model.addAttribute("member", member);
+		model.addAttribute("member", memberService.getById(id));
 		return "grade/grade_add";
 	}
 	
@@ -75,21 +74,26 @@ public class GradeController {
 		logger.info("id 값 체크 = {}", id);
 		
 		MemberDTO param = new MemberDTO();
-		param = mService.getMemById(id);
+		param = memberService.getById(id);
 		model.addAttribute("member", param);
 		return "grade/grade_update"; // grade_update.jsp 페이지에 id파라미터 값으로 가지고 온 학생 정보를 가지고 넘어간다.
 	}
 	
 	// 한 학생의 성적 수정 페이지에서 수정(완료)버튼을 클릭했을 시 호출되는 메소드
 	@RequestMapping(value="/update", method=RequestMethod.POST) 
-	public String update(@RequestParam("id")String id, @RequestParam("name")String name,
-			 			 @RequestParam("subj_seq")int subj_seq, @RequestParam("score")int score,
+	public String update(@RequestParam("id")String id,
+			 			 @RequestParam("subjSeq")int subjSeq, 
+			 			 @RequestParam("score")int score,
 						 Model model) {
-		logger.info("GradeController - update2() 진입");
-		GradeDTO param = new GradeDTO(id, subj_seq, score);
+		logger.info("GradeController - update() 진입");
+		GradeDTO param = new GradeDTO();
+		param.setId(id);
+		param.setSubjSeq(subjSeq);
+		param.setScore(score);
+		
 		String view = "";
 		
-		if (service.update(param) == 1) {
+		if (gradeService.update(param) == 1) {
 			logger.info("성적 수정 성공");
 			view =  "admin/admin_form";
 		} else {

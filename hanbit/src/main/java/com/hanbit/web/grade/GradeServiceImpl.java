@@ -25,11 +25,11 @@ public class GradeServiceImpl implements GradeService{
 	}
 
 	@Override
-	public List<GradeDTO> getList() { // 서비스에서 syso를 하는게 아니라 Controller로 gradeList를 던져주면 된다!
+	public List<GradeDTO> getListAll() { // 서비스에서 syso를 하는게 아니라 Controller로 gradeList를 던져주면 된다!
 		// R 성적표 리스트 출력
-		logger.info("gradeService - getList() 진입");
+		logger.info("gradeService - getListAll() 진입");
 		GradeMapper mapper = sqlSession.getMapper(GradeMapper.class);
-		return mapper.selectList();
+		return mapper.selectListAll();
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class GradeServiceImpl implements GradeService{
 	}
 
 	@Override
-	public int getCount() {
+	public int count() {
 		// R 카운트 조회
 		logger.info("gradeService-input() 진입");
 		GradeMapper mapper = sqlSession.getMapper(GradeMapper.class);

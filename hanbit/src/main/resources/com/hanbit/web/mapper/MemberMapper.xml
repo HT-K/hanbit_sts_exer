@@ -8,23 +8,38 @@
 	<!-- insert, update, delete 같은 경우는 오라클에서 성공여부로 자동으로 int 값을 준다. 이 때는 resultType을 명시하지 않아도 된다. -->
 	<!-- 그러나 select문에서 리턴 타입이 int일 경우는 resultType에 int를 명시해줘야 한다. -->
 	<insert id="insert" parameterType="com.hanbit.web.member.MemberDTO"> 
-		INSERT INTO Member(id,password,name,addr,birth) 
-		VALUES(#{id},#{password},#{name},#{addr},#{birth},#{cate})
+		INSERT INTO Member(id, password, name, addr, birth, major, subject, profile_img, cate) 
+		VALUES(#{id}, #{password}, #{name}, #{addr}, #{birth}, #{subject}, #{major}, #{profileImg}, #{cate})
 	</insert>
 	
 	<select id="login" resultType="com.hanbit.web.member.MemberDTO" parameterType="com.hanbit.web.member.MemberDTO">
-		SELECT id,name,password,addr,birth,cate,
-   			profile_img AS profileImg 
+		SELECT 
+			id,
+			name,
+			password,
+			addr,
+			birth,
+			subject,
+			major,
+   			profile_img AS profileImg,
+   			cate
    		FROM Member
 		WHERE id = #{id} and password = #{password}
 	</select>
 	
 	<!-- selectList()의 리턴 값은 List이다, 이 Mapper에서 select문으로 결과 리턴시 List가 넘어오는데 resultType가 MemberDTO인 이유는 그 List안에 있는 하나하나의 객체가 MemberDTO인지 검사하기 떄문이다!(제네릭 값만 검사한다) -->
 	<!-- 아래 쿼리문은 해당 테이블의 전체 값을 가져온다. 즉 serviceImpl 쪽에서 리턴 값을 받는 타입으로 List가 준비되어 있다면 테이블의 모든 내용을 담을 수 있다! -->
-	<select id="selectList" resultType="com.hanbit.web.member.MemberDTO"> 
+	<select id="selectListAll" resultType="com.hanbit.web.member.MemberDTO"> 
 		select 
-    		id,name,password,addr,birth,cate,
-   			profile_img AS profileImg
+    		id,
+			name,
+			password,
+			addr,
+			birth,
+			subject,
+			major,
+   			profile_img AS profileImg,
+   			cate
     	from Member
 	</select>
 	
@@ -34,8 +49,15 @@
 	
 	<select id="selectById" parameterType="string" resultType="com.hanbit.web.member.MemberDTO"> <!-- 데이터베이스에 넘기는 파라미터는 id 값 하나면 되니까 "string"으로 한다. -->
 		SELECT 
-			id,name,password,addr,birth,cate,
-   			profile_img AS profileImg
+			id,
+			name,
+			password,
+			addr,
+			birth,
+			subject,
+			major,
+   			profile_img AS profileImg,
+   			cate
 		FROM Member WHERE id = #{id}
 	</select>
 	
@@ -45,12 +67,16 @@
 	
 	<update id="update" parameterType="com.hanbit.web.member.MemberDTO">
 		UPDATE Member 
-		SET profile_img = #{profileImg}, password = #{password}, addr = #{addr}
+		SET password = #{password},
+			addr = #{addr},
+			profile_img = #{profileImg}, 
 		WHERE id = #{id} 
 	</update>
 	
 	<delete id="delete" parameterType="com.hanbit.web.member.MemberDTO">
-		DELETE CASCADE FROM Member WHERE id = #{id}
+		DELETE CASCADE 
+		FROM Member 
+		WHERE id = #{id}
 	</delete>
 	
 </mapper>
