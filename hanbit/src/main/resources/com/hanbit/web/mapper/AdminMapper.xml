@@ -37,10 +37,9 @@
 			a.name AS name,
 			a.addr AS addr,
 			a.birth AS birth,
-			a.cate AS cate,
-			s.subj_name AS subjName
-		FROM Admin a, subject s
-		WHERE a.id = #{id} AND a.password = #{password} AND a.id = s.prof_id <!-- 해당 교수가 담당하는 과목도 출력해주기 위해 서브젝트 테이블과 조인했다! -->
+			a.cate AS cate
+		FROM Admin a
+		WHERE a.id = #{id} AND a.password = #{password}
 	</select>
 	
 	<select id="selectById" parameterType="String" resultType="com.hanbit.web.admin.AdminDTO">

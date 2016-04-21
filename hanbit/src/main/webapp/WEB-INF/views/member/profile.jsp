@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="detail">
 		<div class="joinTop">
-			<h2 class="text-center">${member.name} 상세정보</h2>
+			<h2 class="text-center">${sessionScope.user.name} 상세정보</h2>
 		</div>
 		<div class="joinCenter row">
 			<form class="form-horizontal">
@@ -9,7 +9,7 @@
 					<div class="form-group">
 					 	<label for="input_id" class="col-sm-4 control-label">프로필 이미지 등록</label>
 					 	<div class="col-sm-2">
-							<img src="${img}/member/${member.profileImg}" alt="" style="width:200px;height:230px"/>
+							<img src="${img}/member/${sessionScope.user.profileImg}" alt="" style="width:200px;height:230px"/>
 						</div>
 					 	<div class="col-sm-2">
 							<input type="file" id="profile_img" name="profile_img" />
@@ -54,26 +54,9 @@
 				</fieldset>
 			</form>
 			<div class="input_button text-center">
-					<button id="updateBtn">수정 폼으로 이동</button>
-					<button id="delBtn">회원탈퇴</button>
-					<button id="allBtn">전체학생보기</button>					
+					<button class="btn btn-primary" id="updateBtn">수정 폼으로 이동</button>
+					<button class="btn btn-primary" id="deleteBtn">회원탈퇴</button>
 			</div>
 		</div>
 	</div>
 </body>
-<!-- <script type="text/javascript">
-	$(function() {
-		$('form').addClass('form-horizontal'); // 이게 없으면 화면이 꺠진다.
-		
-		$('#updateBtn').addClass('btn btn-primary').click(function() { // 수정 폼 이동 클릭 시 URL에 id 값을 가지고 넘어간다.
-			//location.href = '${context}/member/update_form.do?id=${member.id}'; 
-			location.href = '${context}/member/update';// session객체를 이용하면 ${member.id}를 쓸 필요가 없다. , location.href는 get방식 이동 법이다.
-		});
-		$('#delBtn').addClass('btn btn-primary').click(function() {
-			location.href = '${context}/member/delete';
-		});
-		$('#allBtn').addClass('btn btn-primary').click(function() {
-			location.href = '${context}/member/memList';
-		});
-	});
-</script> -->

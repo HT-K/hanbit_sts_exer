@@ -75,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
 		logger.info("MemberServie - isMember() 진입");
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class); // MemberMapper mapper = new MemberMapperImpl(); 이라고 생각하면 쉽다.
 		MemberDTO member = mapper.selectById(id); // MemberMapper.xml 의 주소 값이 mapper에 들어있고 그 중 login이라는 id를 가진 곳의 요소 값을 가져와서 member에 담는 것~
-		if (!(member.getId().equals(id))) { // 디비에서 가져온 member 객체의 id와 컨트롤러에서 받아온 id 값이 같지 않으면 회원이 아닌것!
+		if (member.getId().equals(id)) { // 디비에서 가져온 member 객체의 id와 컨트롤러에서 받아온 id 값이 같으면 회원~
 			return true;
 		} else {
 			return false;

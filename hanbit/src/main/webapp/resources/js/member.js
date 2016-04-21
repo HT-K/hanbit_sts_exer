@@ -55,13 +55,15 @@ var member = {
 	}, // list() End
 	
 	updateForm : function(context) {
-		$.getJSON(context+'/member/detail',function(member){
-			var update_form = '<div id="detail">'
+		alert("업데이트 폼 진입 체크");
+		$.getJSON(context+'/member/update_form',function(member){ // 기본 동작은 get 방식이다.
+			var update_form = 
+				'<div id="detail">'
 				+	'<div class="joinTop">'
 				+		'<h2 class="text-center">수정정보</h2>'
 				+	'</div>'
 				+	'<div class="joinCenter row">'
-				+		'<form class="form-horizontal" id="frm" action="'+context+'/member/update" method="post" enctype="multipart/form-data">'
+				+		'<form class="form-horizontal" action="'+context+'/member/update" method="post" enctype="multipart/form-data" id="frm">'
 				+			'<fieldset class="joinField">'
 				+				'<div class="form-group">'
 				+				 	'<label for="input_id" class="col-sm-4 control-label">프로필 이미지 등록</label>'
@@ -69,11 +71,11 @@ var member = {
 				+						'<img src="'+context+'/resources/img/member/'+member.profileImg+'" alt="" style="width:200px;height:230px"/>'
 				+					'</div>'
 				+				 	'<div class="col-sm-2">'
-				+						'<input type="file" id="file" name="file" value="이미지변경"/>'
+				+						'<input type="file" id="profile_img" name="profile_img" value="이미지변경"/>'
 				+					'</div>'
 				+				'</div>'
 				+				'<div class="form-group">'
-				+				 	'<label for="input_id" class="col-sm-4 control-label">아이디</label>'
+				+					'<label for="input_id" class="col-sm-4 control-label">아이디</label>'
 				+					'<div class="col-sm-4">'
 				+						'<input type="text" class="form-control" id="id" name="id" value="' + member.id + '" readonly="readonly"/>'
 				+					'</div>'
@@ -86,13 +88,13 @@ var member = {
 				+				'</div>'
 				+				'<div class="form-group">'
 				+					'<label for="input_name" class="col-sm-4 control-label">이름</label>'
-				+				 	'<div class="col-sm-4">'
+				+					 '<div class="col-sm-4">'
 				+						'<input type="text" class="form-control" id="name" name="name" value="' + member.name + '" readonly="readonly"/>'
 				+					'</div>'
 				+				'</div>'
 				+				'<div class="form-group">'
 				+					'<label for="input_name" class="col-sm-4 control-label">주소</label>'
-				+				 	'<div class="col-sm-4">'
+				+					'<div class="col-sm-4">'
 				+						'<input type="text" class="form-control" id="addr" name="addr" value="' + member.addr + '"/>'
 				+					'</div>'
 				+				'</div>'
@@ -102,18 +104,25 @@ var member = {
 				+						'<input type="text" class="form-control" id="birth" name="birth" value="' + member.birth + '" readonly="readonly"/>'
 				+					'</div>'
 				+				'</div>'
+				+				'<div class="form-group">'
+				+					'<label for="input_name" class="col-sm-4 control-label">회원종류</label>'
+				+				 	'<div class="col-sm-4">'
+				+						'<input type="text" class="form-control" id="role" name="role" value="' + member.role + '" readonly="readonly"/>'
+				+					'</div>'
+				+				'</div>'				
 				+				'<div class="input_button text-center">'
-				+					'<button id="update" class="btn btn-primary">수정</button>'
-				+					'<button id="cancle" class="btn btn-primary">취소</button>'
+				+					'<button type="submit" class="btn btn-primary" id="updateProfile" name="updateProfile">수정</button>'
+				+					'<button type="reset" class="btn btn-primary" id="updateCancle">취소</button>'
 				+				'</div>'		
 				+			'</fieldset>'
 				+		'</form>'
 				+	'</div>'
 				+'</div>';
-			$('#content').html(update_form);
-			$('#update').click(function(e) {
+			$('#content').html(update_form); // layout_user.jsp의 content div부분에 위 update_form이 .html된다
+		
+			$('#updateProfile').click(function(e) {
 				e.preventDefault();
-				alert('업데이트 클릭');
+				alert('업데이트 클릭2');
 				var $frm = $('#frm');
 				var postData = new FormData($('#frm')[0]);
 				
@@ -126,38 +135,45 @@ var member = {
 				      contentType: false, 
 				      processData : false,
 					success : function(member) {
-						location.href = context+'/member/content/'+member.id; // 성공하면 content로 돌아간다.
+						alert("성공");
+						location.href = context+'/member/content/'+member.id;
 					},
 					error : function(xhr,status,msg) {
 						alert('에러발생상태 :'+status+',내용 : '+msg);
 					}
 				});
 				});
-			});
-	}
-	
-	/*update : function(context) {
-		alert("수정 체크");
-		$.ajax({ // 객체를 파라미터로 보낸다.
-			url : context + "/member/update",
-			date : {
-				id : $('#id').val(),
-				profileImg : $('#profile_img').val(),
-				password : $('#password').val(),
-				addr : $('#addr').val()
-			},
-			// dataType 과 type은 보낼 때 값과 보내는 방식을 의미
-			dataType : 'json',
-			type : 'post',
-			// 아래 두개 타입은 컨트롤러에 갔다 올 때 받아오는 값의 형태를 의미
-			//contentType : 'application/json',
-			//mimeType : 'application/json',
-			success : function(data) {
-				alert('수정 성공' + data.profileImg);
-			},
-			error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
-				alert('에러 발생 상태 : '+status+' 내용 : '+msg);
-			}
-		});
-	}*/
+			
+			/*$('#updateProfile').click(function(e) {
+				e.preventDefault();
+				alert("업데이트 완료 진입1234");
+				$.ajax({ // 객체를 파라미터로 보낸다.
+					url : context+'/member/update',
+					date : {
+						profileImg : $('#profile_img').val(),
+						id : $('#id').val(),
+						password : $('#password').val(),
+						name : $('#name').val(),
+						addr : $('#addr').val(),
+						birth : $('#birth').val(),
+						role : $('#role').val()
+					},
+					// dataType 과 type은 보낼 때 값과 보내는 방식을 의미
+					type : 'POST', // 이곳에 type을 쓰지 않으면 디폴트로 get이 된다.
+					dataType : 'json', // 생략이 가능하다, 왜냐하면 view-context.xml에서 설정해놨다.
+					success : function(data) {
+						location.href = context+'/member/profile/'+data.id;
+					},
+					error : function(xhr, status, msg) { // 실패하면 이곳으로, 왼쪽 매개변수는 정해져 있다.
+						alert('에러 발생 상태 : '+status+' 내용 : '+msg);
+					}
+				}); // ajax() End
+			}); // updateProfile() End
+*/			
+			$('updateCancle').click(function(e) {
+				e.preventDefault();
+				$('form').reset()
+			}); // updateCancle() End
+		}); // getJson() End
+	} // updateForm() End
 };

@@ -25,12 +25,13 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 </body>
-<script src="${js}/subject.js"></script>
+<script src="${js}/Global.js"></script>
 <script src="${js}/admin.js"></script>
 <script src="${js}/article.js"></script>
 <script src="${js}/member.js"></script>
 <script src="${js}/record.js"></script>
-<script src="${js}/Global.js"></script>
+<script src="${js}/subject.js"></script>
+<script src="${js}/upload.js"></script>
 
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 1}"> 
@@ -38,31 +39,40 @@
 		$(function() {
 			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var logout_header = 
-				'<li role="presentation" style="margin-left: 100px">'
-			+		'<a id="my_article" href="${context}/article/my_article">내 글들 보기</a>'
-			+	'</li>'
-			+	'<li role="presentation" style="margin-left: 100px">'
-			+		'<a href="${context}/member/logout">로그아웃</a>'
-			+	'</li>'
-			+	'<li role="presentation" style="margin-left: 100px">'
-			+		'<a id="mypage" href="${context}/member/mypage">마이페이지</a>'
-			+	'</li>';
+			'<li role="presentation" style="margin-left: 100px">'
+			+	'<a href="${context}/article/my_article" id="my_article">내 글들 보기</a>'
+			+'</li>'
+			+'<li role="presentation" style="margin-left: 100px">'
+			+	'<a href="${context}/member/mypage" id="mypage">마이페이지</a>'
+			+'</li>'
+			+'<li role="presentation" style="margin-left: 100px">'
+			+	'<a href="${context}/member/logout" id="logout">로그아웃</a>'
+			+'</li>';
 			$('#header_ul').html(logout_header);
 			
-			$('#my_article').click(function(e) {
+			$('#my_article').click(function(e) { // 내 게시글 보기
 				e.preventDefault();
 				article.myArticle(global.getContext());
 			});
-			/* $('#mypage').click(function(e) {
+			$('#mypage').click(function(e) { // 마이페이지
 				e.preventDefault();
 				member.mypage(global.getContext());
-			}); */
+			});
+			$('#logout').click(function(e) { // 로그아웃
+				e.preventDefault();
+				location.href = "${context}/member/logout";
+			});
 			
-			$('#updateBtn').addClass('btn btn-primary').click(function() { // 수정 폼 이동 클릭 시 URL에 id 값을 가지고 넘어간다.
+			$('#updateBtn').click(function(e) { // profile.jsp의 '수정 폼으로 이동' 클릭 시
+				e.preventDefault();
 				member.updateForm(global.getContext());
 			});
-/* 			$('#delBtn').addClass('btn btn-primary').click(function() {
-			}); */
+			
+			$('#deleteBtn').click(function(e) { // profile.jsp의 '회원탈퇴' 클릭 시
+				e.preventDefault();
+				member.remove(global.getContext());
+			});
+	
 		});
 	</script>
 </c:when>

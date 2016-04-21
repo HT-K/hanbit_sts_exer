@@ -35,12 +35,15 @@ public class MemberController {
 		return "member/join_form.user";
 	}
 	
-	//@RequestParam(value="subject",required=true) List<String> subject ==> 얘는 체크박스 값 받아오는 방법이다.
-	//@RequestParam("major")String major
 	@RequestMapping(value="/join", method=RequestMethod.POST) // 이건 post방식
-	public String join( @RequestParam("id")String id, @RequestParam("password")String password,
-						@RequestParam("name")String name, @RequestParam("addr")String addr,
-						@RequestParam("birth")int birth, @RequestParam("cate")int cate) {
+	public String join( @RequestParam("id")String id, 
+						@RequestParam("password")String password,
+						@RequestParam("name")String name, 
+						@RequestParam("addr")String addr,
+						@RequestParam("birth")int birth, 
+						@RequestParam("major")String major,
+						@RequestParam(value="subject",required=true)List<String> subject, // 얘는 체크박스 값 받아오는 방법이다.
+						@RequestParam("cate")int cate) {
 		
 		MemberDTO param = new MemberDTO();
 		param.setId(id);
@@ -48,12 +51,17 @@ public class MemberController {
 		param.setName(name);
 		param.setAddr(addr);
 		param.setBirth(birth);
+		param.setMajor(major);
+		String res = "";
+		for (String temp : subject) {
+			res += temp + "/"; // 체크박스에서 클릭한 subject 들을 전부 res에 저장, (/)로 과목 나누기
+		}
+		param.setSubject(res);
 		param.setCate(cate);
 		
-		int res = service.insert(param);
 		String view = "";
 		
-		if (res == 1) {
+		if (service.insert(param) == 1) {
 			logger.info("회원가입 성공!");
 			view = "member/login_form.user";
 		} else {
@@ -81,16 +89,14 @@ public class MemberController {
 		param.setId(id);
 		param.setPassword(password);
 		member = service.login(param);
+		member.setRole(User.valueOf(member.getCate())); // valueOf 메소드와 cate 값을 이용해서 member 객체의 role에 값 저장
 		String view = "";
 		
-		if (member != null) {
+		if (member.getId() != null) {
 			logger.info("로그인 성공");
 			session.setAttribute("user", member); // 로그인 성공 시 session에 로그인에 성공한 유저의 정보가 담긴 member 객체를 담는다.
 			model.addAttribute("member", member); // 로그인 성공 시 다음 페이지에 request와 같은 역할을 하는 model에 member 객체를 담아 보낸다.
-			//model.addAttribute("user", member);
-			//view = "member/detail";
-			//view = "redirect:/member/detail/"+id; // get 방식으로 detail에 id 값 보내기, redirect는 페이지로 가라는게 아니라 서블릿 호출이라고 생가갛면된다.
-			view = "redirect:/member/content/"+id; // 강사님 방식
+			view = "redirect:/member/profile/"+ id; // 
 		} else {
 			logger.info("로그인 실패");
 			view = "member/login_form";
@@ -99,14 +105,69 @@ public class MemberController {
 		return view;
 	}
 	
-	@RequestMapping("/logout") // 모든 회원 정보를 가져옴
-	public String logout(
-			SessionStatus status,
-			HttpSession session) {
+	@RequestMapping("/profile/{id}")
+	public String getMemberProfile(@PathVariable("id")String id,
+									Model model){
+		logger.info("=== getMemberProfile() 진입 ===");
+		if (service.isMember(id)) {
+			member = service.getById(id);
+			member.setRole(User.valueOf(member.getCate()));
+			model.addAttribute("member",member);
+		} else {
+			model.addAttribute("member","");
+		}
+		return "member/profile.user";
+	}	
+	
+	@RequestMapping("/update_form") // member.updateForm() 호출 시, $.getJson()에 의해 이곳으로 오게 된다.
+	public @ResponseBody MemberDTO update_form(Model model,HttpSession session) {
+		logger.info("=== update_form() 진입 ===");
+		MemberDTO member = (MemberDTO) session.getAttribute("user");
+		//model.addAttribute("member", session.getAttribute("user"));
+		return member;
+	}
+	
+	//@RequestMapping(value="/update", method=RequestMethod.POST)
+	//@RequestMapping("/update")
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public void update( // 호출한 ajax()에 리턴 값으로 MemberDTO 자체를 넘겨준다, (@ResponseBody를 쓰면 model에 add()해서 주지 않고 바로 객체를 리턴 시킬 수 있다.)
+			@RequestParam("profile_img")String profileImg,
+			@RequestParam("id")String id,
+			@RequestParam("password")String password,
+			@RequestParam("name")String name,
+			@RequestParam("addr")String addr,
+			@RequestParam("birth")int birth,
+			@RequestParam("role")String role,
+			HttpSession session,
+			Model model){
+		logger.info("=== update() 진입 ===");
+		
+		MemberDTO param = new MemberDTO();
+		param.setProfileImg(profileImg);
+		param.setId(id);
+		param.setPassword(password);
+		param.setName(name);
+		param.setAddr(addr);
+		param.setBirth(birth);
+		param.setRole(role);
+		
+		service.update(param);
+		logger.info("=== update() 디비 다녀오기 성공 ===");
+		
+			session.setAttribute("user", param); // 세션에 업데이트 된 프로필 내용 다시 저장
+			model.addAttribute("member",param);
+
+
+		//return model;
+	}
+	
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
 		logger.info("=== member - logout() ===");
 		session.setAttribute("user", null);
-		status.setComplete(); // 세션 무효화
-		return "global/main.user"; // 되돌아가라, redirect:/ 는 ${context}/ 와 같다, 즉 메인으로 돌아가라는 뜻이다.
+		session.invalidate();
+		return "global/main.user"; // 메인으로 돌아가깃!
 	}
 	
 	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴
@@ -114,23 +175,7 @@ public class MemberController {
 		logger.info("member_list 진입 ");
 		return service.getListAll();
 	}
-	
-/*	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴, 이렇게 리턴 값으로 모델을 던져도됨.
-	public @ResponseBody Model member_list(Model model) {
-		logger.info("member_list 진입 ");
-		List<MemberDTO> list = new ArrayList<MemberDTO>();
-		list = service.getMemList();
-		model.addAttribute("list", list);
-		return model;
-	}*/
-	
-/*	@RequestMapping("/member_list") // 모든 학생 정보를 가져옴, 이렇게 그냥 model에 add만 해놔도 호출한 ajax 함수가 data를 가져간다! (list라는 이름으로!)
-	public void member_list(Model model) {
-		logger.info("memList 진입 ");
-		List<MemberDTO> list = service.getMemList();
-		model.addAttribute("list", list);
-	}*/
-	
+
 	
 	@RequestMapping("/name/{name}") // 이름 검색으로 회원 정보들을 가져옴(중복이름가능!)
 	public String getMembersByName(@PathVariable("name")String name) {
@@ -139,123 +184,6 @@ public class MemberController {
 		List<MemberDTO> list = service.getByName(param);
 		return "member/member_list";
 	}
-	
-	@RequestMapping("/content/{id}")
-	public String getMemberContent(@PathVariable("id")String id,Model model){
-		logger.info("=== member-getMemberContent() ===");
-		if (service.isMember(id)) {
-			member = service.getById(id);
-			member.setRole(User.valueOf(service.getById(id).getCate()));
-			model.addAttribute("member",member);
-		} else {
-			model.addAttribute("member","");
-		}
-		return "member/content.user";
-	}	
-	
-	@RequestMapping("/detail")
-	public @ResponseBody MemberDTO getMemberById(Model model, HttpSession session){
-		logger.info("=== member-getMemberById() ===");
-		member = (MemberDTO) session.getAttribute("user");
-		if (service.isMember(member.getId())) {
-			member = service.getById(member.getId());
-			member.setRole(User.valueOf(member.getCate()));
-			model.addAttribute("member",member);
-		} else {
-			model.addAttribute("member","");
-		}
-		logger.info("이미지 이름 {}", member.getProfileImg());
-		return member;
-	}	
-	
-	/*@RequestMapping("/detail/{id}") // id 검색으로 회원 정보를 가져옴
-	public String getMemberById(@PathVariable("id") String id, Model model) {
-		if (service.isMember(id)) {
-			logger.info("회원확인 성공 = {}", id);
-			// 비회원인지, 학생 교수 관리자 인지 알아내야함. 데이터베이스에는 Cate로 인트형으로 저장되어있는데 이것을 enum에 보내서 role을 알아낸다.
-			member = service.getMemById(id);
-			member.setRole(User.valueOf(member.getCate()));
-			model.addAttribute("member", member);
-		} else {
-			model.addAttribute("member", "");
-		}
-
-		return "member/detail.user";
-	}*/
-	
-	@RequestMapping("/update") // 이건 get방식, update_form.jsp로 고고!
-	public String update(Model model,HttpSession session) {
-		logger.info("update로 진입 ");
-		model.addAttribute("member",session.getAttribute("user"));
-		return "member/update.user";
-	}
-	
-	
-	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public @ResponseBody MemberDTO update(
-			@RequestParam("password")String password,
-			@RequestParam("addr")String addr,
-			@RequestParam(value="file",required=false)MultipartFile file,
-			HttpSession session,
-			Model model){
-		logger.info("수정폼에서 넘어온 주소 = {}",addr);
-		logger.info("수정폼에서 넘어온 비밀번호 = {}",password);
-		
-		MemberDTO legacy = (MemberDTO) session.getAttribute("user");
-		MemberDTO param = (MemberDTO) session.getAttribute("user");
-		FileUpload fileUpload = new FileUpload();
-		String fileName = file.getOriginalFilename();
-		logger.info("수정폼에서 넘어온 파일 = {}",fileName);
-		String fullPath = fileUpload.uploadFile(file, Constants.IMAGE_DOMAIN, fileName);
-		logger.info("이미지 저장 경로 : {}",fullPath);
-		param.setProfileImg(fileName);
-		param.setPassword(password);	
-		param.setAddr(addr);
-		int result = service.update(param);
-		String view = "";
-		if (result == 1) {
-			model.addAttribute("user", param);
-			model.addAttribute("member",param);
-			view = "member/detail";
-		} else {
-			model.addAttribute("member",legacy);
-			view = "member/update_form";
-		}
-		logger.info("수정 후 비번 : {}",param.getProfileImg());
-		return param;
-	}
-	
-	/*@RequestMapping(value="/update", method=RequestMethod.POST) // 이건 post방식, 이렇게 method를 지정해주지 않으면 default는 get방식이다!표9
-	public String update(
-			@RequestParam("profile_img")String profileImg,
-			@RequestParam("password")String password, 
-			@RequestParam("addr")String addr,
-			HttpSession session,
-			Model model) {
-		logger.info("update로 진입 ");
-		MemberDTO param = (MemberDTO) session.getAttribute("user"); // 세션 객체에 user로 저장되어 있는 MemberDTO 객체를 가져온다. 
-		param.setProfileImg(profileImg);
-		param.setPassword(password);
-		param.setAddr(addr);
-		
-		//FileUpload fileUpload = new FileUpload();
-		//String fileName = profileImg.getOriginalFilename();
-		//String fullPath = fileUpload.uploadFile(profileImg, Constants.IMAGE_DOMAIN, fileName);
-		
-		int result = service.update(param);
-		String view = "";
-		
-		if (result == 1) {
-			logger.info("업데이트 성공");
-			session.setAttribute("user", param);
-			model.addAttribute("member", param);
-			view = "member/detail.user";
-		} else {
-			logger.info("업데이트 실패");
-			view = "member/update_form.user";
-		}
-		return view;
-	}*/
 	
 	@RequestMapping("/delete") 
 	public String delete(HttpSession session,

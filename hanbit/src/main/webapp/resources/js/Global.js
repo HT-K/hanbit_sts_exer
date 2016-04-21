@@ -14,13 +14,3 @@ Global.prototype.setContext = function(context) {
 Global.prototype.getContext = function() {
 	return this.context;
 }
-
-/*var global = {
-		context : '',
-		setContext : function(context) {
-			this.context = context;
-		},
-		getContext : function() {
-			return this.context;
-		}
-}*/
