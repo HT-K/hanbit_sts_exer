@@ -26,8 +26,8 @@ public class ArticleController {
 	@Autowired ArticleService service;
 	@Autowired Command command;
 	
-	@RequestMapping("/article_home") // 맨 처음 메인 화면이다.
-	public String list(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
+/*	@RequestMapping("/article_home") // 맨 처음 메인 화면이다.
+	public String article_home(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
 					   @RequestParam(value="keyField",defaultValue ="none")String keyField,
 					   @RequestParam(value="keyword",defaultValue ="none")String keyword,
 					   Model model){		
@@ -57,7 +57,52 @@ public class ArticleController {
 		}
 		model.addAttribute("command", command);
 		return "article/article_home.user";
+	}*/
+	
+	@RequestMapping("/list/{pageNo}") // Article.js에서 호출
+	public Model list(@PathVariable("pageNo")String pageNo,
+					   Model model){		
+		logger.info("pageNo 체크 {}", pageNo);
+
+		//keyField 값에 따라 모델로 보내야할 것이 나눠진다.
+		// 모든 게시글 수를 데이터베이스에서 구해서 command객체에 set해줌 (service.countAll()) 
+		command = CommandFactory.createCommand("article", "article_list", pageNo, "none", "none", service.countAll());
+
+		logger.info("현재 페이지 = {}", command.getPageNo());
+		logger.info("현재 startPage = {}", command.getStartPage());
+		logger.info("현재 endPage = {}", command.getEndPage());
+		logger.info("현재 startRow = {}", command.getStartRow());
+		logger.info("현재 endRow = {}", command.getEndRow());
+		logger.info("현재 totalPages = {}", command.getTotalPages());
+		logger.info("현재 totalArticle = {}", command.getTotalArticle());
+		
+		model.addAttribute("article", service.getListAll(command));
+		model.addAttribute("command", command);
+		return model;
 	}
+	
+	/*@RequestMapping("/list") // Article.js에서 호출
+	public Model list(@RequestParam(value="pageNo",defaultValue="1")String pageNo,
+					   Model model){		
+		logger.info("pageNo 체크 {}", pageNo);
+
+		//keyField 값에 따라 모델로 보내야할 것이 나눠진다.
+		// 모든 게시글 수를 데이터베이스에서 구해서 command객체에 set해줌 (service.countAll()) 
+		command = CommandFactory.createCommand("article", "article_list", pageNo, "none", "none", service.countAll());
+
+		logger.info("현재 페이지 = {}", command.getPageNo());
+		logger.info("현재 startPage = {}", command.getStartPage());
+		logger.info("현재 endPage = {}", command.getEndPage());
+		logger.info("현재 startRow = {}", command.getStartRow());
+		logger.info("현재 endRow = {}", command.getEndRow());
+		logger.info("현재 totalPages = {}", command.getTotalPages());
+		logger.info("현재 totalArticle = {}", command.getTotalArticle());
+		
+		model.addAttribute("article", service.getListAll(command));
+		model.addAttribute("command", command);
+		return model;
+	}*/
+	
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST) // '글 등록' 클릭 시 호출되는 메소드
 	public void write(@RequestParam("title")String title, 

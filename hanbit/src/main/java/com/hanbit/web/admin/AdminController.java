@@ -55,7 +55,7 @@ public class AdminController {
 			logger.info("=== 관리자 로그인 성공 ===");
 			session.setAttribute("user", admin); // 로그인 성공 시 session에 로그인에 성공한 관리자의 정보가 담긴 member 객체를 담는다.
 			//model.addAttribute("user", admin); // 위 세션("user")에 admin을 담는 것과 동일하다. model로 세션에 접근이 가능하다. 단 @SessionAttributes("user") 이렇게 어노테이션으로 세션이 생성되어 있어야한다.
-			view = "admin/subject_list.admin";
+			view = "admin/admin_list.admin";
 		} else {
 			logger.info("=== 관리자 로그인 실패 ===");
 			view = "admin/login_form.admin";
@@ -65,14 +65,12 @@ public class AdminController {
 	
 	@RequestMapping("/logout") // 관리자가 로그아웃 했을 시
 	public String logout(
-			SessionStatus status,
 			Model model,
 			HttpSession session){
 		logger.info("=== admin-logout() ===");
-		session.setAttribute("user", null);
-		//model.addAttribute("user", null); // 자바에서 객체 소멸은 가바지 컬렉터에 의해 이루어진다. 따라서 로그아웃시 로그아웃버튼이 사라지게하려면 빈 member객체를 세션 객체에 저장하는 방법이 좋다!
-		status.setComplete(); // 세션 사용 중지
-		return "redirect:/admin/login_form.admin"; // 다시 관리자 로그인 폼으로~
+		session.setAttribute("user", null);	// 자바에서 객체 소멸은 가바지 컬렉터에 의해 이루어진다. 따라서 로그아웃시 로그아웃버튼이 사라지게하려면 빈 member객체를 세션 객체에 저장하는 방법이 좋다!
+		session.invalidate();
+		return "admin/login_form.admin"; // 다시 관리자 로그인 폼으로~
 	}		
 	
 	@RequestMapping("/member/profile/{id}") // 학생 개인 신상명세 보기 (admin.js와 연결되어있다~)

@@ -10,9 +10,9 @@ var member = {
 		return this.context;
 	},*/
 	
-	list : function() {
+	list : function(context) {
 		alert("member.list() 진입 체크");
-		$.getJSON(member.getContext()+'/member/member_list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
+		$.getJSON(context+'/member/member_list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
 			var member_list = 
 				'<div class="container" style="width:1000px;height:450px; margin:0 auto;">'
 				+	'<table class="table table-hover" id="member_list" style="width:100%;margin-top: 30px">'
@@ -32,7 +32,7 @@ var member = {
 					member_list +=
 						'<tr>'
 						+	'<td> '+ this.id+' </td>'
-						+	'<td><a class="memberProfile" href="'+ member.getContext()+ '/admin/member/profile/'+ this.id +'"> '+ this.name +' </a></td>'
+						+	'<td><a class="memberProfile" href="'+ context + '/admin/member/profile/'+ this.id +'"> '+ this.name +' </a></td>'
 						+	'<td> '+ value.major +' </td>'
 						+	'<td> '+ value.subject +' </td>'
 						+	'<td> '+ this.addr +' </td>'

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="container">
-	
 	<table class="table table-bordered">
 		<c:if test="${command.totalPages > 0 }">
 		<tr>

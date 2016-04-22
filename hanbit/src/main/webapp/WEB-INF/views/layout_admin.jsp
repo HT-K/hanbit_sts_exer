@@ -30,19 +30,23 @@
 		<tiles:insertAttribute name="footer"/>
 	</div>
 </body>
+
+<script src="${js}/Admin.js"></script>
+<script src="${js}/Article.js"></script>
 <script src="${js}/Global.js"></script>
-<script src="${js}/admin.js"></script>
-<script src="${js}/article.js"></script>
-<script src="${js}/member.js"></script>
-<script src="${js}/record.js"></script>
-<script src="${js}/subject.js"></script>
-<script src="${js}/upload.js"></script>
+<script src="${js}/Grade.js"></script>
+<script src="${js}/Hanbit.js"></script>
+<script src="${js}/Member.js"></script>
+<script src="${js}/Record.js"></script>
+<script src="${js}/Subject.js"></script>
 
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 3}"> 
 	<script type="text/javascript">
 		$(function() {
-			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
+			var context = $.fn.global('${context}').getContext();
+			var article = $.fn.article();
+			//var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
 			var logout_header = // 관리자가 로그인 했다면 로그아웃 네비를 띄워주자!
 				'<ul class="nav navbar-nav">'
 				+'<li>'
@@ -52,16 +56,16 @@
 				+'<a href="#" id="memberMgmt">학생관리</a>'
 				+'</li>'
 				+'<li>'
-				+'<a href="#" id="recordMgmt">성적관리</a>'
+				+'<a href="${context}/record/record_list" id="recordMgmt">성적관리</a>'
 				+'</li>'
 				+'<li>'
 				+'<a href="#" id="subjectMgmt">과목관리</a>'
 				+'</li>'
 				+'</ul>'
 				+'<ul class="nav navbar-nav navbar-right" style="margin-right: 200px">'
-            	+'<li><a href="#">로그아웃</a></li>'
+            	+'<li><a href="#" id="logout">로그아웃</a></li>'
          		+'</ul>';
-			$('#header_ul').html(logout_header);
+			$('#admin_header').html(logout_header);
 			
 			$('#adminMgmt').click(function(e) { // 교직원 관리
 				e.preventDefault();
@@ -73,15 +77,15 @@
 				alert("학생관리 클릭 체크");
 				member.list(global.getContext());
 			});
-			$('#recordMgmt').click(function(e) { // 성적관리
+			/* $('#recordMgmt').click(function(e) { // 성적관리
 				e.preventDefault();
 				record.list(global.getContext());
-			});
+			}); */
 			$('#subjectMgmt').click(function(e) { // 과목관리
 				e.preventDefault();
 				subject.list(global.getContext());
 			});
-			$('#logout').click(function(e) { // 로그아웃
+ 			$('#logout').click(function(e) { // 로그아웃
 				e.preventDefault();
 				location.href = "${context}/admin/logout";
 			});
@@ -97,7 +101,7 @@
 				+	'<a href="${context}/">Home</a>'
 				+'</li>'
 				+'</ul>'
-				$('#header_ul').html(login_header);
+				$('#admin_header').html(login_header);
 		});
 	</script>
 </c:otherwise>

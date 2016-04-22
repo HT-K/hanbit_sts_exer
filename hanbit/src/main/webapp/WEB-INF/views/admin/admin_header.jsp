@@ -8,7 +8,7 @@
 		<div class="container-fluid"> 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<a href="#" class="navbar-brand" style="margin-left: 100px">관리자메뉴</a>
-					<div id="header_ul">
+					<div id="admin_header">
 						<!-- 여기엔 관리자가 로그인인지 아닌지 layout_admin.jsp에서 체크해서 폼이 알아서 들어간다. -->
 	        		</div>
 	        </div>

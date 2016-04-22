@@ -9,7 +9,7 @@
 	<!-- 그러나 select문에서 리턴 타입이 int일 경우는 resultType에 int를 명시해줘야 한다. -->
 	<insert id="insert" parameterType="com.hanbit.web.member.MemberDTO"> 
 		INSERT INTO Member(id, password, name, addr, birth, major, subject, profile_img, cate) 
-		VALUES(#{id}, #{password}, #{name}, #{addr}, #{birth}, #{subject}, #{major}, #{profileImg}, #{cate})
+		VALUES(#{id}, #{password}, #{name}, #{addr}, #{birth}, #{major}, #{subject}, #{profileImg}, #{cate})
 	</insert>
 	
 	<select id="login" resultType="com.hanbit.web.member.MemberDTO" parameterType="com.hanbit.web.member.MemberDTO">

@@ -25,20 +25,22 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 </body>
+
+<script src="${js}/Admin.js"></script>
+<script src="${js}/Article.js"></script>
 <script src="${js}/Global.js"></script>
-<script src="${js}/admin.js"></script>
-<script src="${js}/article.js"></script>
-<script src="${js}/member.js"></script>
-<script src="${js}/record.js"></script>
-<script src="${js}/subject.js"></script>
-<script src="${js}/upload.js"></script>
+<script src="${js}/Grade.js"></script>
+<script src="${js}/Hanbit.js"></script>
+<script src="${js}/Member.js"></script>
+<script src="${js}/Record.js"></script>
+<script src="${js}/Subject.js"></script>
 
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 1}"> 
 	<script type="text/javascript">
 		$(function() {
-			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
-			var logout_header = 
+			var context = $.fn.global('${context}').getContext();
+			var article = $.fn.article();
 			'<li role="presentation" style="margin-left: 100px">'
 			+	'<a href="${context}/article/my_article" id="my_article">내 글들 보기</a>'
 			+'</li>'
@@ -50,13 +52,13 @@
 			+'</li>';
 			$('#header_ul').html(logout_header);
 			
-			$('#my_article').click(function(e) { // 내 게시글 보기
+			/* $('#my_article').click(function(e) { // 내 게시글 보기
 				e.preventDefault();
 				article.myArticle(global.getContext());
-			});
+			}); */
 			$('#mypage').click(function(e) { // 마이페이지
 				e.preventDefault();
-				member.mypage(global.getContext());
+				member.mypage(context);
 			});
 			$('#logout').click(function(e) { // 로그아웃
 				e.preventDefault();
@@ -65,12 +67,12 @@
 			
 			$('#updateBtn').click(function(e) { // profile.jsp의 '수정 폼으로 이동' 클릭 시
 				e.preventDefault();
-				member.updateForm(global.getContext());
+				member.updateForm(context);
 			});
 			
 			$('#deleteBtn').click(function(e) { // profile.jsp의 '회원탈퇴' 클릭 시
 				e.preventDefault();
-				member.remove(global.getContext());
+				member.remove(context);
 			});
 	
 		});
@@ -79,10 +81,15 @@
 <c:otherwise>
 	<script type="text/javascript">
 		$(function() {
-			var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
+			// 팩토리 패턴이다.
+			var context = $.fn.global('${context}').getContext();
+			var article = $.fn.article();
+			var member = $.fn.member();
+			/* var global = new Global('${context}'); // 생성자 기법을 통해 Global.js 에 컨텍스트 경로를 저장한다.
+			var article = new Article(); // Article 객체 생성 */
 			var login_header = 
 				'<li role="presentation" style="margin-left: 100px">'
-				+	'<a id="article_all" href="${context}/article/article_home">모든 게시글 보기</a>'
+				+	'<a href="#" id="article_all">모든 게시글 보기</a>'
 				+'</li>'
 				+'<li role="presentation" style="margin-left: 100px">'
 				+	'<a href="${context}/member/login_form">로그인</a>'
@@ -95,15 +102,16 @@
 				+'</li>';
 				$('#header_ul').html(login_header);
 				
-				/* $('#article_all').click(function(e) {
+				$('#article_all').click(function(e) { // 모든 게시글 보기
+					alert("넌 올거야");
 					e.preventDefault();
-					article.articleAll(global.getContext());
-				}); */
-				/* $('#join').click(function(e) {
-					e.preventDefault();
-					member.join(global.getContext());
+					article.articleAll(context, 1);
 				});
-				$('#admin_login').click(function(e) {
+				$('#join').click(function(e) {
+					e.preventDefault();
+					member.joinForm(context);
+				});
+				/* $('#admin_login').click(function(e) {
 					e.preventDefault();
 					admin.login(global.getContext());
 				}); */

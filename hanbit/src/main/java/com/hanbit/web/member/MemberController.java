@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +36,7 @@ public class MemberController {
 		return "member/join_form.user";
 	}
 	
-	@RequestMapping(value="/join", method=RequestMethod.POST) // 이건 post방식
+	/*@RequestMapping(value="/join", method=RequestMethod.POST) // 이건 post방식
 	public String join( @RequestParam("id")String id, 
 						@RequestParam("password")String password,
 						@RequestParam("name")String name, 
@@ -69,6 +70,32 @@ public class MemberController {
 			view = "member/join_form.user";
 		}
 		return view;
+	}*/
+	
+	
+	// member.js에서 JSON.stringfy(member)로 받아온 값을 처리하는 방법이다
+	@RequestMapping(value="/join", method=RequestMethod.POST) // 이건 post방식
+	public @ResponseBody MemberDTO join(
+			@RequestBody MemberDTO param,
+			Model model	) {
+		logger.info("== 회원가입 성공 체크 ===");
+		member.setId(param.getId());
+		logger.info("id체크 {}", param.getId());
+		member.setPassword(param.getPassword());
+		member.setName(param.getName());
+		member.setAddr(param.getAddr());
+		member.setBirth(param.getBirth());
+		member.setMajor(param.getMajor());
+		/*String res = "";
+		for (String temp : subject) {
+			res += temp + "/"; // 체크박스에서 클릭한 subject 들을 전부 res에 저장, (/)로 과목 나누기
+		}
+		param.setSubject(res);*/
+		member.setCate(param.getCate());
+		
+		service.insert(member);
+		
+		return member;
 	}
 	
 	// /member URL 들어오고 뒤에 action 값은 이곳에 넣는다.

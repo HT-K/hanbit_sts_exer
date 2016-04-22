@@ -3,17 +3,17 @@
  */
 
 var admin = {
-		context : '',
+		/*context : '',
 		setContext : function(context) {
 			this.context = context;
 		},
 		getContext : function() {
 			return this.context;
-		},
+		},*/
 		
-		list : function() {
+		list : function(context) {
 			alert("admin.list() 진입 체크");
-			$.getJSON(admin.getContext()+'/admin/admin_list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
+			$.getJSON(context+'/admin/admin_list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.
 				var admin_list = 
 					'<div class="container" style="width:1000px;height:450px; margin:0 auto;">'
 					+	'<table class="table table-hover" id="admin_list" style="width:100%;margin-top: 30px">'
@@ -34,7 +34,7 @@ var admin = {
 						admin_list +=
 							'<tr>'
 							+	'<td> '+ this.id+' </td>'
-							+	'<td><a class="adminProfile" href="'+ admin.getContext()+ '/admin/admin_profile/'+ this.id +'"> '+ this.name +' </a></td>'
+							+	'<td><a class="adminProfile" href="'+ context+ '/admin/admin_profile/'+ this.id +'"> '+ this.name +' </a></td>'
 							+	'<td> '+ this.password +' </td>'
 							+	'<td> '+ this.addr +' </td>'
 							+	'<td> '+ this.birth +' </td>'

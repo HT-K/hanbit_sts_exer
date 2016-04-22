@@ -31,13 +31,13 @@
 		<c:otherwise>
 		<c:forEach var="record" items="${record}">
 		<tr>
-			<td>${record.seq}</td>
+			<td>${record.recordSeq}</td>
 			<td>
 				<%-- <c:if test="${record.level}>0">
 				<c:forEach begin="1" end="${record.level}">-</c:forEach>&gt;
 				</c:if> --%>
 				<!-- href="${context}/article/search/${article.articleId}" -->
-				<a class="list_title" href="${context}/article/detail/${record.seq}">${record.id}</a>
+				<a class="list_title" href="${context}/article/detail/${record.recordSeq}">${record.id}</a>
 			</td>
 			<td>${record.name}</td>
 			<td>${record.subject}</td>
