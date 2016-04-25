@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path=""/>
+	<classpathentry excluding="src/main/webapp/resources/js/Admin.js|src/main/webapp/resources/js/Article.js|src/main/webapp/resources/js/Global.js|src/main/webapp/resources/js/Grade.js|src/main/webapp/resources/js/Hanbit.js|src/main/webapp/resources/js/Member.js|src/main/webapp/resources/js/Record.js|src/main/webapp/resources/js/Subject.js|src/main/webapp/resources/js_literal/Article.js|src/main/webapp/resources/js_literal/Global.js|src/main/webapp/resources/js_literal/Hanbit.js|src/main/webapp/resources/js_literal/admin.js|src/main/webapp/resources/js_literal/article_backup.js|src/main/webapp/resources/js_literal/attr.js|src/main/webapp/resources/js_literal/member.js|src/main/webapp/resources/js_literal/record.js|src/main/webapp/resources/js_literal/subject.js|src/main/webapp/resources/js_literal/upload.js" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipselabs.jsdt.jquery.core.CoflictLibrary_2.1"/>
 	<classpathentry kind="output" path=""/>
