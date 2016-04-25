@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<!-- tiles 프레임워크를 이용하여 구현한 페이지로 관리자와 관련된 모든 내용은 이 layout_admin.jsp를 거치게 된다. -->
+<!-- 이 페이지의 div -> id = content인 곳에 원하는 화면을 .html로 띄워서 마치 한 페이지 안에서 모든 것이 돌아가게끔 보이게 만드는게 주 목적이다. -->
 <html>
 <head>
 	<meta charset="UTF-8" />
@@ -26,14 +28,16 @@
 	</div>
 </body>
 
-<script src="${js}/Admin.js"></script>
-<script src="${js}/Article.js"></script>
-<script src="${js}/Global.js"></script>
-<script src="${js}/Grade.js"></script>
-<script src="${js}/Hanbit.js"></script>
-<script src="${js}/Member.js"></script>
-<script src="${js}/Record.js"></script>
-<script src="${js}/Subject.js"></script>
+<!-- div -> id = content인 곳에 보이게 될 페이지와 그 기능들을 담고 있는 .js파일들이다. -->
+<!-- 이 파일에 객체리터럴 혹은 함수표현식으로 작성된 것들을 호출해서 content에 .html로 내용을 브라우저 화면에 띄우게 된다.  -->
+<script src="${js}/Admin.js"></script> <!-- 관리자와 관련된 페이지와 기능을 모아놓은 js파일 -->
+<script src="${js}/Article.js"></script> <!-- 게시판과 관련된 페이지와 기능을 모아놓은 js파일 -->
+<script src="${js}/Global.js"></script> <!-- web/까지 경로를 의미하는 ${context}를 어느 js파일에서든 쓸 수 있도록 get,set이 들어있는 js파일 -->
+<script src="${js}/Grade.js"></script> <!-- 성적과 관련된 페이지와 기능을 모아놓은 js파일 -->
+<script src="${js}/Hanbit.js"></script> <!-- 팩토리 패턴의 공장과 같은 역할을 하는 js파일이다. 만약 각 js 파일안에 함수표현식으로 시작되는 것이 있다면 이안에서 new를 이용하여 해당 함수표현식을 객체로 만들 수 있다. -->
+<script src="${js}/Member.js"></script> <!-- 회원과 관련된 페이지와 기능을 모아놓은 js파일 -->
+<script src="${js}/Record.js"></script> <!-- 뷰로 만들어진 성적 -->
+<script src="${js}/Subject.js"></script> <!-- 과목과 관련된 페이지 -->
 
 <c:choose> 
 <c:when test="${sessionScope.user.cate == 1}"> 
@@ -61,7 +65,7 @@
 				member.mypage(context);
 			});
 			$('#logout').click(function(e) { // 로그아웃
-				e.preventDefault();
+				e.preventDefault(); // 이것을 써주면 a 태그에 href속성에 URL호출내용이 있더라도 실행되지 않고 무시하게 된다.중요중요
 				location.href = "${context}/member/logout";
 			});
 			
@@ -81,7 +85,7 @@
 <c:otherwise>
 	<script type="text/javascript">
 		$(function() {
-			// 팩토리 패턴이다.
+			// 팩토리 패턴이다. Hanbit.js에 미리 만들어놓은 생성자들을 이용한 것이다.
 			var context = $.fn.global('${context}').getContext();
 			var article = $.fn.article();
 			var member = $.fn.member();

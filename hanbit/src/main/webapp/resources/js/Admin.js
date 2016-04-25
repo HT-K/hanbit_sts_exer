@@ -1,16 +1,8 @@
 /**
- * admin 페이지관련
+ * admin 페이지 관련
  */
 
 var admin = {
-		/*context : '',
-		setContext : function(context) {
-			this.context = context;
-		},
-		getContext : function() {
-			return this.context;
-		},*/
-		
 		list : function(context) {
 			alert("admin.list() 진입 체크");
 			$.getJSON(context+'/admin/admin_list',function(data) { // 이름 그대로 JSON형태의 값을 가져오는 함수다. , 왼쪽에는 호출할 URL, 오른쪽에는 호출한 URL에서 받아온 JSON(=data)을 활용할 function()이 위치한다.

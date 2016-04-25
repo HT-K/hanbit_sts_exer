@@ -30,7 +30,7 @@ function Article(){
 Article.prototype.myArticle = function(context) {
 		alert('내가 쓴 글 게시판 목록 진입');
 	}
-Article.prototype.articleAll = function(context, pageNo) {
+Article.prototype.articleAll = function(context, pageNo) { // Article.js는 함수표현식으로 만들었다.
 	alert("여기와야해");
 	$.getJSON(context+'/article/list/'+pageNo,function(data) {
 		var totalPages = data.command.totalPages;

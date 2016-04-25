@@ -2,14 +2,11 @@
  * Hanbit 팩토리 : 즉시 실행함수 
  */
 
-/**
- * 즉시 실행 함수 만들기
- * ()(); -> 첫번째 괄호에 anonymous function을 만든다
- */
-
+// 팩토리 패턴의 예이다.
 // $는 제이쿼리를 뜻하고 fn은 prototype를 줄인 것이다.
 // $.fn.extend 안에 함수를 만들면 $.fn.함수이름으로 호출할 수 있게 된다.
-// 팩토리 패턴의 예이다.
+// 예를 들면 var article = $.fn.article(); ==> Article.jsp에 있는 function Article(){} 의 객체를 생성한 것이다.
+// 우리는 article(var 변수)로 function Article(){} 안에 만들어진 함수에 접근할 수 있게 된다!
 (function() {
 	$.fn.extend({
 		/*admin : function() {
